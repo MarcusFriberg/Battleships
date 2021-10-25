@@ -6,13 +6,11 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static void main(String[] args) {
-	//Tjena!!!
-        // Detta är jag!
+	// Insert code here
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+    // Insert code here
     }
-
 }
