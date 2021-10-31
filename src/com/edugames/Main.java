@@ -2,18 +2,12 @@ package com.edugames;
 
 import com.edugames.view.StartView;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
-	launch(args);
+	    launch(args);
     }
 
     @Override
