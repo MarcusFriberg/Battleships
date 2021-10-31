@@ -1,21 +1,22 @@
 package com.edugames;
 
+import com.edugames.view.StartView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
-        launch(args);
+	    launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Battleships");
-            //Create and show a new scene "StartView" in primaryStage
-            //Updates the scene to "GameView" and starts a new session when the buttons are pressed
+    public void start(Stage primaryStage) {
+        // Set the title of the window and create a StackPane
+        primaryStage.setTitle("Sänka skepp");
 
+        // Create a new startView and provide it with the primaryStage and let it present itself
+        StartView startView = new StartView(primaryStage);
+        startView.present();
     }
-
 }
-
