@@ -1,4 +1,7 @@
 package com.edugames.view;
+
+// Imports
+import com.edugames.controller.GameController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,7 +14,7 @@ import javafx.stage.Stage;
 * Class StartView
 * A class to create a scene for the startView of the game
 * where the player can select server or client mode.
-* @param: Constructor recieves the primaryStage as a parameter.
+* @param: Constructor receives the primaryStage as a parameter.
 * @author: Marcus Friberg
 * @author: marcus.friberg@edu.edugrad.se
 * @version: 1.0
@@ -19,6 +22,7 @@ import javafx.stage.Stage;
 public class StartView {
     // Variables
     private Stage primaryStage;
+    private GameController gameController;
 
     // Constructor
     public StartView(Stage primaryStage) {
@@ -34,7 +38,7 @@ public class StartView {
     * @author: Marcus Friberg
     * @author: marcus.friberg@edu.edugrade.se
     * @version: 1.0
-     */
+    */
     public void present() {
         // Create two buttons to let user select game mode
         Button buttonStartServer = new Button("", new ImageView("serverstart.png"));
@@ -54,6 +58,7 @@ public class StartView {
         // Set the action when button is pressed
         buttonStartServer.setOnAction(event -> {
             System.out.println("Server mode was pressed");
+            gameController = new GameController(primaryStage, true);
         });
         Button buttonStartClient = new Button("", new ImageView("clientstart.png"));
         // Style the button
@@ -72,6 +77,8 @@ public class StartView {
         // Set the action when button is pressed
         buttonStartClient.setOnAction(event -> {
             System.out.println("Client mode was pressed");
+            gameController = new GameController(primaryStage, false);
+
         });
         // Create a VBox to hold the buttons and place it under the game-logo
         VBox buttonsBox = new VBox();
@@ -81,10 +88,10 @@ public class StartView {
         // Create a StackPane to hold the VBox
         StackPane stackPane = new StackPane();
         stackPane.getChildren().add(buttonsBox);
-        // Create a new image called startScreenImage from Start-screen.png
-        Image startScreenImage = new Image("Start-screen.png");
-        // Create a new BackgroundImage from the startScreenImage and make it none repeat, position to CENTER and make it default size
-        BackgroundImage backgroundImage = new BackgroundImage(startScreenImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        // Create a new image called startViewBackgroundImage from Start-screen.png
+        Image startViewBackgroundImage = new Image("Start-screen.png");
+        // Create a new BackgroundImage from the startViewBackgroundImage and make it none repeat, position to CENTER and make it default size
+        BackgroundImage backgroundImage = new BackgroundImage(startViewBackgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         // Create a Background from the backgroundImage
         Background background = new Background(backgroundImage);
         // Set the background of stackPane to this background
