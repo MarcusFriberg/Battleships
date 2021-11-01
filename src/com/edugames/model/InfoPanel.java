@@ -1,12 +1,8 @@
-/*package com.edugames;
+package com.edugames.model;
 
-//TODO: Add a label that shows if you're playing as client or server
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
+// Imports
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,102 +11,63 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
+
+/*
+ * Class InfoPanel
+ * A class to create a HBox with info panel to include in GameView
+ * @param: Constructor receives the isServer(Boolean) as parameter.
+ * @author: Matilda Wintence
+ * @author: matilda.wintence.edu.edugrade.com
+ * @version: 1.0
+ */
 
 public class InfoPanel {
+    // Variables
+    private Boolean isServer;
+    private String labelImage;
 
-    Button weStartButton;
-    Button enemyStartButton;
-    Image imageYouStart;
-    Image imageEnemyStart;
-    ImageView iVewYouStart;
-    ImageView iVewEnemyStart;
-
-
-    //root.setCenter(weStartButton);
-
-    public void InfoPanel() {
-        weStartButton = new Button();
-        imageYouStart = new Image(getClass().getResourceAsStream("button1.png"));
-        iVewYouStart = new ImageView(imageYouStart);
-        weStartButton.setGraphic(iVewYouStart);
-        weStartButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //När vi klickar på knappen så kommer vi att kunna starta spelet och här lägger vi in den funktionen.
-            }
-        });
-
-        enemyStartButton = new Button();
-        imageEnemyStart = new Image(getClass().getResourceAsStream("button.png"));
-        iVewEnemyStart = new ImageView(imageEnemyStart);
-        weStartButton.setGraphic(iVewEnemyStart);
-        enemyStartButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //När vi klickar på knappen så kommer vi att kunna starta spelet och här lägger vi in den funktionen.
-            }
-        });
-    }
-    Button youStartButton;
-    Button enemyStartButton;
-
-    Image imageYouStart;
-    Image imageEnemyStart;
-    Image imageAircraftCarrier;
-    Image imageCruiser;
-    Image imageBattleship;
-    Image imageSubmarine;
-
-    ImageView iVewYouStart;
-    ImageView iVewEnemyStart;
-    ImageView iVewAircraftCarrier;
-    ImageView iVewCruiser;
-    ImageView iVewBattleship;
-    ImageView iVewSubmarine;
-
-    private int counterAircraftCarrier = 1;
-    private int counterCruiser = 2;
-    private int counterBattleship = 3;
-    private int counterSubmarine = 4;
-
-    private Label labelAircraftCarrier;
-    private Label labelCruiser;
-    private Label labelBattleship;
-    private Label labelSubmarine;
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Battleships");
-
-        youStartButton = new Button();
-        imageYouStart = new Image(getClass().getResourceAsStream("button.png"));
-        iVewYouStart = new ImageView(imageYouStart);
-        youStartButton.setGraphic(iVewYouStart);
-        youStartButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //När vi klickar på knappen så kommer vi att kunna starta spelet och här lägger vi in den funktionen.
-            }
-        });
-
-        enemyStartButton = new Button();
-        imageEnemyStart = new Image(getClass().getResourceAsStream("button2.png"));
-        iVewEnemyStart = new ImageView(imageEnemyStart);
-        enemyStartButton.setGraphic(iVewEnemyStart);
-        enemyStartButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //När vi klickar på knappen så kommer vi att kunna starta spelet och här lägger vi in den funktionen.
-                //Vill också att knapparna försvinner då, eller att man iaf inte kan klicka på dem
-            }
-        });
-        imageAircraftCarrier = new Image(getClass().getResourceAsStream("aircraftcarriers.png"));
+    // Constructor
+    public InfoPanel(Boolean isServer) {
+        // Change the label depending on Boolean isServer true/false
+        this.isServer = isServer;
+        if(isServer) {
+            labelImage = "labelsever.png";
+        } else {
+            labelImage = "labelclient.png";
+        }
+        // Create variables of Image, ImageView and Label for InfoPanel "playing as"
+        Image imageChoice;
+        ImageView iVewChoice;
+        Label labelChoice;
+        // Create Image variables of the ships
+        Image imageAircraftCarrier;
+        Image imageCruiser;
+        Image imageBattleship;
+        Image imageSubmarine;
+        // Create ImageView variables for the Images of the ships
+        ImageView iVewAircraftCarrier;
+        ImageView iVewCruiser;
+        ImageView iVewBattleship;
+        ImageView iVewSubmarine;
+        // Create counter variables for the remaining ships with set starting values
+        int counterAircraftCarrier = 1;
+        int counterCruiser = 2;
+        int counterBattleship = 3;
+        int counterSubmarine = 4;
+        // Create Labels variables for the "remaining ship" counters
+        Label labelAircraftCarrier;
+        Label labelCruiser;
+        Label labelBattleship;
+        Label labelSubmarine;
+        // Create new Image from labelImage that changes depending on what button is pressed in StartView
+        imageChoice = new Image(labelImage);
+        // Create new ImageView where the imageChoice is presented
+        iVewChoice = new ImageView(imageChoice);
+        // Scale the iVew to preferred size in x and y-axis
+        iVewChoice.setScaleX(0.2);
+        iVewChoice.setScaleY(0.2);
+        // Create new Images and Ivew for the ships and assign the Image and assign the variables values
+        imageAircraftCarrier = new Image(getClass().getResourceAsStream("aircraftcarrier.png"));
         iVewAircraftCarrier = new ImageView(imageAircraftCarrier);
         imageBattleship = new Image(getClass().getResourceAsStream("battleship.png"));
         iVewBattleship = new ImageView(imageBattleship);
@@ -118,68 +75,89 @@ public class InfoPanel {
         iVewCruiser = new ImageView(imageCruiser);
         imageSubmarine = new Image(getClass().getResourceAsStream("submarine.png"));
         iVewSubmarine = new ImageView(imageSubmarine);
+        // Create new label
+        labelChoice = new Label();
+        // Set graphic
+        labelChoice.setGraphic(iVewChoice);
+        // Set the preferred size of the label
+        labelChoice.setMinSize(10, 100);
+        // Add padding to the label
+        labelChoice.setPadding(new Insets(30,0,30,110));
 
-
+        // Create new Labels and assign values to the variables, make a toString to print out the Integer
         labelAircraftCarrier = new Label("  x " + Integer.toString(counterAircraftCarrier));
         labelBattleship = new Label("  x " + Integer.toString(counterBattleship));
         labelCruiser = new Label("  x " + Integer.toString(counterCruiser));
         labelSubmarine = new Label("  x " + Integer.toString(counterSubmarine));
-
-        labelAircraftCarrier.setFont(new Font("Courier New", 35));
-        labelBattleship.setFont(new Font("Courier New", 35));
-        labelCruiser.setFont(new Font("Courier New", 35));
-        labelSubmarine.setFont(new Font("Courier New", 35));
-
+        // Set font style and size of the labels
+        labelAircraftCarrier.setFont(new Font("Courier New", 20));
+        labelBattleship.setFont(new Font("Courier New", 20));
+        labelCruiser.setFont(new Font("Courier New", 20));
+        labelSubmarine.setFont(new Font("Courier New", 20));
+        // Set color and opacity of the labels
         labelAircraftCarrier.setTextFill(Color.web("4592da", 0.8));
         labelBattleship.setTextFill(Color.web("4592da", 0.8));
         labelCruiser.setTextFill(Color.web("4592da", 0.8));
         labelSubmarine.setTextFill(Color.web("4592da", 0.8));
 
+        // TODO: I don't know if this is needed, I'll keep it as a comment as I've not been able to try the code in main
+        //BorderPane borderPane = new BorderPane();
+        //borderPane.setScaleX(859);
+        //borderPane.setScaleY(100);
 
-        BorderPane borderPane = new BorderPane();
-
+        // Create new HBox to hold the ships and counters
         HBox hBoxAircraftCarrier = new HBox();
         HBox hBoxBattleship = new HBox();
         HBox hBoxCruiser = new HBox();
         HBox hBoxSubmarine = new HBox();
-
+        // Add images of ships and label with counter to the HBoxes
         hBoxAircraftCarrier.getChildren().addAll(iVewAircraftCarrier, labelAircraftCarrier);
         hBoxBattleship.getChildren().addAll(iVewBattleship, labelBattleship);
         hBoxCruiser.getChildren().addAll(iVewCruiser, labelCruiser);
         hBoxSubmarine.getChildren().addAll(iVewSubmarine, labelSubmarine);
-
-
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(youStartButton, enemyStartButton);
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.TOP_RIGHT);
-
+        // Create new VBox to hold all the HBoxes
         VBox vBoxShipsAndCounter = new VBox();
+        // Add all the HBoxes containing ships and counters to the VBox
         vBoxShipsAndCounter.getChildren().addAll(hBoxAircraftCarrier, hBoxBattleship, hBoxCruiser, hBoxSubmarine);
-        vBoxShipsAndCounter.setAlignment(Pos.BOTTOM_LEFT);
+        // Scale it to the preferred size in x and y-axis
+        vBoxShipsAndCounter.setScaleX(0.2);
+        vBoxShipsAndCounter.setScaleY(0.2);
+        // Add padding to the vBox
+        vBoxShipsAndCounter.setPadding(new Insets(30,1200,0,0));
 
+        // Create new HBox to contain the entire info panel
+        HBox infoPanelBox = new HBox();
+        // Add label the VBox containing ships and counter and labelChoice
+        infoPanelBox.getChildren().addAll(vBoxShipsAndCounter, labelChoice);
+        // Scale the HBox to the preferred size in x and y-axis
+        infoPanelBox.setScaleX(100);
+        infoPanelBox.setScaleY(859);
 
-        borderPane.setCenter(hBox);
-        borderPane.setBottom(vBoxShipsAndCounter);
-        Scene scene = new Scene(borderPane, 4000,4000);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        //TODO: usable counter: if shipCruiserSunken then for example: counterCruiser --1;
     }
 
-    import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
-import javafx.scene.text.Font;
+    /*
+     * Method init
+     * A method to initialize InfoPanel.
+     * Creates the HBox and sends it to GameView via GameController.
+     * @author: Matilda Wintence
+     * @author: matilda.wintence@edu.edugrade.se
+     * @version: 1.0
+     */
 
-}*/
+    public void init() {
+        //TODO: Code that initalize.... need help here
+    }
+
+    /*
+     * Method updateInfoPanel
+     * A method that updates the "shipsSunken".
+     * @author: Matilda Wintence
+     * @author: matilda.wintenceg@edu.edugrade.se
+     * @version: 1.0
+     */
+    public HBox updateInfoPanel() {
+        //TODO: Code here
+        return infoPanelBox;
+    }
+}
