@@ -158,7 +158,7 @@ public class InfoPanel {
          */
 
         public HBox updateInfoPanel() {
-            //TODO: Write a code that makes the ships counter update, I'll do this later when we have a functioning
+            //TODO: Write a code that makes the ships counter update and send an updated infoPanelBox, I'll do this later when we have a functioning
             // ship class: if shipCruiserSunken then for example: counterCruiser --1;
             return infoPanelBox;
         }
