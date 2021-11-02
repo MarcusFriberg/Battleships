@@ -1,8 +1,76 @@
 package com.edugames.model;
 
-public class Coordinate {
+public class Coordinate
+{
+    private char x;
+    private char y;
+    private boolean isHit;
+    private boolean hasShip;
+    private String imageFileName;
 
-    //Create variables to hold information about x and y pos, filename for image, isHit, hasShip and ship object
-    //Create methods to receive information about incoming shots, update image, setShip object, to update ship object
-    //Getter for x and y pos
+    public Coordinate(char x, char y, boolean isHit, boolean hasShip, String imageFileName)
+    {
+        this.x = x;
+        this.y = y;
+        this.isHit = isHit;
+        this.hasShip = hasShip;
+        this.imageFileName = imageFileName;
+        System.out.println(x + " " + y);
+    }
+
+    public char getX() {
+        return x;
+    }
+    public void setX(char x) {
+        this.x = x;
+    }
+    public char getY() {
+        return y;
+    }
+    public void setY(char y) {this.y = y;}
+    public boolean isHit() {
+        return isHit;
+    }
+    public void setHit(boolean hit) {
+        isHit = hit;
+    }
+    public boolean isHasShip() {return hasShip;}
+    public void setHasShip(boolean hasShip) {
+        this.hasShip = hasShip;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+
+    public void changeImage()
+    {
+        if(this.isHit)
+        {
+            if(this.hasShip)
+            {
+                this.setImageFileName("coord-ship-hit.png");
+            }
+            else
+            {
+                this.setImageFileName("coord-empty-hit.png");
+            }
+        }
+        else
+        {
+            if(this.hasShip)
+            {
+                this.setImageFileName("coord-ship-noHit.png");
+            }
+            else
+            {
+                this.setImageFileName("coord-empty-noHit.png");
+            }
+
+        }
+    }
+
 }
