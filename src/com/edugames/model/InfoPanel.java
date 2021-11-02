@@ -2,11 +2,9 @@ package com.edugames.model;
 
 // Imports
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,15 +24,13 @@ public class InfoPanel {
     private Boolean isServer;
     private String labelImage;
 
+    // Create new HBox to contain the entire info panel
+    HBox infoPanelBox = new HBox();
+
+
     // Constructor
-    public InfoPanel(Boolean isServer) {
-        // Change the label depending on Boolean isServer true/false
-        this.isServer = isServer;
-        if (isServer) {
-            labelImage = "labelsever.png";
-        } else {
-            labelImage = "labelclient.png";
-        }
+    public InfoPanel() {}
+
         /*
          * Method init
          * A method to initialize InfoPanel.
@@ -44,8 +40,14 @@ public class InfoPanel {
          * @version: 1.0
          */
 
-
-        public HBox initInfoPanel () {
+        public HBox initInfoPanel(Boolean isServer) {
+            // Change the labelImage depending on Boolean isServer is true/false
+            this.isServer = isServer;
+            if (isServer) {
+                labelImage = "labelsever.png";
+            } else {
+                labelImage = "labelclient.png";
+            }
 
             // Create variables of Image, ImageView and Label for InfoPanel "playing as"
             Image imageChoice;
@@ -138,17 +140,13 @@ public class InfoPanel {
             // Add padding to the vBox
             vBoxShipsAndCounter.setPadding(new Insets(30, 1200, 0, 0));
 
-            // Create new HBox to contain the entire info panel
-            HBox infoPanelBox = new HBox();
             // Add label the VBox containing ships and counter and labelChoice
             infoPanelBox.getChildren().addAll(vBoxShipsAndCounter, labelChoice);
             // Scale the HBox to the preferred size in x and y-axis
             infoPanelBox.setScaleX(100);
             infoPanelBox.setScaleY(859);
 
-            //TODO: usable counter: if shipCruiserSunken then for example: counterCruiser --1;
-
-            return InfoPanel;
+            return infoPanelBox;
         }
 
         /*
@@ -158,9 +156,10 @@ public class InfoPanel {
          * @author: matilda.wintenceg@edu.edugrade.se
          * @version: 1.0
          */
-        public HBox updateInfoPanel () {
-            //TODO: Code here
+
+        public HBox updateInfoPanel() {
+            //TODO: Write a code that makes the ships counter update, I'll do this later when we have a functioning
+            // ship class: if shipCruiserSunken then for example: counterCruiser --1;
             return infoPanelBox;
         }
-    }
     }
