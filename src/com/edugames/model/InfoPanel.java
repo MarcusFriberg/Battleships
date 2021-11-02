@@ -156,8 +156,7 @@ public class InfoPanel {
      * @author: matilda.wintenceg@edu.edugrade.se
      * @version: 1.0
      */
-    public HBox updateInfoPanel() {
-        //TODO: Code here
-        return infoPanelBox;
+   // public HBox updateInfoPanel() {
+     //   //TODO: Code here
+       // return infoPanelBox;
     }
-}

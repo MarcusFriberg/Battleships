@@ -1,8 +1,7 @@
 package com.edugames.view;
 
 // Imports
-import com.edugames.model.EnemyPanel;
-import com.edugames.model.PlayerPanel;
+import com.edugames.model.GamePanel;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,16 +21,16 @@ public class GameView {
     // Variables
     private Stage primaryStage;
     private Boolean isServer;
-    private PlayerPanel playerPanel;
+    private GamePanel gamePanel;
 
     // Constructor
     public GameView(Stage primaryStage, Boolean isServer) {
         this.primaryStage = primaryStage;
         this.isServer = isServer;
-        playerPanel = new PlayerPanel();
+        gamePanel = new GamePanel();
         // --TODO-- Remove this line and the comments on the next line when enemyPanel-class is done
         // enemyPanel = new EnemyPanel();
-        playerPanel.initPlayerPanel();
+        gamePanel.initGamePanel();
     }
 
     //Initiates game graphics from each panel
@@ -64,7 +63,7 @@ public class GameView {
         // Fetch the content of the enemyPanel by calling drawEnemyPanel()
         // --TODO-- Remove line with playerpanel's call and uncomment the line with enemypanel's call when EnemyPanel.java is complete
         try {
-            enemyPanelContent = playerPanel.drawPlayerPanel();
+            enemyPanelContent = gamePanel.drawGamePanel();
             //enemyPanelContent = enemyPanel.drawEnemyPanel();
         } catch (Exception e) {
             System.out.println(e);
@@ -75,7 +74,7 @@ public class GameView {
         GridPane playerPanelContent = new GridPane();
         // Fetch the content of the playerPanel by calling drawPlayerPanel()
         try {
-            playerPanelContent = playerPanel.drawPlayerPanel();
+            playerPanelContent = gamePanel.drawGamePanel();
         } catch (Exception e) {
             System.out.println(e);
         }
