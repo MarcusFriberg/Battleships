@@ -162,4 +162,3 @@ public class InfoPanel {
             // ship class: if shipCruiserSunken then for example: counterCruiser --1;
             return infoPanelBox;
         }
-    }

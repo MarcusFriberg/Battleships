@@ -1,4 +1,5 @@
 package com.edugames.model;
 
-public class AIPlayer {
+public class AIPlayer
+{
 }
