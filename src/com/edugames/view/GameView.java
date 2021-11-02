@@ -2,6 +2,7 @@ package com.edugames.view;
 
 // Imports
 import com.edugames.model.GamePanel;
+import com.edugames.model.InfoPanel;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -22,15 +23,19 @@ public class GameView {
     private Stage primaryStage;
     private Boolean isServer;
     private GamePanel gamePanel;
+    private InfoPanel infoPanel;
 
     // Constructor
     public GameView(Stage primaryStage, Boolean isServer) {
         this.primaryStage = primaryStage;
         this.isServer = isServer;
+        infoPanel = new InfoPanel();
         gamePanel = new GamePanel();
         // --TODO-- Remove this line and the comments on the next line when enemyPanel-class is done
         // enemyPanel = new EnemyPanel();
         gamePanel.initGamePanel();
+        infoPanel.initInfoPanel(isServer);
+
     }
 
     //Initiates game graphics from each panel
@@ -54,7 +59,7 @@ public class GameView {
         topPanelContent.setMinSize(960,210);
         // Create a HBox to hold the content of the infoPanel and set its size
         // --TODO-- Add a call to the infopanel method that returns a HBox when class is done
-        HBox infoPanelContent = new HBox();
+        HBox infoPanelContent = infoPanel.drawInfoPanel();
         infoPanelContent.setMinSize(960, 113);
         // Create a new HBox to hold both the panels
         HBox gamePanelsContent = new HBox();
