@@ -7,16 +7,16 @@ import javafx.scene.layout.GridPane;
 import java.io.FileNotFoundException;
 
 /*
- * Class PlayerPanel.
- * This class creates coordinate-objects and update the graphics in the PlayerPanel.
+ * Class GamePanel.
+ * This class creates coordinate-objects and update the graphics in the GamePanel.
  * - First there is a constructor for the class itself.
- * - The first method creates 100 objects of the class coordinate to represent the squares on the Playerpanel.
+ * - The first method creates 100 objects of the class coordinate to represent the squares on the GamePanel.
  * - The second method creates a GridPane that creates and draws out the images on the GridPane.
  * @author Linda Djurström
  * @version: 1.0.
  */
 
-public class PlayerPanel {
+public class GamePanel {
     // Variabels created for y and x positions.
     private char[] xpos = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     private char[] ypos = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
@@ -25,17 +25,18 @@ public class PlayerPanel {
     // A new Gridpane is created.
     GridPane gridPane = new GridPane();
 
+
     // Constructor.
-    public PlayerPanel() {}
+    public GamePanel() {}
 
     /*
-     * Method initPlayerPanel().
-     * Method initPlayerPanel() creates 100 coordinate-objects and stores them in a two-dimensional array.
+     * Method initGamePanel().
+     * Method initGamePanel() creates 100 coordinate-objects and stores them in a two-dimensional array.
      * @ returns a two-dimensional array with coordinate-objects.
      * @author Linda Djurström
      * @version: 1.0.
      */
-    public Coordinate[][] initPlayerPanel() {
+    public Coordinate[][] initGamePanel() {
         // An intertwined for-loop to construct 100 objects at once.
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -47,13 +48,13 @@ public class PlayerPanel {
     }
 
     /*
-     * Method drawPlayerPanel().
+     * Method drawGamePanel().
      * This method creates a GridPane with images created from filename-property of the Coordinate-objects.
      * @returns a gridPane.
      * @author Linda Djurström
      * @version: 1.0.
      */
-    public GridPane drawPlayerPanel() throws FileNotFoundException {
+    public GridPane drawGamePanel() throws FileNotFoundException {
         // The GridPane is formatted.
         GridPane gridPane = new GridPane();
         gridPane.setMinSize(400, 400);
