@@ -67,13 +67,13 @@ public class InfoPanel {
         iVewChoice.setScaleX(0.2);
         iVewChoice.setScaleY(0.2);
         // Create new Images and Ivew for the ships and assign the Image and assign the variables values
-        imageAircraftCarrier = new Image(getClass().getResourceAsStream("aircraftcarrier.png"));
+        imageAircraftCarrier = new Image("aircraftcarrier.png");
         iVewAircraftCarrier = new ImageView(imageAircraftCarrier);
-        imageBattleship = new Image(getClass().getResourceAsStream("battleship.png"));
+        imageBattleship = new Image("battleship.png");
         iVewBattleship = new ImageView(imageBattleship);
-        imageCruiser = new Image(getClass().getResourceAsStream("cruiser.png"));
+        imageCruiser = new Image("cruiser.png");
         iVewCruiser = new ImageView(imageCruiser);
-        imageSubmarine = new Image(getClass().getResourceAsStream("submarine.png"));
+        imageSubmarine = new Image("submarine.png");
         iVewSubmarine = new ImageView(imageSubmarine);
         // Create new label
         labelChoice = new Label();
