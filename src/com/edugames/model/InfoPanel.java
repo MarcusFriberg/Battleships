@@ -43,9 +43,9 @@ public class InfoPanel {
         // Change the labelImage depending on Boolean isServer is true/false
         this.isServer = isServer;
         if (isServer) {
-            gameModeImage = "GameViewPlayingAsServer.png";
+            gameModeImage = "server.png";
         } else {
-            gameModeImage = "GameViewPlayingAsClient.png";
+            gameModeImage = "client.png";
         }
     }
 
@@ -76,24 +76,31 @@ public class InfoPanel {
         Label cruiserCountLabel = new Label("  x " + "3");
         Label submarineCountLabel = new Label("  x " + "4");
         // Set font style and size of the labels
-        airCraftCarrierCountLabel.setFont(new Font("Courier New", 30));
-        battleshipCountLabel.setFont(new Font("Courier New", 30));
-        cruiserCountLabel.setFont(new Font("Courier New", 30));
-        submarineCountLabel.setFont(new Font("Courier New", 30));
+        airCraftCarrierCountLabel.setFont(new Font("Arial Bold", 20));
+        battleshipCountLabel.setFont(new Font("Arial Bold", 20));
+        cruiserCountLabel.setFont(new Font("Arial Bold", 20));
+        submarineCountLabel.setFont(new Font("Arial Bold", 20));
         // Set color and opacity of the labels
-        airCraftCarrierCountLabel.setTextFill(Color.web("4592da", 0.8));
-        battleshipCountLabel.setTextFill(Color.web("4592da", 0.8));
-        cruiserCountLabel.setTextFill(Color.web("4592da", 0.8));
-        submarineCountLabel.setTextFill(Color.web("4592da", 0.8));
+        airCraftCarrierCountLabel.setTextFill(Color.web("4592da", 1));
+        battleshipCountLabel.setTextFill(Color.web("4592da", 1));
+        cruiserCountLabel.setTextFill(Color.web("4592da", 1));
+        submarineCountLabel.setTextFill(Color.web("4592da", 1));
         // Create new Image from labelImage that changes depending on what button is pressed in StartView
         Image gameMode = new Image(gameModeImage);
         // Create new ImageView where the imageChoice is presented
         ImageView gameModeImageView = new ImageView(gameMode);
         Image bults = new Image("bults.png");
+        Image bults2 = new Image("bults2.png");
+        Image space = new Image("space.png");
+        Image playingAs = new Image("playingAs.png");
         ImageView bults1ImageView = new ImageView(bults);
-        ImageView bults2ImageView = new ImageView(bults);
+        ImageView bults2ImageView = new ImageView(bults2);
         ImageView bults3ImageView = new ImageView(bults);
-        ImageView bults4ImageView = new ImageView(bults);
+        ImageView bults4ImageView = new ImageView(bults2);
+        ImageView bults5ImageView = new ImageView(bults);
+        ImageView bults6ImageView = new ImageView(bults2);
+        ImageView spaceImageView = new ImageView(space);
+        ImageView playingAsImageView = new ImageView(playingAs);
         // Scale the iVew to preferred size in x and y-axis
         //gameModeImageView.setScaleX(0.2);
         //gameModeImageView.setScaleY(0.2);
@@ -123,25 +130,22 @@ public class InfoPanel {
 
         ColumnConstraints columnConstraints = new ColumnConstraints();
 
-
         infoPanelPane.add(airCraftCarrierImageView, 0, 0);
         infoPanelPane.add(airCraftCarrierCountLabel, 1, 0);
         infoPanelPane.add(battleShipImageView,0,1);
         infoPanelPane.add(battleshipCountLabel, 1,1);
-        infoPanelPane.add(bults1ImageView,3,0);
-        infoPanelPane.add(bults2ImageView,3,1);
-        infoPanelPane.add(cruiserImageView, 4, 0);
-        infoPanelPane.add(cruiserCountLabel, 5, 0);
-        infoPanelPane.add(submarineImageView, 4, 1);
-        infoPanelPane.add(submarineCountLabel, 5, 1);
-        infoPanelPane.add(bults3ImageView,6,0);
-        infoPanelPane.add(bults4ImageView,6,1);
-        infoPanelPane.add(gameModeImageView,7,0);
-        infoPanelPane.setPadding(new Insets(5,0,0,0));
+        infoPanelPane.add(cruiserImageView, 2, 0);
+        infoPanelPane.add(cruiserCountLabel, 3, 0);
+        infoPanelPane.add(submarineImageView, 2, 1);
+        infoPanelPane.add(submarineCountLabel, 3, 1);
+        infoPanelPane.add(spaceImageView,4,0);
+        infoPanelPane.add(playingAsImageView, 5, 0);
+        infoPanelPane.add(gameModeImageView,5,1);
+        infoPanelPane.setPadding(new Insets(0,0,20,0));
         //columnConstraints.setPrefWidth();
         infoPanelPane.getColumnConstraints().add(columnConstraints);
 
-        //infoPanelPane.setGridLinesVisible(true);
+        infoPanelPane.setGridLinesVisible(false);
 
 
         return infoPanelPane;
