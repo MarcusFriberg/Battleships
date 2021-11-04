@@ -4,6 +4,7 @@ package com.edugames.view;
 import com.edugames.model.GamePanel;
 import com.edugames.model.InfoPanel;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -59,8 +60,9 @@ public class GameView {
         topPanelContent.setMinSize(960,210);
         // Create a HBox to hold the content of the infoPanel and set its size
         // --TODO-- Add a call to the infopanel method that returns a HBox when class is done
-        HBox infoPanelContent = infoPanel.drawInfoPanel();
+        GridPane infoPanelContent = infoPanel.drawInfoPanel();
         infoPanelContent.setMinSize(960, 113);
+        infoPanelContent.setAlignment(Pos.CENTER);
         // Create a new HBox to hold both the panels
         HBox gamePanelsContent = new HBox();
         // Create a new GridPane to hold the enemyPanel

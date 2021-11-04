@@ -2,15 +2,16 @@ package com.edugames.model;
 
 // Imports
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /*
  * Class InfoPanel
@@ -42,9 +43,9 @@ public class InfoPanel {
         // Change the labelImage depending on Boolean isServer is true/false
         this.isServer = isServer;
         if (isServer) {
-            gameModeImage = "labelsever.png";
+            gameModeImage = "server.png";
         } else {
-            gameModeImage = "labelclient.png";
+            gameModeImage = "client.png";
         }
     }
 
@@ -55,11 +56,12 @@ public class InfoPanel {
      * @author: matilda.wintenceg@edu.edugrade.se
      * @version: 1.0
      */
-    public HBox drawInfoPanel() {
+    public GridPane drawInfoPanel() {
         // Create new HBox to contain the entire info panel
+        GridPane infoPanelPane = new GridPane();
         HBox infoPanelBox = new HBox();
         // Create new Images and ImageViews for the ships and assign the Image and assign the variables values
-        Image airCraftCarrier = new Image("aircraftcarrier.png");
+        Image airCraftCarrier = new Image("airCraftCarrier.png");
         ImageView airCraftCarrierImageView = new ImageView(airCraftCarrier);
         Image battleShip = new Image("battleship.png");
         ImageView battleShipImageView = new ImageView(battleShip);
@@ -67,63 +69,85 @@ public class InfoPanel {
         ImageView cruiserImageView = new ImageView(cruiser);
         Image submarine = new Image("submarine.png");
         ImageView submarineImageView = new ImageView(submarine);
-        airCraftCarrierImageView.setScaleX(0.5);
-        airCraftCarrierImageView.setScaleY(0.5);
-        battleShipImageView.setScaleX(0.5);
-        battleShipImageView.setScaleY(0.5);
-        cruiserImageView.setScaleX(0.5);
-        cruiserImageView.setScaleY(0.5);
-        submarineImageView.setScaleX(0.5);
-        submarineImageView.setScaleY(0.5);
         // --TODO-- Replace String numbers with a call to AIPlayers method to return number of ships of a given type
         // Create new Labels and assign values to the variables, make a toString to print out the Integer
         Label airCraftCarrierCountLabel = new Label("  x " + "1");
-        airCraftCarrierCountLabel.setMaxWidth(100);
         Label battleshipCountLabel = new Label("  x " + "2");
-        battleshipCountLabel.setMaxWidth(100);
         Label cruiserCountLabel = new Label("  x " + "3");
-        cruiserCountLabel.setMaxWidth(100);
         Label submarineCountLabel = new Label("  x " + "4");
-        submarineCountLabel.setMaxWidth(100);
         // Set font style and size of the labels
-        airCraftCarrierCountLabel.setFont(new Font("Courier New", 20));
-        battleshipCountLabel.setFont(new Font("Courier New", 20));
-        cruiserCountLabel.setFont(new Font("Courier New", 20));
-        submarineCountLabel.setFont(new Font("Courier New", 20));
+        airCraftCarrierCountLabel.setFont(new Font("Arial Bold", 20));
+        battleshipCountLabel.setFont(new Font("Arial Bold", 20));
+        cruiserCountLabel.setFont(new Font("Arial Bold", 20));
+        submarineCountLabel.setFont(new Font("Arial Bold", 20));
         // Set color and opacity of the labels
-        airCraftCarrierCountLabel.setTextFill(Color.web("4592da", 0.8));
-        battleshipCountLabel.setTextFill(Color.web("4592da", 0.8));
-        cruiserCountLabel.setTextFill(Color.web("4592da", 0.8));
-        submarineCountLabel.setTextFill(Color.web("4592da", 0.8));
+        airCraftCarrierCountLabel.setTextFill(Color.web("4592da", 1));
+        battleshipCountLabel.setTextFill(Color.web("4592da", 1));
+        cruiserCountLabel.setTextFill(Color.web("4592da", 1));
+        submarineCountLabel.setTextFill(Color.web("4592da", 1));
         // Create new Image from labelImage that changes depending on what button is pressed in StartView
         Image gameMode = new Image(gameModeImage);
         // Create new ImageView where the imageChoice is presented
         ImageView gameModeImageView = new ImageView(gameMode);
+        Image bults = new Image("bults.png");
+        Image bults2 = new Image("bults2.png");
+        Image space = new Image("space.png");
+        Image playingAs = new Image("playingAs.png");
+        ImageView bults1ImageView = new ImageView(bults);
+        ImageView bults2ImageView = new ImageView(bults2);
+        ImageView bults3ImageView = new ImageView(bults);
+        ImageView bults4ImageView = new ImageView(bults2);
+        ImageView bults5ImageView = new ImageView(bults);
+        ImageView bults6ImageView = new ImageView(bults2);
+        ImageView spaceImageView = new ImageView(space);
+        ImageView playingAsImageView = new ImageView(playingAs);
         // Scale the iVew to preferred size in x and y-axis
-        gameModeImageView.setScaleX(0.2);
-        gameModeImageView.setScaleY(0.2);
+        //gameModeImageView.setScaleX(0.2);
+        //gameModeImageView.setScaleY(0.2);
         // Create new HBox to hold the ships and counters
         HBox airCraftCarrierWrapper = new HBox();
         HBox battleShipWrapper = new HBox();
         HBox cruiserWrapper = new HBox();
         HBox submarineWrapper = new HBox();
         // Add images of ships and label with counter to the HBoxes
-        airCraftCarrierWrapper.getChildren().addAll(airCraftCarrierImageView, airCraftCarrierCountLabel);
-        battleShipWrapper.getChildren().addAll(battleShipImageView, battleshipCountLabel);
-        cruiserWrapper.getChildren().addAll(cruiserImageView, cruiserCountLabel);
-        submarineWrapper.getChildren().addAll(submarineImageView, submarineCountLabel);
+        //airCraftCarrierWrapper.getChildren().addAll(airCraftCarrierImageView, airCraftCarrierCountLabel);
+        //battleShipWrapper.getChildren().addAll(battleShipImageView, battleshipCountLabel);
+        //cruiserWrapper.getChildren().addAll(cruiserImageView, cruiserCountLabel);
+        //submarineWrapper.getChildren().addAll(submarineImageView, submarineCountLabel);
         // Create new VBoxes to hold all the HBoxes
-        VBox shipsAndCounterFirstWrapper = new VBox();
-        VBox shipsAndCounterSecondWrapper = new VBox();
+        //VBox shipsAndCounterFirstWrapper = new VBox();
+        //VBox shipsAndCounterSecondWrapper = new VBox();
         // Add all the HBoxes containing ships and counters to the VBox
-        shipsAndCounterFirstWrapper.getChildren().addAll(airCraftCarrierWrapper, battleShipWrapper);
-        shipsAndCounterSecondWrapper.getChildren().addAll(cruiserWrapper, submarineWrapper);
+        //shipsAndCounterFirstWrapper.getChildren().addAll(airCraftCarrierWrapper, battleShipWrapper);
+        //shipsAndCounterSecondWrapper.getChildren().addAll(cruiserWrapper, submarineWrapper);
         // Scale it to the preferred size in x and y-axis
         // Add padding to the vBox
-        shipsAndCounterFirstWrapper.setPadding(new Insets(0, 0, 0, 0));
-        shipsAndCounterSecondWrapper.setPadding(new Insets(0, 0, 0, 0));
+        //shipsAndCounterFirstWrapper.setPadding(new Insets(0, 0, 0, 0));
         // Add label the VBox containing ships and counter and labelChoice
-        infoPanelBox.getChildren().addAll(shipsAndCounterFirstWrapper, shipsAndCounterSecondWrapper, gameModeImageView);
-        return infoPanelBox;
+        //infoPanelBox.getChildren().addAll(shipsAndCounterFirstWrapper, shipsAndCounterSecondWrapper, gameModeImageView);
+        infoPanelPane.setMinSize(960,113);
+        //infoPanelPane.getChildren().add(gameModeImageView);
+
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+
+        infoPanelPane.add(airCraftCarrierImageView, 0, 0);
+        infoPanelPane.add(airCraftCarrierCountLabel, 1, 0);
+        infoPanelPane.add(battleShipImageView,0,1);
+        infoPanelPane.add(battleshipCountLabel, 1,1);
+        infoPanelPane.add(cruiserImageView, 2, 0);
+        infoPanelPane.add(cruiserCountLabel, 3, 0);
+        infoPanelPane.add(submarineImageView, 2, 1);
+        infoPanelPane.add(submarineCountLabel, 3, 1);
+        infoPanelPane.add(spaceImageView,4,0);
+        infoPanelPane.add(playingAsImageView, 5, 0);
+        infoPanelPane.add(gameModeImageView,5,1);
+        infoPanelPane.setPadding(new Insets(0,0,20,0));
+        //columnConstraints.setPrefWidth();
+        infoPanelPane.getColumnConstraints().add(columnConstraints);
+
+        infoPanelPane.setGridLinesVisible(false);
+
+
+        return infoPanelPane;
     }
 }
