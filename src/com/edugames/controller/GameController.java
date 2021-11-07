@@ -35,6 +35,17 @@ public class GameController {
         // Code to init a new GameSession
     }
 
+    /*
+    * Method initGameView
+    * Method to initiate a new GameView and store it in gameView for access
+    * Will initiate the playerPanel and enemyPanel and store the returned Coordinate 2D arrays for
+    * each panel in playerPanelCoordinates and enemyPanelCoordinates for quick access to all
+    * Coordinate-objects of each GamePanel.
+    * Then calls the present()-method of the gameView to draw the content.
+    * @author: Marcus Friberg
+    * @author: marcus.friberg@edu.edugrade.se
+    * @version: 1.1
+    */
     public void initGameView() {
         gameView = new GameView(primaryStage, isServer);
         playerPanelCoordinates = gameView.initPlayerPanel();
