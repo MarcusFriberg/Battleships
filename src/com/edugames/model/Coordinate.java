@@ -15,7 +15,7 @@ public class Coordinate
         this.isHit = isHit;
         this.hasShip = hasShip;
         this.imageFileName = imageFileName;
-        System.out.println(x + " " + y);
+        System.out.println(y + " " + x);
     }
 
     public char getX() {

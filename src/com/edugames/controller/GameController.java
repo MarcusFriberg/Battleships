@@ -1,5 +1,7 @@
 package com.edugames.controller;
 
+import com.edugames.model.Coordinate;
+import com.edugames.model.GamePanel;
 import com.edugames.view.GameView;
 import javafx.stage.Stage;
 
@@ -8,16 +10,14 @@ public class GameController {
     private Stage primaryStage;
     private Boolean isServer;
     private GameView gameView;
-
+    private Coordinate[][] playerPanelCoordinates;
+    private Coordinate[][] enemyPanelCoordinates;
 
     // Constructor
     public GameController(Stage primaryStage, Boolean isServer) {
         this.primaryStage = primaryStage;
         this.isServer = isServer;
         initGameSession();
-        initPlayerPanel();
-        initEnemyPanel();
-        initInfoPanel();
         initGameView();
 
     }
@@ -35,20 +35,10 @@ public class GameController {
         // Code to init a new GameSession
     }
 
-    public void initPlayerPanel() {
-        // Code to init a new PlayerPanel
-    }
-
-    public void initEnemyPanel() {
-        // Code to init a new EnemyPanel
-    }
-
-    public void initInfoPanel() {
-        // Code to init a new InfoPanel
-    }
-
     public void initGameView() {
         gameView = new GameView(primaryStage, isServer);
+        playerPanelCoordinates = gameView.initPlayerPanel();
+        enemyPanelCoordinates = gameView.initEnemyPanel();
         gameView.present();
     }
 }
