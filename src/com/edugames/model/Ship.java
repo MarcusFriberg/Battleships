@@ -27,11 +27,46 @@ public class Ship {
     private int shipStartYPos;
     private String shipType;
     private List<Coordinate> shipCoordinates = new ArrayList<>();
+    private Coordinate[][] playerPanelCoordinates;
 
-    public Ship(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos) {
+    // Constructor
+    public Ship(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos, Coordinate[][] playerPanelCoordinates) {
         this.shipSize = shipSize;
         this.shipAlignment = shipAlignment;
         this.shipStartXPos = shipStartXPos;
         this.shipStartYPos = shipStartYPos;
+        this.playerPanelCoordinates = playerPanelCoordinates;
+        setShipType();
+        storeShipCoordinates();
+    }
+
+    // Getters
+    public String getShipType() {
+        return shipType;
+    }
+
+    // Setters
+    private void setShipType() {
+        switch (shipSize) {
+            case 2:
+                shipType = "submarine";
+                break;
+            case 3:
+                shipType = "cruiser";
+                break;
+            case 4:
+                shipType = "battleship";
+                break;
+            case 5:
+                shipType = "aircraft carrier";
+                break;
+            default:
+                System.out.println("The system have provided a shipSize to the constructor of class Ship that is not valid. Terminating application to get attention!");
+                System.exit(0);
+        }
+    }
+    // write description
+    public void storeShipCoordinates(){
+        // Create code to store the coordinates that the ship is located on into shipCoordinates.
     }
 }

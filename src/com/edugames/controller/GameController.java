@@ -1,7 +1,7 @@
 package com.edugames.controller;
-
+// Imports
 import com.edugames.model.Coordinate;
-import com.edugames.model.GamePanel;
+import com.edugames.model.Ship;
 import com.edugames.view.GameView;
 import javafx.stage.Stage;
 
@@ -33,6 +33,22 @@ public class GameController {
 
     public void initGameSession() {
         // Code to init a new GameSession
+    }
+
+    /*
+     * Method createShip
+     * Method to create a Ship object when the AIPlayers placeShip-method is called.
+     * Will pass the playerPanelCoordinates to the constructor of Ship to give access
+     * to all Coordinate-objects in the playerPanel. Will also pass the shipSize, shipAlignment,
+     * shipStartXPos and shipStartYPos that was provided in the call from AIPlayers placeShip-method.
+     * @returns: The Ship-object that was created.
+     * @author: Marcus Friberg
+     * @author: marcus.friberg@edu.edugrade.se
+     * @version: 1.1
+     */
+    public Ship createShip(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos) {
+        Ship ship = new Ship(shipSize, shipAlignment, shipStartXPos, shipStartYPos, playerPanelCoordinates);
+        return ship;
     }
 
     /*
