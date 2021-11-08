@@ -1,11 +1,23 @@
 package com.edugames.model;
 
+import com.edugames.controller.GameController;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 public class GameSession {
+
+    Boolean isServer;
+    private String si;
+    private String s1;
+    private String s2;
+    private String s3;
+    private String s4;
+    private String incoming;
+    private GameController gameController;
     private int shotFired;
     // Detta tillhör Martins:
     // private int totalShotsFired;
-    private String incomingShot;
-    private int lastIncomingShot;
+    private String lastShotFired;
+
 
     //Make a constructor that takes parameters to start a new session as client or server
     //Create a new server connection
@@ -21,12 +33,37 @@ public class GameSession {
 - om vilken koordinat vi beskjuter på motståndarens spelplan
 - om motståndarens senaste skott blev en träff*/
 
-    public GameSession() {
+    // TODO: Är tanken att jag ska göra en metod för att ta emot och skicka för varje s1,s2,s3,s4 osv eller bara en
+    // TODO: metod som tar emot och tolkar och sparar det i en incoming String och sen skickar det till GameController?
+
+    public GameSession(Boolean isServer) {
+        this.isServer = isServer;
     }
 
-    public int incomingShot() {
-        if ()
+    public void initGameSession(String si) {
+        this.si = si;
+        lastShotFired = si;
+        // TODO: Send to socket here or in a separate method?
+        }
 
-        return shotFired;
+
+    public String incomingFire() {
+        // TODO: Divide into sub strings and only send the coordinates?? Sockets incoming here?
+        return s1;
     }
+
+    public void outgoingFire(String s1) {
+        // TODO: Send to socket
+    }
+
+
+    //TODO: Är detta rätt sätt:
+
+
+    public void incomingData(String incoming) {
+        //TODO: Dela upp i substrängar eller index samt en if (subString1 == "h")/ if (incoming.plats(0) == "h"
+        // så skickas det till GameController att det har blivit en träff. På så vis kan alla ligga under incoming
+    }
+
+
 }
