@@ -59,6 +59,7 @@ public class GameSession {
         //send incomingDataSplit[0] and incomingDataSplit[2]
     }
 
+
         /*
      * Method encodeOutgoingData
      * A method that has a String and a Coordinate object as an inparameter.
@@ -67,20 +68,29 @@ public class GameSession {
      * @author: matilda.wintenceg@edu.edugrade.se
      * @version: 1.0
      */
-    public void encodeOutGoingData(String outgoingData, Coordinate coordinateFiredOn) {
-        String coordinateFiredOnString = coordinateFiredOn.toString();
-        String encodedOutgoingData = outgoingData.concat(coordinateFiredOnString);
+
+    public void encodeOutGoingData(String outgoingData, Coordinate lastEnemyCoordinateShot) {
+        String lastEnemyCoordinateString = lastEnemyCoordinateShot.toString();
+        String shot = " shot ";
+        String encodedOutgoingData = outgoingData.concat(lastEnemyCoordinateString);
+        String encodedOutgoingData1 = outgoingData+shot+lastEnemyCoordinateString;
+        //return encodedOutgoingData1;
+        //TODO: Need to get shot and spaces into the String, is concat the best option?
     }
 
 
     /*
      * Method bridgeIncomingAndOutgoingData
      * A method that acts as a bridge between the hostClient/hostServer and decodeIncomingData/encodeOutgoingData.
-     * Sends the data between different mothods.
+     * Sends the data between different methods.
      * @author: Matilda Wintence
      * @author: matilda.wintenceg@edu.edugrade.se
      * @version: 1.0
      */
+
+    public void bridgeIncomingAndOutgoingData() {
+
+    }
 
         // sista koordinaten vi sköt på hos motståndaren - lagra i en variabel som heter lastEnemyCoordinateShot
 
