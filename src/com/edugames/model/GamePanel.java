@@ -44,16 +44,6 @@ public class GamePanel {
                 coordinates[i][j] = new Coordinate(xpos[i], ypos[j], false, false, "coord-empty-noHit.png");
             }
         }
-        // --TODO-- Remove testcode below when functions to draw ships are in place
-        // Test code starts here
-        coordinates[2][2].setHit(true);
-        coordinates[7][7].setHasShip(true);
-        coordinates[7][8].setHasShip(true);
-        coordinates[7][8].setHit(true);
-        coordinates[2][2].changeImage();
-        coordinates[7][7].changeImage();
-        coordinates[7][8].changeImage();
-        // Test code ends here
         return coordinates;
     }
 

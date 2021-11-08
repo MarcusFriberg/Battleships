@@ -7,6 +7,7 @@ public class Coordinate
     private boolean isHit;
     private boolean hasShip;
     private String imageFileName;
+    private Ship shipOnThisCoordinate;
 
     public Coordinate(char x, char y, boolean isHit, boolean hasShip, String imageFileName)
     {
@@ -35,6 +36,7 @@ public class Coordinate
         isHit = hit;
     }
     public boolean isHasShip() {return hasShip;}
+
     public void setHasShip(boolean hasShip) {
         this.hasShip = hasShip;
     }
@@ -44,6 +46,10 @@ public class Coordinate
     }
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    }
+
+    public void setShipOnThisCoordinate(Ship ship) {
+        this.shipOnThisCoordinate = ship;
     }
 
     public void changeImage()

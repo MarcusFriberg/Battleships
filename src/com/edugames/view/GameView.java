@@ -34,7 +34,6 @@ public class GameView {
         playerPanel = new GamePanel();
         enemyPanel = new GamePanel();
         infoPanel.initInfoPanel(isServer);
-
     }
 
     /*
@@ -90,8 +89,7 @@ public class GameView {
         HBox gamePanelsContent = new HBox();
         // Create a new GridPane to hold the enemyPanel
         GridPane enemyPanelContent = new GridPane();
-        // Fetch the content of the enemyPanel by calling drawEnemyPanel()
-        // --TODO-- Remove line with playerpanel's call and uncomment the line with enemypanel's call when EnemyPanel.java is complete
+        // Fetch the content of the enemyPanel by calling drawGamePanel()
         try {
             enemyPanelContent = enemyPanel.drawGamePanel();
             //enemyPanelContent = enemyPanel.drawEnemyPanel();
@@ -102,7 +100,7 @@ public class GameView {
         enemyPanelContent.setPadding(new Insets(0,0,0,50));
         // Create a new GridPane to hold the PlayerPanel
         GridPane playerPanelContent = new GridPane();
-        // Fetch the content of the playerPanel by calling drawPlayerPanel()
+        // Fetch the content of the playerPanel by calling drawGamePanel()
         try {
             playerPanelContent = playerPanel.drawGamePanel();
         } catch (Exception e) {

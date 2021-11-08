@@ -66,6 +66,10 @@ public class GameController {
         gameView = new GameView(primaryStage, isServer);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
+        // Making a few testShip's --TODO-- Remove these test-ships before release
+        createShip(3,'h', 0,0);
+        createShip(5,'v',5,5);
+        createShip(3,'v',0,4);
         gameView.present();
     }
 }

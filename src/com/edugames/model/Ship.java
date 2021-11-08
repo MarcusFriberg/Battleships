@@ -21,10 +21,10 @@ import java.util.List;
  */
 public class Ship {
     // variables
-    private int shipSize;
-    private char shipAlignment;
-    private int shipStartXPos;
-    private int shipStartYPos;
+    private final int shipSize;
+    private final char shipAlignment;
+    private final int shipStartXPos;
+    private final int shipStartYPos;
     private String shipType;
     private List<Coordinate> shipCoordinates = new ArrayList<>();
     private Coordinate[][] playerPanelCoordinates;
@@ -46,6 +46,15 @@ public class Ship {
     }
 
     // Setters
+
+    /*
+    * Method setShipType
+    * A method to set the variable shipType to a string describing what kind
+    * of ship this is. The shipSize is used to set this value.
+    * @author: Marcus Friberg
+    * @author: marcus.friberg@edu.edugrad.se
+    * @version: 1.0
+    */
     private void setShipType() {
         switch (shipSize) {
             case 2:
@@ -65,8 +74,46 @@ public class Ship {
                 System.exit(0);
         }
     }
-    // write description
+
+    /*
+     * Method storeShipCoordinates
+     * A method to store all the coordinates that the ship is placed on.
+     * Method uses the shipAlignment to add coordinate objects either on the right side
+     * of the start coordinate or below the start coordinate depending on horizontal or vertical
+     * alignment. Loop starts at the coordinate and continues as long as iteration is less than
+     * startPosition + shipSize. Method will also call the setShipOnThisCoordinate method of the
+     * coordinate-object and send itself (this ship) as a parameter and make calls to the coordinates
+     * setHasShip()-method with the parameter true and finally call changeImage()-method to update
+     * the coordinates image.
+     * @author: Marcus Friberg
+     * @author: marcus.friberg@edu.edugrad.se
+     * @version: 1.0
+     */
     public void storeShipCoordinates(){
-        // Create code to store the coordinates that the ship is located on into shipCoordinates.
+        switch (shipAlignment) {
+            case 'h':
+                for (int i = shipStartXPos; i < (shipStartXPos+shipSize); i++) {
+                    shipCoordinates.add(playerPanelCoordinates[i][shipStartYPos]);
+                    playerPanelCoordinates[i][shipStartYPos].setShipOnThisCoordinate(this);
+                    playerPanelCoordinates[i][shipStartYPos].setHasShip(true);
+                    playerPanelCoordinates[i][shipStartYPos].changeImage();
+                    // --TODO-- Remove sout below, only to confirm this is working while testing.
+                    System.out.println("Added ship to coordinate " + playerPanelCoordinates[i][shipStartYPos].getX() + playerPanelCoordinates[i][shipStartYPos].getY());
+                }
+                break;
+            case 'v':
+                for (int i = shipStartYPos; i < (shipStartYPos+shipSize); i++) {
+                    shipCoordinates.add(playerPanelCoordinates[shipStartXPos][i]);
+                    playerPanelCoordinates[shipStartXPos][i].setShipOnThisCoordinate(this);
+                    playerPanelCoordinates[shipStartXPos][i].setHasShip(true);
+                    playerPanelCoordinates[shipStartXPos][i].changeImage();
+                    // --TODO-- Remove sout below, only to confirm this is working while testing.
+                    System.out.println("Added ship to coordinate " + playerPanelCoordinates[shipStartXPos][i].getX() + playerPanelCoordinates[shipStartXPos][i].getY());
+                }
+                break;
+            default:
+                System.out.println("Something went wrong when storing ship's coordinate-objects. Terminating application!");
+                System.exit(0);
+        }
     }
 }
