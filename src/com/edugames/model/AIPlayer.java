@@ -1,8 +1,5 @@
 package com.edugames.model;
 
-import com.edugames.controller.GameController;
-import com.edugames.view.GameView;
-
 import java.util.ArrayList;
 import java.util.List;
 
