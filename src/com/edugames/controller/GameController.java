@@ -1,5 +1,6 @@
 package com.edugames.controller;
 // Imports
+import com.edugames.model.AIPlayer;
 import com.edugames.model.Coordinate;
 import com.edugames.model.Ship;
 import com.edugames.view.GameView;
@@ -46,10 +47,12 @@ public class GameController {
      * @author: marcus.friberg@edu.edugrade.se
      * @version: 1.1
      */
-    public Ship createShip(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos) {
+    /*public Ship createShip(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos) {
         Ship ship = new Ship(shipSize, shipAlignment, shipStartXPos, shipStartYPos, playerPanelCoordinates);
         return ship;
-    }
+
+
+    } */
 
     /*
     * Method initGameView
@@ -66,10 +69,13 @@ public class GameController {
         gameView = new GameView(primaryStage, isServer);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
+        AIPlayer aiPlayer = new AIPlayer(playerPanelCoordinates);
         // Making a few testShip's --TODO-- Remove these test-ships before release
-        createShip(3,'h', 0,0);
+        /*createShip(3,'h', 0,0);
         createShip(5,'v',5,5);
         createShip(3,'v',0,4);
+
+         */
         gameView.present();
     }
 }
