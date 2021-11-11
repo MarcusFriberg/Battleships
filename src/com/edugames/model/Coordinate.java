@@ -22,20 +22,22 @@ public class Coordinate
     public char getX() {
         return x;
     }
-    public void setX(char x) {
-        this.x = x;
-    }
+
     public char getY() {
         return y;
     }
-    public void setY(char y) {this.y = y;}
-    public boolean isHit() {
+
+    public boolean getIsHit() {
         return isHit;
     }
-    public void setHit(boolean hit) {
-        isHit = hit;
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
     }
-    public boolean isHasShip() {return hasShip;}
+
+    public boolean getHasShip() {
+        return hasShip;
+    }
 
     public void setHasShip(boolean hasShip) {
         this.hasShip = hasShip;
@@ -44,8 +46,13 @@ public class Coordinate
     public String getImageFileName() {
         return imageFileName;
     }
+
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    }
+
+    public Ship getShipOnThisCoordinate() {
+        return shipOnThisCoordinate;
     }
 
     public void setShipOnThisCoordinate(Ship ship) {
