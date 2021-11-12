@@ -23,11 +23,13 @@ public class GameSession {
     private Coordinate lastOutgoingShot;
     private String outgoingText = "";
     private String incomingText = "";
+    private int enemyShipsDestroyed;
 
     // Constructor
     public GameSession(Boolean isServer, GameController gameController) {
         this.isServer = isServer;
         this.gameController = gameController;
+        this.enemyShipsDestroyed = 0;
         if(isServer) {
             hostServer();
         } else {
@@ -133,6 +135,10 @@ public class GameSession {
     public String encodeOutgoingData(String lastIncomingShotResult, Coordinate outgoingShot) {
         return lastIncomingShotResult + " shot " + outgoingShot.getX() + outgoingShot.getY();
     }
+
+    /*public void increaseEnemyShipsDestroyed() {
+        enemyShipsDestroyed ++;
+    }*/
 }
 
 

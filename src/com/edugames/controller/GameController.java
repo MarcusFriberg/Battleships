@@ -19,8 +19,9 @@ public class GameController {
     public GameController(Stage primaryStage, Boolean isServer) {
         this.primaryStage = primaryStage;
         this.isServer = isServer;
-        initGameSession();
+        initPlayer();
         initGameView();
+        initGameSession();
     }
 
 
@@ -31,6 +32,10 @@ public class GameController {
 
 
     // Initial Setup of a new game that happens when player selects to start in either server or client mode
+
+    public void initPlayer() {
+        player = new AIPlayer(playerPanelCoordinates, this);
+    }
 
     public void initGameSession() {
         // Code to init a new GameSession
@@ -69,9 +74,9 @@ public class GameController {
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
         // Making a few testShip's --TODO-- Remove these test-ships before release
-        createShip(3,'h', 0,0);
-        createShip(5,'v',5,5);
-        createShip(3,'v',0,4);
+        // createShip(3,'h', 0,0);
+        // createShip(5,'v',5,5);
+        // createShip(3,'v',0,4);
         gameView.present();
     }
 
@@ -98,14 +103,14 @@ public class GameController {
             Ship ship = coordinate.getShipOnThisCoordinate();
             // Check if the ship is sunken
             if(ship.checkIfShipIsSunken()) {
-                // Check if the player is game over --TODO -- Remove block comment below when player is complete
-                /*if(player.checkGameOver()) {
+                // Check if the player is game over
+                if(player.checkGameOver()) {
                     // Player is game over
                     result = "game over";
                 } else {
                     // Player is not game over but ship was sunken
                     result = "s";
-                }*/
+                }
             // If ship was not sunken
             } else {
                 // Ship was hit
@@ -180,7 +185,7 @@ public class GameController {
 
     public Coordinate requestNewShot() {
         Target target = new Target(3, 3);
-        //target = player.fire();
+        target = player.fireAtTarget();
         Coordinate coordinate = enemyPanelCoordinates[target.getXCoordinate()][target.getYCoordinate()];
         return coordinate;
     }
