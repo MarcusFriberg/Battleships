@@ -5,6 +5,8 @@ import com.edugames.model.AIPlayer;
 import com.edugames.model.Coordinate;
 import com.edugames.model.Ship;
 import com.edugames.view.GameView;
+import com.edugames.model.GameSession;
+import com.edugames.model.Target;
 import javafx.stage.Stage;
 import java.util.*;
 
@@ -78,7 +80,7 @@ public class GameController {
         gameView = new GameView(primaryStage, isServer);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
-        AIPlayer aiPlayer = new AIPlayer(playerPanelCoordinates);
+        AIPlayer aiPlayer = new AIPlayer(playerPanelCoordinates, this);
         // Making a few testShip's --TODO-- Remove these test-ships before release
         // createShip(3,'h', 0,0);
         // createShip(5,'v',5,5);
@@ -176,7 +178,7 @@ public class GameController {
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(true);
                 coordinate.changeImage();
-                gameSession.increaseEnemyShipsDestroyed();
+                //gameSession.increaseEnemyShipsDestroyed();
                 player.enemyShipWasDestroyed();
                 gameView.present();
                 break;
