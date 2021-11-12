@@ -41,11 +41,9 @@ public class Ship {
     }
 
     // Getters
-    public String getShipType() {
-        return shipType;
+    public int getShipSize() {
+        return shipSize;
     }
-
-    // Setters
 
     /*
     * Method setShipType
@@ -115,5 +113,23 @@ public class Ship {
                 System.out.println("Something went wrong when storing ship's coordinate-objects. Terminating application!");
                 System.exit(0);
         }
+    }
+
+    /*
+     * Method checkIfShipIsSunken
+     * A method to check if the ship is Sunken.
+     * @returns: Boolean - true if ship is sunken, else false.
+     * @author: Marcus Friberg
+     * @author: marcus.friberg@edu.edugrad.se
+     * @version: 1.0
+     */
+    public Boolean checkIfShipIsSunken() {
+        Boolean sunken = true;
+        for(Coordinate coordinate : shipCoordinates) {
+            if(!coordinate.getIsHit()) {
+                sunken = false;
+            }
+        }
+        return sunken;
     }
 }

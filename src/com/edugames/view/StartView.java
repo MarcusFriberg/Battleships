@@ -78,7 +78,6 @@ public class StartView {
         buttonStartClient.setOnAction(event -> {
             System.out.println("Client mode was pressed");
             gameController = new GameController(primaryStage, false);
-
         });
         // Create a VBox to hold the buttons and place it under the game-logo
         VBox buttonsBox = new VBox();

@@ -1,7 +1,6 @@
 package com.edugames.model;
 
 import com.edugames.controller.GameController;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,13 +12,11 @@ public class AIPlayer {
     private GameController gameController;
     private List<Target> possibleTargets = new ArrayList<>();
 
-
     public AIPlayer(Coordinate[][] coordinates, GameController gameController) {
         this.playerPanelCoordinates = coordinates;
         this.gameController = gameController;
         placeShips();
     }
-
 
     public void placeShips() {
         String alignmentLetters = "hv";
@@ -54,7 +51,6 @@ public class AIPlayer {
             randomCoordinate = random.nextInt(coordinateList.size());
             xPos = numbers.lastIndexOf(coordinateList.get(randomCoordinate).getX());
             yPos = letters.lastIndexOf(coordinateList.get(randomCoordinate).getY());
-
 
 //ToDo: Ev. kan denna flyttas ned så att det inte skapas upp något skepp alls.
             if (alignment == 'h' && xPos > playerPanelCoordinates[1].length - counter)
@@ -167,6 +163,7 @@ public class AIPlayer {
         possibleTargets.remove(target);
         return target;
     }
+
 }
 
 
