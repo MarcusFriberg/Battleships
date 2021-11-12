@@ -4,7 +4,6 @@ import com.edugames.controller.GameController;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 /*
  * Class GameSession
@@ -24,10 +23,13 @@ public class GameSession {
     private Coordinate lastOutgoingShot;
     private String outgoingText = "";
     private String incomingText = "";
+    private int enemyShipsDestroyed;
+
     // Constructor
     public GameSession(Boolean isServer, GameController gameController) {
         this.isServer = isServer;
         this.gameController = gameController;
+        this.enemyShipsDestroyed = 0;
         if(isServer) {
             hostServer();
         } else {
@@ -54,16 +56,7 @@ public class GameSession {
             PrintWriter writer = new PrintWriter(output, true);
 
             while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
-
                 writer.println(socketHelper(reader.readLine()));
-
-
-            //    incomingText = reader.readLine();
-            //    System.out.println("Klienten säger: " + incomingText);
-            //    Scanner scanner = new Scanner(System.in);
-            //    outgoingText = Scanner.nextLine();
-            //    writer.println(outgoingText);
-            //    System.out.println("Väntar på svar");
             }
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -86,7 +79,6 @@ public class GameSession {
             PrintWriter writer = new PrintWriter(output, true);
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-
 
             while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
                 if (firstShot) {
@@ -143,6 +135,10 @@ public class GameSession {
     public String encodeOutgoingData(String lastIncomingShotResult, Coordinate outgoingShot) {
         return lastIncomingShotResult + " shot " + outgoingShot.getX() + outgoingShot.getY();
     }
+
+    /*public void increaseEnemyShipsDestroyed() {
+        enemyShipsDestroyed ++;
+    }*/
 }
 
 

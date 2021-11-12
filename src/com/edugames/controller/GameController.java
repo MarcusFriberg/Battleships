@@ -1,9 +1,6 @@
 package com.edugames.controller;
 // Imports
-import com.edugames.model.AIPlayer;
-import com.edugames.model.Coordinate;
-import com.edugames.model.GameSession;
-import com.edugames.model.Ship;
+import com.edugames.model.*;
 import com.edugames.view.GameView;
 import javafx.stage.Stage;
 import java.util.*;
@@ -22,8 +19,9 @@ public class GameController {
     public GameController(Stage primaryStage, Boolean isServer) {
         this.primaryStage = primaryStage;
         this.isServer = isServer;
-        initGameSession();
+        initPlayer();
         initGameView();
+        initGameSession();
     }
 
 
@@ -35,9 +33,13 @@ public class GameController {
 
     // Initial Setup of a new game that happens when player selects to start in either server or client mode
 
+    public void initPlayer() {
+        player = new AIPlayer(playerPanelCoordinates, this);
+    }
+
     public void initGameSession() {
         // Code to init a new GameSession
-        gameSession = new GameSession(isServer);
+        gameSession = new GameSession(isServer, this);
     }
 
     /*
@@ -72,14 +74,14 @@ public class GameController {
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
         // Making a few testShip's --TODO-- Remove these test-ships before release
-        createShip(3,'h', 0,0);
-        createShip(5,'v',5,5);
-        createShip(3,'v',0,4);
+        // createShip(3,'h', 0,0);
+        // createShip(5,'v',5,5);
+        // createShip(3,'v',0,4);
         gameView.present();
     }
 
     /*
-     * Method lastIncomingShotResult
+     * Method handleIncomingShot
      * Method to check if an incoming shot hits one of the friendly players ships.
      * Returns a string with "h" for hit, "m" for miss, "s" for sunken or
      * "game over" if the friendly player is game over.
@@ -89,7 +91,7 @@ public class GameController {
      * @author: marcus.friberg@edu.edugrade.se
      * @version: 1.1
      */
-    public String lastIncomingShotResult(String xy) {
+    public String handleIncomingShot(String xy) {
         String result = "";
         // Get the Coordinate-object that was hit by enemy
         Coordinate coordinate = getCoordinateObjectFromString(xy);
@@ -101,14 +103,14 @@ public class GameController {
             Ship ship = coordinate.getShipOnThisCoordinate();
             // Check if the ship is sunken
             if(ship.checkIfShipIsSunken()) {
-                // Check if the player is game over --TODO -- Remove block comment below when player is complete
-                /*if(player.checkGameOver()) {
+                // Check if the player is game over
+                if(player.checkGameOver()) {
                     // Player is game over
                     result = "game over";
                 } else {
                     // Player is not game over but ship was sunken
                     result = "s";
-                }*/
+                }
             // If ship was not sunken
             } else {
                 // Ship was hit
@@ -146,5 +148,49 @@ public class GameController {
         Coordinate coordinate = playerPanelCoordinates[x][y];
         // Return the Coordinate-object that we were looking for
         return coordinate;
+    }
+
+    public void handleLastOutgoingShotResult(String result, Coordinate coordinate) {
+        switch (result) {
+            case "i" :
+                break;
+            case "h" :
+                coordinate.setIsHit(true);
+                coordinate.setHasShip(true);
+                coordinate.changeImage();
+                gameView.present();
+                break;
+            case "m" :
+                coordinate.setIsHit(true);
+                coordinate.setHasShip(false);
+                coordinate.changeImage();
+                gameView.present();
+                break;
+            case "s" :
+                coordinate.setIsHit(true);
+                coordinate.setHasShip(true);
+                coordinate.changeImage();
+                gameSession.increaseEnemyShipsDestroyed();
+                player.enemyShipWasDestroyed();
+                gameView.present();
+                break;
+            case "game over" :
+                coordinate.setIsHit(true);
+                coordinate.setHasShip(true);
+                coordinate.changeImage();
+                gameView.present();
+                handleGameResult(true);
+        }
+    }
+
+    public Coordinate requestNewShot() {
+        Target target = new Target(3, 3);
+        target = player.fireAtTarget();
+        Coordinate coordinate = enemyPanelCoordinates[target.getXCoordinate()][target.getYCoordinate()];
+        return coordinate;
+    }
+
+    public void handleGameResult(Boolean victory) {
+        // code to handle game result, true for victory, false for loss
     }
 }

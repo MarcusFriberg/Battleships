@@ -41,8 +41,8 @@ public class Ship {
     }
 
     // Getters
-    public String getShipType() {
-        return shipType;
+    public int getShipSize() {
+        return shipSize;
     }
 
     /*
