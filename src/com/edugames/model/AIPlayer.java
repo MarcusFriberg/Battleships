@@ -16,6 +16,7 @@ public class AIPlayer {
         this.playerPanelCoordinates = coordinates;
         this.gameController = gameController;
         placeShips();
+        initTargets();
     }
 
     public void placeShips() {
@@ -81,7 +82,7 @@ public class AIPlayer {
                 //Todo= Uppdatera
 
 
-                myShips.add(gameController.createShip(counter, alignment, xPos, yPos, playerPanelCoordinates);
+                myShips.add(gameController.createShip(counter, alignment, xPos, yPos));
 
                 for (int j = 0; j < counter; j++) {
                     try {
@@ -159,7 +160,7 @@ public class AIPlayer {
 
     public Target fireAtTarget(){
         Random random = new Random();
-        Target target = possibleTargets.get(random.nextInt(possibleTargets.size());
+        Target target = possibleTargets.get(random.nextInt(possibleTargets.size()));
         possibleTargets.remove(target);
         return target;
     }

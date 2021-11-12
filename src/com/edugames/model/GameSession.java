@@ -56,7 +56,9 @@ public class GameSession {
             PrintWriter writer = new PrintWriter(output, true);
 
             while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
-                writer.println(socketHelper(reader.readLine()));
+                if(reader.ready()) {
+                    writer.println(socketHelper(reader.readLine()));
+                }
             }
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -105,7 +107,6 @@ public class GameSession {
      * @version: 1.0
      */
     public String socketHelper(String incomingText) {
-        lastOutgoingShot = gameController.requestNewShot();
         return encodeOutgoingData(gameController.handleIncomingShot(decodeIncomingData(incomingText)), lastOutgoingShot);
     }
 
@@ -121,6 +122,7 @@ public class GameSession {
     public String decodeIncomingData(String incomingText) {
         String[] incomingDataSplit = incomingText.split(" ");
         gameController.handleLastOutgoingShotResult(incomingDataSplit[0], lastOutgoingShot);
+        lastOutgoingShot = gameController.requestNewShot();
         return incomingDataSplit[2];
     }
 
@@ -136,9 +138,9 @@ public class GameSession {
         return lastIncomingShotResult + " shot " + outgoingShot.getX() + outgoingShot.getY();
     }
 
-    /*public void increaseEnemyShipsDestroyed() {
+    public void increaseEnemyShipsDestroyed() {
         enemyShipsDestroyed ++;
-    }*/
+    }
 }
 
 
