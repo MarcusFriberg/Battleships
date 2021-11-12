@@ -1,11 +1,149 @@
 package com.edugames.model;
+// Imports
+import com.edugames.controller.GameController;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
 
+/*
+ * Class GameSession
+ * A class that communicates via sockets with another computer, decodes/encodes the in/out parameters and communicate
+ * with GameController.
+ * @param: Constructor receives the isServer(Boolean) and gameController(GameController) as parameter.
+ * @author: Matilda Wintence
+ * @author: matilda.wintence.edu.edugrade.com
+ * @co-author: Martin Andersson
+ * @co-author: martin.andersson.edu.edugrade.com
+ * @version: 1.0
+ */
 public class GameSession {
+    // Variables
+    private Boolean isServer;
+    private GameController gameController;
+    private Coordinate lastOutgoingShot;
+    private String outgoingText = "";
+    private String incomingText = "";
+    // Constructor
+    public GameSession(Boolean isServer, GameController gameController) {
+        this.isServer = isServer;
+        this.gameController = gameController;
+        if(isServer) {
+            hostServer();
+        } else {
+            hostClient();
+        }
+    }
 
-    //Make a constructor that takes parameters to start a new session as client or server
-    //Create a new server connection
-    //Create a GameController and send a parameter with shoot or wait
-    //Create methods to send information about incoming shots to the GameController
-    //Create methods to receive information from GameController about shots fired and results of enemy shots
-    //
+    /*
+     * Method hostServer
+     * A method connect with another computer as server, on the same network.
+     * Creates a loop in which in och out parameters can pass trough.
+     * @author: Martin Andersson
+     * @author: martin.andersson.edu.edugrade.com
+     * @version: 1.0
+     */
+    public void hostServer() {
+        try(ServerSocket serverSocket = new ServerSocket(8888)) {
+            Socket socket = serverSocket.accept();
+            System.out.println("Client connected");
+            System.out.println("Waiting for shot");
+            InputStream input = socket.getInputStream();
+            OutputStream output = socket.getOutputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            PrintWriter writer = new PrintWriter(output, true);
+
+            while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
+
+                writer.println(socketHelper(reader.readLine()));
+
+
+            //    incomingText = reader.readLine();
+            //    System.out.println("Klienten säger: " + incomingText);
+            //    Scanner scanner = new Scanner(System.in);
+            //    outgoingText = Scanner.nextLine();
+            //    writer.println(outgoingText);
+            //    System.out.println("Väntar på svar");
+            }
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    /*
+     * Method hostClient
+     * A method connect with another computer as client, on the same network.
+     * Creates a loop in which in och out parameters can pass trough.
+     * @author: Martin Andersson
+     * @author: martin.andersson.edu.edugrade.com
+     * @version: 1.0
+     */
+    public void hostClient() {
+        boolean firstShot = true;
+        try {
+            Socket socket = new Socket("localhost", 8888);
+            OutputStream output = socket.getOutputStream();
+            PrintWriter writer = new PrintWriter(output, true);
+            InputStream input = socket.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
+
+            while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
+                if (firstShot) {
+                    lastOutgoingShot = gameController.requestNewShot();
+                    String firstText = "i shot " + lastOutgoingShot.getX() + lastOutgoingShot.getY();
+                    firstShot = false;
+                    writer.println(firstText);
+                } else {
+                    writer.println(socketHelper(reader.readLine()));
+                }
+            }
+            socket.close();
+        }catch (Exception e ) {
+            System.out.println(e);
+        }
+    }
+
+    /*
+     * Method socketHelper
+     * A method that acts as a bridge between the hostClient/hostServer and decodeIncomingData/encodeOutgoingData.
+     * Sends the data between different methods.
+     * @author: Martin Andersson
+     * @author: martin.andersson@edu.edugrade.se
+     * @version: 1.0
+     */
+    public String socketHelper(String incomingText) {
+        lastOutgoingShot = gameController.requestNewShot();
+        return encodeOutgoingData(gameController.handleIncomingShot(decodeIncomingData(incomingText)), lastOutgoingShot);
+    }
+
+    /*
+
+     * Method decodeIncomingData
+     * A method that has a String as an inparameter.
+     * Decodes the incoming data and sends it to the bridge.
+     * @author: Matilda Wintence
+     * @author: matilda.wintence@edu.edugrade.se
+     * @version: 1.0
+     */
+    public String decodeIncomingData(String incomingText) {
+        String[] incomingDataSplit = incomingText.split(" ");
+        gameController.handleLastOutgoingShotResult(incomingDataSplit[0], lastOutgoingShot);
+        return incomingDataSplit[2];
+    }
+
+    /*
+     * Method encodeOutgoingData
+     * A method that has a String and a Coordinate object as an inparameter.
+     * Encodes the outgoing data and sends it to the bridge.
+     * @author: Matilda Wintence
+     * @author: matilda.wintence@edu.edugrade.se
+     * @version: 1.0
+     */
+    public String encodeOutgoingData(String lastIncomingShotResult, Coordinate outgoingShot) {
+        return lastIncomingShotResult + " shot " + outgoingShot.getX() + outgoingShot.getY();
+    }
 }
+
+
+

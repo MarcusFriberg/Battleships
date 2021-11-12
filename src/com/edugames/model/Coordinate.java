@@ -18,7 +18,6 @@ public class Coordinate {
     // Variables
     private char x;
     private char y;
-    private int shipCoordinate;
     private boolean isHit;
     private boolean hasShip;
     private String imageFileName;
@@ -32,66 +31,73 @@ public class Coordinate {
         this.isHit = isHit;
         this.hasShip = hasShip;
         this.imageFileName = imageFileName;
-        System.out.println(x + " " + y);}
+    }
 
     // Getters and Setters
+    public char getX() {
+        return x;
+    }
 
-    public int getShipCoordinate() {return shipCoordinate;}
-    public void setShipCoordinate(int shipCoordinate) {this.shipCoordinate = shipCoordinate;}
-    public char getX() {return x;}
-    public char getY() {return y;}
-    public boolean getIsHit() {return isHit;}
-    public void setIsHit(boolean hit) {isHit = hit;}
-    public boolean getHasShip() {return hasShip;}
-    public void setHasShip(boolean hasShip) {this.hasShip = hasShip;}
-    public String getImageFileName() {return imageFileName;}
-    public void setImageFileName(String imageFileName) {this.imageFileName = imageFileName;}
+    public char getY() {
+        return y;
+    }
+
+    public boolean getIsHit() {
+        return isHit;
+    }
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
+    }
+
+    public boolean getHasShip() {
+        return hasShip;
+    }
+
+    public void setHasShip(boolean hasShip) {
+        this.hasShip = hasShip;
+    }
+
+    public String getImageFileName() {
+      return imageFileName;
+    }
+    
+    public void setImageFileName(String imageFileName) {
+      this.imageFileName = imageFileName;
+    }
+    
     public Ship getShipOnThisCoordinate(){
         return shipOnThisCoordinate;
     }
+
     public void setShipOnThisCoordinate(Ship ship){
         this.shipOnThisCoordinate = ship;
     }
-        /*
-         * Method changeImage
-         * A method to show an image of a ship when hit on the coordinate where it is shot.
-         * if ship is not shot ,dont change images.
-         * @author: Shermin Gilanizadeh
-         * @author: shermin.gilanizadeh @edu.edugrad.se
-         * @version: 1.0
-         */
-    public void changeImage(){
-
-        // A method is used for a change of images when or if a ship was hit.
-        // Method used to show if there is a hit on a ship, then there is also a ship on that coordinate
-        // and the image changes too.
-        if(this.isHit)
-        {
-            if (this.hasShip)
-            {
+      
+    /*
+     * Method changeImage
+     * A method used for to change images when a coordinate is hit.
+     * Uses isHit, hasShip to show the correct image.
+     * @author: Shermin Gilanizadeh
+     * @author: shermin.gilanizadeh @edu.edugrad.se
+     * @version: 1.0
+     */
+    public void changeImage() {
+        if(this.isHit) {
+            if (this.hasShip) {
                // the coordinates show a ship ,when ship is hit image changes image to ship-hit.
                 this.setImageFileName("coord-ship-hit.png");
-            }
-            else
-            {
-                //Image show there is no ship and no hit.
+            } else {
+                //Image show there is no ship and but coordinate is hit.
                 this.setImageFileName("coord-empty-hit.png");}
-        }
-        else
-        {
-            //
-            if(this.hasShip)
-            {
-                // Image show there is a ship on the coordinare but the ship is not hiten.
+        } else {
+            if(this.hasShip) {
+                // Image show there is a ship on the coordinare but the ship is not hit.
                 this.setImageFileName("coord-ship-noHit.png");
-            }
-            else
-            {
+            } else {
                 // image shows an empty coordinate whit no hit.
                 this.setImageFileName("coord-empty-noHit.png");
             }
-
         }
     }
-
 }
