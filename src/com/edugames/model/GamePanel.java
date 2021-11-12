@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 public class GamePanel {
     // Variabels created for y and x positions.
     private char[] xpos = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    private char[] ypos = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+    private char[] ypos = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
     // Construction of a new two-dimensional array for coordinates.
     Coordinate[][] coordinates = new Coordinate[10][10];
     // A new Gridpane is created.

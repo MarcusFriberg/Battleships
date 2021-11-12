@@ -1,5 +1,7 @@
 package com.edugames.model;
 
+import com.edugames.controller.GameController;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,10 +10,12 @@ public class AIPlayer {
     private Coordinate[][] playerPanelCoordinates;
     private List<Ship> myShips = new ArrayList<>();
     private List<Coordinate> coordinateList = new ArrayList<>();
+    private GameController gameController;
 
 
-    public AIPlayer(Coordinate[][] coordinates) {
+    public AIPlayer(Coordinate[][] coordinates, GameController gameController) {
         this.playerPanelCoordinates = coordinates;
+        this.gameController = gameController;
         placeShips();
     }
 
@@ -20,13 +24,13 @@ public class AIPlayer {
         String alignmentLetters = "hv";
         char alignment;
         String numbers = "0123456789";
-        String letters = "ABCDEFGHIJ";
+        String letters = "abcdefghij";
         int xPos;
         int yPos;
         Random random = new Random();
         int randomCoordinate;
         int counter;
-// -----------------------------------------------------------------------------------------
+
         int k = 0;
         for (Coordinate[] playerPanelCoordinate : playerPanelCoordinates) {
             for (int j = 0; j < playerPanelCoordinates[1].length; j++) {
@@ -34,7 +38,7 @@ public class AIPlayer {
                 k++;
             }
         }
-// ----------------------------------------------------------------------------------------
+
         for (int i = 0; i < 10; i++) {
             if (i < 1)
                 counter = 5;
@@ -44,14 +48,12 @@ public class AIPlayer {
                 counter = 3;
             else
                 counter = 2;
-//-----------------------------------------------------------------------------------------------------------
 
             alignment = alignmentLetters.charAt(random.nextInt(2));
             randomCoordinate = random.nextInt(coordinateList.size());
             xPos = numbers.lastIndexOf(coordinateList.get(randomCoordinate).getX());
             yPos = letters.lastIndexOf(coordinateList.get(randomCoordinate).getY());
 
-//--------------------------------------------------------------------------------------------------
 
 //ToDo: Ev. kan denna flyttas ned så att det inte skapas upp något skepp alls.
             if (alignment == 'h' && xPos > playerPanelCoordinates[1].length - counter)
@@ -59,7 +61,6 @@ public class AIPlayer {
             else if (alignment == 'v' && yPos > playerPanelCoordinates.length - counter)
                 yPos -= counter;
 
-// -----------------------------------------------------------------------------------------------------
             boolean check = true;
             int[] tempY = new int[counter];
             int[] tempX = new int[counter];
@@ -78,9 +79,12 @@ public class AIPlayer {
                 tempY[j] = yPosTemp;
                 tempX[j] = xPosTemp;
             }
-//-----------------------------------------------------------------------------------------------------------------
+
             if (check) {
-                myShips.add(new Ship(counter, alignment, xPos, yPos, playerPanelCoordinates));
+                //Todo= Uppdatera
+
+
+                myShips.add(gameController.createShip(counter, alignment, xPos, yPos, playerPanelCoordinates);
 
                 for (int j = 0; j < counter; j++) {
                     try {
@@ -119,7 +123,6 @@ public class AIPlayer {
         }
     }
 
-    //---------------------------------------------------------------------------
     public boolean checkGameOver() {
         boolean gameOver = false;
 
@@ -134,9 +137,7 @@ public class AIPlayer {
         return gameOver;
     }
 
-    //--------------------------------------------------------------------------------
     public int getNumberOfShipsOfShipSize(int shipSize) {
-
         int counter = 0;
 
         for (int i = 0; i < myShips.size(); i++) {
@@ -144,11 +145,9 @@ public class AIPlayer {
                 counter++;
             }
         }
-
         return counter;
     }
-
-    }
+}
 
 
 
