@@ -44,9 +44,6 @@ public class Ship {
     public String getShipType() {
         return shipType;
     }
-    public int getShipSize() {
-        return shipSize;
-    }
 
     // Setters
 

@@ -11,6 +11,7 @@ public class AIPlayer {
     private List<Ship> myShips = new ArrayList<>();
     private List<Coordinate> coordinateList = new ArrayList<>();
     private GameController gameController;
+    private List<Target> possibleTargets = new ArrayList<>();
 
 
     public AIPlayer(Coordinate[][] coordinates, GameController gameController) {
@@ -146,6 +147,25 @@ public class AIPlayer {
             }
         }
         return counter;
+    }
+
+    public void enemyShipWasDestroyed(){
+        //TODO: Code here please :)
+    }
+
+    public void initTargets(){
+        for(int x = 0; x < 10; x++){
+            for(int y = 0; y < 10; y++) {
+                possibleTargets.add(new Target(x,y));
+            }
+        }
+    }
+
+    public Target fireAtTarget(){
+        Random random = new Random();
+        Target target = possibleTargets.get(random.nextInt(possibleTargets.size());
+        possibleTargets.remove(target);
+        return target;
     }
 }
 
