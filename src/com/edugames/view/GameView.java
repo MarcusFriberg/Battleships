@@ -5,8 +5,10 @@ import com.edugames.controller.GameController;
 import com.edugames.model.Coordinate;
 import com.edugames.model.GamePanel;
 import com.edugames.model.InfoPanel;
+import javafx.beans.Observable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -28,6 +30,8 @@ public class GameView {
     private final GamePanel enemyPanel;
     private final InfoPanel infoPanel;
     private final GameController gameController;
+    private GridPane playerPanelContent;
+    private GridPane enemyPanelContent;
 
     // Constructor
     public GameView(Stage primaryStage, Boolean isServer, GameController gameController) {
@@ -97,7 +101,7 @@ public class GameView {
         // Create a new HBox to hold both the panels
         HBox gamePanelsContent = new HBox();
         // Create a new GridPane to hold the enemyPanel
-        GridPane enemyPanelContent = new GridPane();
+        enemyPanelContent = new GridPane();
         // Fetch the content of the enemyPanel by calling drawGamePanel()
         try {
             enemyPanelContent = enemyPanel.drawGamePanel();
@@ -108,7 +112,7 @@ public class GameView {
         // Set the padding of the enemyPanel to draw the panel in the correct position
         enemyPanelContent.setPadding(new Insets(0,0,0,50));
         // Create a new GridPane to hold the PlayerPanel
-        GridPane playerPanelContent = new GridPane();
+        playerPanelContent = new GridPane();
         // Fetch the content of the playerPanel by calling drawGamePanel()
         try {
             playerPanelContent = playerPanel.drawGamePanel();
@@ -135,5 +139,13 @@ public class GameView {
         primaryStage.setScene(scene);
         // Show the stage
         primaryStage.show();
+    }
+
+    public GamePanel getPlayerPanel() {
+        return playerPanel;
+    }
+
+    public GamePanel getEnemyPanel() {
+        return enemyPanel;
     }
 }
