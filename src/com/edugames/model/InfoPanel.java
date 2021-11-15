@@ -35,6 +35,8 @@ public class InfoPanel {
         this.gameView = gameView;
     }
 
+    public InfoPanel() {}
+
     /*
      * Method init
      * A method to initialize InfoPanel.
@@ -101,11 +103,20 @@ public class InfoPanel {
         startButton.setShape(new Circle(0.5));
         startButton.setStyle("-fx-background-color:transparent");
         startButton.setOnMouseEntered(event -> {
-            startButton.setScaleX(0.55);
-            startButton.setScaleY(0.55);
+            startButton.setScaleX(1.15);
+            startButton.setScaleY(1.15);
+        });
+        startButton.setOnMouseExited(event -> {
+            startButton.setScaleX(1);
+            startButton.setScaleY(1);
+        });
+        startButton.setOnAction(event -> {
+            System.out.println("Start was pressed");
+            //gameView.getGameController().startConnection();
+            startButton.setVisible(false);
         });
         // Create two labels with empty space to get everything into place
-        Label emptySpace1 = new Label("                                                         ");
+        Label emptySpace1 = new Label("");
         Label emptySpace2 = new Label("     ");
         Label emptySpace3 = new Label("     ");
         // Create Slider and set min, max and starting value
@@ -131,11 +142,31 @@ public class InfoPanel {
         gameSpeedDelaySlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-               gameSpeedDelayLabel.setText("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
-               gameView.getGameController().gameDelayWasChanged((int)gameSpeedDelaySlider.getValue()*1000);
+                gameSpeedDelayLabel.setText("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
+                gameView.getGameController().gameDelayWasChanged((int)gameSpeedDelaySlider.getValue()*1000);
                 // TODO: Inset method here that updates the controller and handles the delay, send with gameSpeedDelaySlider.getValue
             }
         });
+        // Create ColumnConstraints so that the nodes doesn't affect each other, only to column 6
+        ColumnConstraints column1 = new ColumnConstraints(50, 100, 100);
+        column1.setHgrow(Priority.NEVER);
+        ColumnConstraints column2 = new ColumnConstraints(50, 50, 100);
+        column2.setHgrow(Priority.NEVER);
+        ColumnConstraints column3 = new ColumnConstraints(50, 100, 100);
+        column3.setHgrow(Priority.NEVER);
+        ColumnConstraints column4 = new ColumnConstraints(50, 100, 100);
+        column4.setHgrow(Priority.NEVER);
+        ColumnConstraints column5 = new ColumnConstraints(30, 30, 30);
+        column5.setHgrow(Priority.NEVER);
+        ColumnConstraints column6 = new ColumnConstraints(50, 210, 210);
+        column6.setHgrow(Priority.NEVER);
+        // Add the columnConstraints# to infoPanelPane
+        infoPanelPane.getColumnConstraints().add(column1);
+        infoPanelPane.getColumnConstraints().add(column2);
+        infoPanelPane.getColumnConstraints().add(column3);
+        infoPanelPane.getColumnConstraints().add(column4);
+        infoPanelPane.getColumnConstraints().add(column5);
+        infoPanelPane.getColumnConstraints().add(column6);
         // Add the nodes to the GridPane and set their position
         infoPanelPane.add(airCraftCarrierImageView, 0, 0);
         infoPanelPane.add(airCraftCarrierCountLabel, 1, 0);
