@@ -55,7 +55,7 @@ public class GameSession {
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             PrintWriter writer = new PrintWriter(output, true);
 
-            while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
+            while(true) {
                 if(reader.ready()) {
                     writer.println(socketHelper(reader.readLine()));
                 }
@@ -82,7 +82,7 @@ public class GameSession {
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
-            while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
+            while(true) {
                 if (firstShot) {
                     lastOutgoingShot = gameController.requestNewShot();
                     String firstText = "i shot " + lastOutgoingShot.getX() + lastOutgoingShot.getY();
@@ -92,7 +92,7 @@ public class GameSession {
                     writer.println(socketHelper(reader.readLine()));
                 }
             }
-            socket.close();
+            //socket.close();
         }catch (Exception e ) {
             System.out.println(e);
         }
