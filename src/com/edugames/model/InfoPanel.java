@@ -1,15 +1,19 @@
 package com.edugames.model;
 
 // Imports
+import com.edugames.controller.GameController;
+import com.edugames.view.GameView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 
 /*
@@ -24,13 +28,12 @@ public class InfoPanel {
     // Variables
     private Boolean isServer;
     private String gameModeImage;
+    private GameView gameView;
 
     // Constructor
-    public InfoPanel() {
-        // Empty Constructor
+    public InfoPanel(GameView gameView) {
+        this.gameView = gameView;
     }
-
-    //Hej hej hej
 
     /*
      * Method init
@@ -93,13 +96,18 @@ public class InfoPanel {
         Image gameMode = new Image(gameModeImage);
         // Create new ImageView where the imageChoice is presented
         ImageView gameModeImageView = new ImageView(gameMode);
-        // Create an Image with an empty space to fill out the infoPanel
-        Image space = new Image("space.png");
-        // Create new ImageView where space is presented
-        ImageView spaceImageView = new ImageView(space);
+        // Create a new start button
+        Button startButton = new Button("", new ImageView("startButton.png"));
+        startButton.setShape(new Circle(0.5));
+        startButton.setStyle("-fx-background-color:transparent");
+        startButton.setOnMouseEntered(event -> {
+            startButton.setScaleX(0.55);
+            startButton.setScaleY(0.55);
+        });
         // Create two labels with empty space to get everything into place
-        Label emptySpace1 = new Label("                                                                 ");
-        Label emptySpace2 = new Label("                              ");
+        Label emptySpace1 = new Label("                                                         ");
+        Label emptySpace2 = new Label("     ");
+        Label emptySpace3 = new Label("     ");
         // Create Slider and set min, max and starting value
         Slider gameSpeedDelaySlider = new Slider(0, 10, 2);
         // Set preferred size
@@ -123,7 +131,8 @@ public class InfoPanel {
         gameSpeedDelaySlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                gameSpeedDelayLabel.setText("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
+               gameSpeedDelayLabel.setText("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
+               gameView.getGameController().gameDelayWasChanged((int)gameSpeedDelaySlider.getValue()*1000);
                 // TODO: Inset method here that updates the controller and handles the delay, send with gameSpeedDelaySlider.getValue
             }
         });
@@ -139,9 +148,11 @@ public class InfoPanel {
         infoPanelPane.add(emptySpace1, 4, 0);
         infoPanelPane.add(gameSpeedDelayLabel, 5,0);
         infoPanelPane.add(gameSpeedDelaySlider,5,1);
-        infoPanelPane.add(emptySpace2,6, 0);
-        infoPanelPane.add(playingAsImageView, 7, 0);
-        infoPanelPane.add(gameModeImageView,7,1);
+        infoPanelPane.add(emptySpace2, 6, 0);
+        infoPanelPane.add(startButton,7, 0, 2, 2);
+        infoPanelPane.add(emptySpace3, 9, 0);
+        infoPanelPane.add(playingAsImageView, 10, 0);
+        infoPanelPane.add(gameModeImageView,10,1);
         infoPanelPane.setPadding(new Insets(0,0,20,0));
         return infoPanelPane;
     }
