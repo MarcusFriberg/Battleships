@@ -162,28 +162,18 @@ public class GameController {
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(true);
                 coordinate.changeImage();
-                gameView.present();
                 break;
             case "m" :
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(false);
                 coordinate.changeImage();
-                gameView.present();
                 break;
-            case "s" :
+            default:
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(true);
                 coordinate.changeImage();
                 gameSession.increaseEnemyShipsDestroyed();
                 player.enemyShipWasDestroyed();
-                gameView.present();
-                break;
-            case "game over" :
-                coordinate.setIsHit(true);
-                coordinate.setHasShip(true);
-                coordinate.changeImage();
-                gameView.present();
-                handleGameResult(true);
         }
     }
 

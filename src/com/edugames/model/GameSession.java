@@ -71,6 +71,7 @@ public class GameSession {
      * @version: 1.0
      */
     public String socketHelper(String incomingText) {
+        System.out.println("socketHelper tar emot: " + incomingText);
         if(incomingText.equals("game over")) {
             // Code to mark lastOutgoingShot as a hit
             // Code to present Victory Screen/Message
@@ -80,6 +81,7 @@ public class GameSession {
             lastOutgoingShot = gameController.requestNewShot();
             outgoingText = encodeOutgoingData(incomingShotResult, lastOutgoingShot);
         }
+        System.out.println("socketHelper skickar: " + outgoingText);
         return outgoingText;
     }
 
