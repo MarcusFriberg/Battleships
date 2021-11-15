@@ -20,6 +20,10 @@ public class ServerThread extends Thread {
     // Variables
     private GameSession gameSession;
     private Socket socket;
+    private InputStream input;
+    private OutputStream output;
+    private BufferedReader reader;
+    private PrintWriter writer;
 
     //Constructor
     public ServerThread(GameSession gameSession) {
@@ -34,13 +38,14 @@ public class ServerThread extends Thread {
             socket = serverSocket.accept();
             System.out.println("Client connected");
             System.out.println("Waiting for shot");
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+            input = socket.getInputStream();
+            output = socket.getOutputStream();
+            reader = new BufferedReader(new InputStreamReader(input));
+            writer = new PrintWriter(output, true);
+        } catch (IOException e) {
+            System.out.println("Run method in ServerThread could not initialize socket, reader or writer with the message: " + e);
         }
-        InputStream input = socket.getInputStream();
-        OutputStream output = socket.getOutputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        PrintWriter writer = new PrintWriter(output, true);
+
         System.out.println("ServerThread passed checkpoint 1");
         setPriority(Thread.MAX_PRIORITY);
         while(gameSession.getGameIsRunning())
@@ -50,7 +55,13 @@ public class ServerThread extends Thread {
                 sleep(gameSession.getGameDelay());
             }
             catch (Exception e) {System.out.println("Error in ServerThread");}
-            writer.println(gameSession.socketHelper(reader.readLine()));
+            try {
+            if(reader.ready()) {
+                writer.println(gameSession.socketHelper(reader.readLine()));
+            }
+            } catch (IOException e){
+                System.out.println("ServerThread could not call gameSession.socketHelper with message: " + e );
+            }
             System.out.println("ServerThread passed checkpoint 4");
         }
     }

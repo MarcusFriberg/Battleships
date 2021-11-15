@@ -143,12 +143,24 @@ public class GameSession {
         this.gameDelay = gameDelay;
     }
 
-    private Boolean getGameIsRunning() {
+    public Boolean getGameIsRunning() {
         return gameIsRunning;
     }
 
-    private void setGameIsRunning(boolean gameIsRunning) {
+    public void setGameIsRunning(boolean gameIsRunning) {
         this.gameIsRunning = gameIsRunning;
+    }
+
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public void setLastOutgoingShot(Coordinate coordinate) {
+        this.lastOutgoingShot = coordinate;
+    }
+
+    public Coordinate getLastOutgoingShot() {
+        return lastOutgoingShot;
     }
 }
 
