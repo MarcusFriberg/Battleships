@@ -26,24 +26,16 @@ public class GameController {
         this.isServer = isServer;
         initGameView();
         initPlayer();
-        initGameSession();
         gameView.present();
     }
 
 
 
-    //Create methods to update models on action
-    //Create methods to update graphics on action
-
-
-
-    // Initial Setup of a new game that happens when player selects to start in either server or client mode
-
     public void initPlayer() {
         player = new AIPlayer(playerPanelCoordinates, this);
     }
 
-    public void initGameSession() {
+    public void startConnection() {
         // Code to init a new GameSession
         gameSession = new GameSession(isServer, this);
     }
@@ -62,8 +54,6 @@ public class GameController {
     public Ship createShip(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos) {
         Ship ship = new Ship(shipSize, shipAlignment, shipStartXPos, shipStartYPos, playerPanelCoordinates);
         return ship;
-
-
     }
 
     /*
