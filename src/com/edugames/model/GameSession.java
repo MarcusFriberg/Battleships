@@ -59,28 +59,7 @@ public class GameSession {
      * @version: 1.0
      */
     public void hostClient() {
-        boolean firstShot = true;
-        try {
-            Socket socket = new Socket("localhost", 8888);
-            OutputStream output = socket.getOutputStream();
-            PrintWriter writer = new PrintWriter(output, true);
-            InputStream input = socket.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-
-            while(true) {
-                if (firstShot) {
-                    lastOutgoingShot = gameController.requestNewShot();
-                    String firstText = "i shot " + lastOutgoingShot.getX() + lastOutgoingShot.getY();
-                    firstShot = false;
-                    writer.println(firstText);
-                } else {
-                    writer.println(socketHelper(reader.readLine()));
-                }
-            }
-            //socket.close();
-        }catch (Exception e ) {
-            System.out.println(e);
-        }
+        ClientThread networkConnection = new ClientThread(this);
     }
 
     /*
