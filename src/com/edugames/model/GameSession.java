@@ -55,8 +55,10 @@ public class GameSession {
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             PrintWriter writer = new PrintWriter(output, true);
 
-            while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
-                writer.println(socketHelper(reader.readLine()));
+            while(true) {
+                if(reader.ready()) {
+                    writer.println(socketHelper(reader.readLine()));
+                }
             }
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -80,7 +82,7 @@ public class GameSession {
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
-            while(!outgoingText.equals("game over") || !incomingText.equals("game over")) {
+            while(true) {
                 if (firstShot) {
                     lastOutgoingShot = gameController.requestNewShot();
                     String firstText = "i shot " + lastOutgoingShot.getX() + lastOutgoingShot.getY();
@@ -90,7 +92,7 @@ public class GameSession {
                     writer.println(socketHelper(reader.readLine()));
                 }
             }
-            socket.close();
+            //socket.close();
         }catch (Exception e ) {
             System.out.println(e);
         }
@@ -105,7 +107,6 @@ public class GameSession {
      * @version: 1.0
      */
     public String socketHelper(String incomingText) {
-        lastOutgoingShot = gameController.requestNewShot();
         return encodeOutgoingData(gameController.handleIncomingShot(decodeIncomingData(incomingText)), lastOutgoingShot);
     }
 
@@ -121,6 +122,7 @@ public class GameSession {
     public String decodeIncomingData(String incomingText) {
         String[] incomingDataSplit = incomingText.split(" ");
         gameController.handleLastOutgoingShotResult(incomingDataSplit[0], lastOutgoingShot);
+        lastOutgoingShot = gameController.requestNewShot();
         return incomingDataSplit[2];
     }
 
@@ -136,9 +138,9 @@ public class GameSession {
         return lastIncomingShotResult + " shot " + outgoingShot.getX() + outgoingShot.getY();
     }
 
-    /*public void increaseEnemyShipsDestroyed() {
+    public void increaseEnemyShipsDestroyed() {
         enemyShipsDestroyed ++;
-    }*/
+    }
 }
 
 
