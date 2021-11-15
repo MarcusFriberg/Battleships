@@ -26,24 +26,16 @@ public class GameController {
         this.isServer = isServer;
         initGameView();
         initPlayer();
-        initGameSession();
         gameView.present();
     }
 
 
 
-    //Create methods to update models on action
-    //Create methods to update graphics on action
-
-
-
-    // Initial Setup of a new game that happens when player selects to start in either server or client mode
-
     public void initPlayer() {
         player = new AIPlayer(playerPanelCoordinates, this);
     }
 
-    public void initGameSession() {
+    public void startConnection() {
         // Code to init a new GameSession
         gameSession = new GameSession(isServer, this);
     }
@@ -62,8 +54,6 @@ public class GameController {
     public Ship createShip(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos) {
         Ship ship = new Ship(shipSize, shipAlignment, shipStartXPos, shipStartYPos, playerPanelCoordinates);
         return ship;
-
-
     }
 
     /*
@@ -81,7 +71,6 @@ public class GameController {
         gameView = new GameView(primaryStage, isServer, this);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
-        gameView.present();
     }
 
     /*
@@ -102,6 +91,7 @@ public class GameController {
         // Set the isHit property of this Coordinate-object to true and update its image
         coordinate.setIsHit(true);
         coordinate.changeImage();
+        updatePlayerPanelImage(xy);
         // If there is a ship on this coordinate
         if(coordinate.getHasShip()) {
             Ship ship = coordinate.getShipOnThisCoordinate();
@@ -154,6 +144,29 @@ public class GameController {
         return coordinate;
     }
 
+    /*
+     * Method updatePlayerPanelImage
+     * Method to update the image in playerPanel that is represented by the incoming string xy-value.
+     * @param: String xy - a location of a coordinate.
+     * @author: Marcus Friberg
+     * @author: marcus.friberg@edu.edugrade.se
+     * @version: 1.1
+     */
+    public void updatePlayerPanelImage(String xy) {
+        // Make an array of chars from String xy
+        char [] positionArray = xy.toCharArray();
+        // Make a List of characters with the possible values of positionArray[1] (they y-value)
+        List <Character> yValues = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'));
+        // Set y to the index where the y-value was found
+        int y = yValues.indexOf(positionArray[1]);
+        // Convert the x value from char -> String - int
+        int x = Integer.parseInt(Character.toString(positionArray[0]));
+        // Tell the playerPanel to update the imageView
+        gameView.getPlayerPanel().updateImageView(x, y);
+    }
+
+
+
     public void handleLastOutgoingShotResult(String result, Coordinate coordinate) {
         switch (result) {
             case "i" :
@@ -162,29 +175,41 @@ public class GameController {
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(true);
                 coordinate.changeImage();
-                gameView.present();
+                updateEnemyPanelImage(coordinate);
                 break;
             case "m" :
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(false);
                 coordinate.changeImage();
-                gameView.present();
+                updateEnemyPanelImage(coordinate);
                 break;
-            case "s" :
+            default:
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(true);
                 coordinate.changeImage();
+                updateEnemyPanelImage(coordinate);
                 gameSession.increaseEnemyShipsDestroyed();
                 player.enemyShipWasDestroyed();
-                gameView.present();
-                break;
-            case "game over" :
-                coordinate.setIsHit(true);
-                coordinate.setHasShip(true);
-                coordinate.changeImage();
-                gameView.present();
-                handleGameResult(true);
         }
+    }
+
+    /*
+     * Method updateEnemyPanelImage
+     * Method to update the image in enemyPanel that is represented by the incoming string xy-value.
+     * @param: String xy - a location of a coordinate.
+     * @author: Marcus Friberg
+     * @author: marcus.friberg@edu.edugrade.se
+     * @version: 1.1
+     */
+    public void updateEnemyPanelImage(Coordinate coordinate) {
+        // Make a List of characters with the possible values of positionArray[1] (they y-value)
+        List <Character> yValues = new ArrayList<>(Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'));
+        // Set y to the index where the y-value was found
+        int y = yValues.indexOf(coordinate.getY());
+        // Convert the x value from char -> String - int
+        int x = Integer.parseInt(Character.toString(coordinate.getX()));
+        // Tell the playerPanel to update the imageView
+        gameView.getEnemyPanel().updateImageView(x, y);
     }
 
     public Coordinate requestNewShot() {
@@ -200,5 +225,9 @@ public class GameController {
 
     public void gameDelayWasChanged(int newGameDelay) {
         gameSession.setGameDelay(newGameDelay);
+    }
+
+    public GameView getGameView() {
+        return gameView;
     }
 }

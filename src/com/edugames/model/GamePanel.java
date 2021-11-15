@@ -22,6 +22,7 @@ public class GamePanel {
     private char[] ypos = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
     // Construction of a new two-dimensional array for coordinates.
     Coordinate[][] coordinates = new Coordinate[10][10];
+    ImageView[][] imageViews = new ImageView[10][10]; // TEST
     // A new Gridpane is created.
     GridPane gridPane = new GridPane();
 
@@ -70,15 +71,20 @@ public class GamePanel {
                 // Tell this Coordinate-object to update its image-property depending on its current state.
                 coordinates[i][j].changeImage();
                 // Create a new imageView to hold the image.
-                ImageView imageView = new ImageView();
-                imageView.setFitWidth(39);
-                imageView.setFitHeight(39);
+                imageViews[i][j] = new ImageView();
+                imageViews[i][j].setFitWidth(39);
+                imageViews[i][j].setFitHeight(39);
                 // Set the image of the imageview.
-                imageView.setImage(new Image(coordinates[i][j].getImageFileName()));
+                imageViews[i][j].setImage(new Image(coordinates[i][j].getImageFileName()));
                 // Add the imageView to the GridPane-cell.
-                gridPane.add(imageView, i, j);
+                gridPane.add(imageViews[i][j], i, j);
             }
         }
         return gridPane;
+    }
+
+    public void updateImageView(int xPos, int yPos) {
+        Image image = new Image(coordinates[xPos][yPos].getImageFileName());
+        imageViews[xPos][yPos].setImage(image);
     }
 }
