@@ -112,7 +112,7 @@ public class InfoPanel {
         });
         startButton.setOnAction(event -> {
             System.out.println("Start was pressed");
-            //gameView.getGameController().startConnection();
+            gameView.getGameController().startConnection();
             startButton.setVisible(false);
         });
         // Create two labels with empty space to get everything into place
