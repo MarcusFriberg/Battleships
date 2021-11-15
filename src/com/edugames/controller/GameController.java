@@ -78,7 +78,7 @@ public class GameController {
     * @version: 1.1
     */
     public void initGameView() {
-        gameView = new GameView(primaryStage, isServer);
+        gameView = new GameView(primaryStage, isServer, this);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
         gameView.present();
@@ -196,5 +196,9 @@ public class GameController {
 
     public void handleGameResult(Boolean victory) {
         // code to handle game result, true for victory, false for loss
+    }
+
+    public void gameDelayWasChanged(int newGameDelay) {
+        gameSession.setGameDelay(newGameDelay);
     }
 }

@@ -1,6 +1,7 @@
 package com.edugames.view;
 
 // Imports
+import com.edugames.controller.GameController;
 import com.edugames.model.Coordinate;
 import com.edugames.model.GamePanel;
 import com.edugames.model.InfoPanel;
@@ -26,11 +27,13 @@ public class GameView {
     private final GamePanel playerPanel;
     private final GamePanel enemyPanel;
     private final InfoPanel infoPanel;
+    private final GameController gameController;
 
     // Constructor
-    public GameView(Stage primaryStage, Boolean isServer) {
+    public GameView(Stage primaryStage, Boolean isServer, GameController gameController) {
         this.primaryStage = primaryStage;
-        infoPanel = new InfoPanel();
+        this.gameController = gameController;
+        infoPanel = new InfoPanel(this);
         playerPanel = new GamePanel();
         enemyPanel = new GamePanel();
         infoPanel.initInfoPanel(isServer);
@@ -62,6 +65,12 @@ public class GameView {
         return enemyPanel.initGamePanel();
     }
 
+    // Getters
+
+
+    public GameController getGameController() {
+        return gameController;
+    }
 
     /*
     * Method present

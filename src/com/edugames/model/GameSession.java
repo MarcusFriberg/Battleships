@@ -19,10 +19,11 @@ import java.net.Socket;
 public class GameSession {
     // Variables
     private Boolean isServer;
+    private Boolean gameIsRunning = true;
     private GameController gameController;
     private Coordinate lastOutgoingShot;
     private String outgoingText = "";
-    private String incomingText = "";
+    private int gameDelay = 2000;
     private int enemyShipsDestroyed;
 
     // Constructor
@@ -46,23 +47,7 @@ public class GameSession {
      * @version: 1.0
      */
     public void hostServer() {
-        try(ServerSocket serverSocket = new ServerSocket(8888)) {
-            Socket socket = serverSocket.accept();
-            System.out.println("Client connected");
-            System.out.println("Waiting for shot");
-            InputStream input = socket.getInputStream();
-            OutputStream output = socket.getOutputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            PrintWriter writer = new PrintWriter(output, true);
-
-            while(true) {
-                if(reader.ready()) {
-                    writer.println(socketHelper(reader.readLine()));
-                }
-            }
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        ServerThread networkConnection = new ServerThread(this);
     }
 
     /*
@@ -100,14 +85,23 @@ public class GameSession {
 
     /*
      * Method socketHelper
-     * A method that acts as a bridge between the hostClient/hostServer and decodeIncomingData/encodeOutgoingData.
+     * A method that acts as a bridge between the Client/Server and decodeIncomingData/encodeOutgoingData.
      * Sends the data between different methods.
      * @author: Martin Andersson
      * @author: martin.andersson@edu.edugrade.se
      * @version: 1.0
      */
     public String socketHelper(String incomingText) {
-        return encodeOutgoingData(gameController.handleIncomingShot(decodeIncomingData(incomingText)), lastOutgoingShot);
+        if(incomingText.equals("game over")) {
+            // Code to mark lastOutgoingShot as a hit
+            // Code to present Victory Screen/Message
+        } else {
+            String incomingShotCoordinates = decodeIncomingData(incomingText);
+            String incomingShotResult = gameController.handleIncomingShot(incomingShotCoordinates);
+            lastOutgoingShot = gameController.requestNewShot();
+            outgoingText = encodeOutgoingData(incomingShotResult, lastOutgoingShot);
+        }
+        return outgoingText;
     }
 
     /*
@@ -122,7 +116,6 @@ public class GameSession {
     public String decodeIncomingData(String incomingText) {
         String[] incomingDataSplit = incomingText.split(" ");
         gameController.handleLastOutgoingShotResult(incomingDataSplit[0], lastOutgoingShot);
-        lastOutgoingShot = gameController.requestNewShot();
         return incomingDataSplit[2];
     }
 
@@ -140,6 +133,22 @@ public class GameSession {
 
     public void increaseEnemyShipsDestroyed() {
         enemyShipsDestroyed ++;
+    }
+
+    public int getGameDelay() {
+        return gameDelay;
+    }
+
+    public void setGameDelay(int gameDelay) {
+        this.gameDelay = gameDelay;
+    }
+
+    private Boolean getGameIsRunning() {
+        return gameIsRunning;
+    }
+
+    private void setGameIsRunning(boolean gameIsRunning) {
+        this.gameIsRunning = gameIsRunning;
     }
 }
 
