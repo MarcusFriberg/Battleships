@@ -1,8 +1,11 @@
 package com.edugames.model;
 
 // Imports
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -27,6 +30,8 @@ public class InfoPanel {
         // Empty Constructor
     }
 
+    //Hej hej hej
+
     /*
      * Method init
      * A method to initialize InfoPanel.
@@ -49,8 +54,8 @@ public class InfoPanel {
      * Method drawInfoPanel
      * A method that updates the InfoPanel that displays information about remaining ships and what mode user is playing in.
      * @author: Matilda Wintence
-     * @author: matilda.wintenceg@edu.edugrade.se
-     * @version: 1.0
+     * @author: matilda.wintence@edu.edugrade.se
+     * @version: 2.0
      */
     public GridPane drawInfoPanel() {
         // Create new GridPane to contain the entire info panel
@@ -92,7 +97,37 @@ public class InfoPanel {
         Image space = new Image("space.png");
         // Create new ImageView where space is presented
         ImageView spaceImageView = new ImageView(space);
-        // Add the ImageViews to the GridPane and set their position
+        // Create two labels with empty space to get everything into place
+        Label emptySpace1 = new Label("                                                                 ");
+        Label emptySpace2 = new Label("                              ");
+        // Create Slider and set min, max and starting value
+        Slider gameSpeedDelaySlider = new Slider(0, 10, 2);
+        // Set preferred size
+        gameSpeedDelaySlider.setPrefSize(200,35);
+        // Choose to show tick marks and tick labels
+        gameSpeedDelaySlider.setShowTickMarks(true);
+        gameSpeedDelaySlider.setShowTickLabels(true);
+        gameSpeedDelaySlider.showTickLabelsProperty();
+        // Set the tick intervalls to 1.0
+        gameSpeedDelaySlider.setMajorTickUnit(1.0);
+        // Set no minor tick marks
+        gameSpeedDelaySlider.setMinorTickCount(0);
+        // Make the thumb snap to ticks
+        gameSpeedDelaySlider.setSnapToTicks(true);
+        // Create new label that shows value of chosen value on slider
+        Label gameSpeedDelayLabel = new Label("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
+        // Set the texts font, size, color and opacity
+        gameSpeedDelayLabel.setFont(new Font("Impact", 16));
+        gameSpeedDelayLabel.setTextFill(Color.web("414242", 0.9));
+        // Add an override method that shows changing value on slider
+        gameSpeedDelaySlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                gameSpeedDelayLabel.setText("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
+                // TODO: Inset method here that updates the controller and handles the delay, send with gameSpeedDelaySlider.getValue
+            }
+        });
+        // Add the nodes to the GridPane and set their position
         infoPanelPane.add(airCraftCarrierImageView, 0, 0);
         infoPanelPane.add(airCraftCarrierCountLabel, 1, 0);
         infoPanelPane.add(battleShipImageView,0,1);
@@ -101,9 +136,12 @@ public class InfoPanel {
         infoPanelPane.add(cruiserCountLabel, 3, 0);
         infoPanelPane.add(submarineImageView, 2, 1);
         infoPanelPane.add(submarineCountLabel, 3, 1);
-        infoPanelPane.add(spaceImageView,4,0);
-        infoPanelPane.add(playingAsImageView, 5, 0);
-        infoPanelPane.add(gameModeImageView,5,1);
+        infoPanelPane.add(emptySpace1, 4, 0);
+        infoPanelPane.add(gameSpeedDelayLabel, 5,0);
+        infoPanelPane.add(gameSpeedDelaySlider,5,1);
+        infoPanelPane.add(emptySpace2,6, 0);
+        infoPanelPane.add(playingAsImageView, 7, 0);
+        infoPanelPane.add(gameModeImageView,7,1);
         infoPanelPane.setPadding(new Insets(0,0,20,0));
         return infoPanelPane;
     }
