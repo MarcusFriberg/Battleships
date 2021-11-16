@@ -73,13 +73,17 @@ public class GameSession {
     public String socketHelper(String incomingText) {
         System.out.println("socketHelper tar emot: " + incomingText);
         if(incomingText.equals("game over")) {
-            // Code to mark lastOutgoingShot as a hit
+            gameController.handleLastOutgoingShotResult("s", lastOutgoingShot);
             // Code to present Victory Screen/Message
         } else {
             String incomingShotCoordinates = decodeIncomingData(incomingText);
             String incomingShotResult = gameController.handleIncomingShot(incomingShotCoordinates);
-            lastOutgoingShot = gameController.requestNewShot();
-            outgoingText = encodeOutgoingData(incomingShotResult, lastOutgoingShot);
+            if(incomingShotResult.equals("game over")) {
+                outgoingText = "game over";
+            } else {
+                lastOutgoingShot = gameController.requestNewShot();
+                outgoingText = encodeOutgoingData(incomingShotResult, lastOutgoingShot);
+            }
         }
         System.out.println("socketHelper skickar: " + outgoingText);
         return outgoingText;
