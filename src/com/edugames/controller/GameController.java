@@ -175,12 +175,14 @@ public class GameController {
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(true);
                 coordinate.changeImage();
+                //player.setLastTargetWasAHit(true);
                 updateEnemyPanelImage(coordinate);
                 break;
             case "m" :
                 coordinate.setIsHit(true);
                 coordinate.setHasShip(false);
                 coordinate.changeImage();
+                //player.setLastTargetWasAHit(false);
                 updateEnemyPanelImage(coordinate);
                 break;
             default:
@@ -189,7 +191,7 @@ public class GameController {
                 coordinate.changeImage();
                 updateEnemyPanelImage(coordinate);
                 gameSession.increaseEnemyShipsDestroyed();
-                player.enemyShipWasDestroyed();
+                //player.setNextTargetShouldBeRandom(true);
         }
     }
 
@@ -225,9 +227,5 @@ public class GameController {
 
     public void gameDelayWasChanged(int newGameDelay) {
         gameSession.setGameDelay(newGameDelay);
-    }
-
-    public GameView getGameView() {
-        return gameView;
     }
 }
