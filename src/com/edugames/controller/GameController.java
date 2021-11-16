@@ -1,12 +1,10 @@
 package com.edugames.controller;
 // Imports
 
-import com.edugames.model.AIPlayer;
-import com.edugames.model.Coordinate;
-import com.edugames.model.Ship;
+import com.edugames.model.*;
+import com.edugames.view.DefeatView;
 import com.edugames.view.GameView;
-import com.edugames.model.GameSession;
-import com.edugames.model.Target;
+import com.edugames.view.VictoryView;
 import javafx.stage.Stage;
 import java.util.*;
 
@@ -19,6 +17,7 @@ public class GameController {
     private Coordinate[][] playerPanelCoordinates;
     private Coordinate[][] enemyPanelCoordinates;
     private AIPlayer player;
+    private BackgroundMusic audio;
 
     // Constructor
     public GameController(Stage primaryStage, Boolean isServer) {
@@ -26,13 +25,16 @@ public class GameController {
         this.isServer = isServer;
         initGameView();
         initPlayer();
+        //initAudio();
         gameView.present();
     }
 
-
-
     public void initPlayer() {
         player = new AIPlayer(playerPanelCoordinates, this);
+    }
+
+    public void initAudio() {
+        audio = new BackgroundMusic();
     }
 
     public void startConnection() {
@@ -222,7 +224,13 @@ public class GameController {
     }
 
     public void handleGameResult(Boolean victory) {
-        // code to handle game result, true for victory, false for loss
+        if(victory) {
+            VictoryView victoryView = new VictoryView(primaryStage);
+            victoryView.present();
+        } else {
+            DefeatView defeatView = new DefeatView(primaryStage);
+            defeatView.present();
+        }
     }
 
     public void gameDelayWasChanged(int newGameDelay) {

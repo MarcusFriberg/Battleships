@@ -1,33 +1,35 @@
 package com.edugames.model;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.*;
-import java.io.File;
+import java.io.*;
 
-public class BackgroundMusic{
+public class BackgroundMusic extends Thread {
+    // Variables
+    private String audioFile = "backgroundSound.wav";
+    AudioInputStream audioInputStream;
 
     public BackgroundMusic() {
+        createAudioStream();
+        start();
     }
 
-    public void playMusic(String musicLocation) {
+    public void createAudioStream() {
         try {
-            File musicPath = new File(musicLocation);
-            if (musicPath.exists()){
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInput);
-                clip.start();
-
-                JOptionPane.showMessageDialog(null, "Press ok to stop playing");
-            } else {
-                System.out.println("Kan inte hitta filen");
-            }
+            // Code to create the audioInputStream
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error creating audioInputStream: " + e);
         }
-    }}
+    }
+
+    public void run() {
+        try {
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
+        } catch (Exception e) {
+            System.out.println("Error creating and playing clip: " + e);
+        }
+    }
+}

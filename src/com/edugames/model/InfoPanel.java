@@ -1,7 +1,6 @@
 package com.edugames.model;
 
 // Imports
-import com.edugames.controller.GameController;
 import com.edugames.view.GameView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
