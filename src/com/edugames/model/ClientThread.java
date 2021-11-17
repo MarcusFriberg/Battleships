@@ -73,7 +73,6 @@ public class ClientThread extends Thread {
                 } catch (IOException e){
                     System.out.println("ClientThread failed to receive or send data with error message: " + e );
                 }
-
             }
         }
         try {
