@@ -24,6 +24,8 @@ public class ServerThread extends Thread {
     private OutputStream output;
     private BufferedReader reader;
     private PrintWriter writer;
+    private String textInput;
+    private String textOutput;
 
     //Constructor
     public ServerThread(GameSession gameSession) {
@@ -32,8 +34,7 @@ public class ServerThread extends Thread {
     }
 
 
-    public void run()
-    {
+    public void run() {
         try(ServerSocket serverSocket = new ServerSocket(8888)) {
             socket = serverSocket.accept();
             System.out.println("Client connected");
@@ -56,9 +57,9 @@ public class ServerThread extends Thread {
             }
             catch (Exception e) {System.out.println("Error in ServerThread");}
             try {
-            if(reader.ready()) {
-                writer.println(gameSession.socketHelper(reader.readLine()));
-            }
+                if(reader.ready()) {
+                    writer.println(gameSession.socketHelper(reader.readLine()));
+                }
             } catch (IOException e){
                 System.out.println("ServerThread could not call gameSession.socketHelper with message: " + e );
             }

@@ -18,12 +18,14 @@ public class GameController {
     private Coordinate[][] enemyPanelCoordinates;
     private AIPlayer player;
     private BackgroundMusic audio;
+    private VictoryView victoryView;
+    private DefeatView defeatView;
 
     // Constructor
     public GameController(Stage primaryStage, Boolean isServer) {
         this.primaryStage = primaryStage;
         this.isServer = isServer;
-        initGameView();
+        initViews();
         initPlayer();
         //initAudio();
         gameView.present();
@@ -69,10 +71,12 @@ public class GameController {
     * @author: marcus.friberg@edu.edugrade.se
     * @version: 1.1
     */
-    public void initGameView() {
+    public void initViews() {
         gameView = new GameView(primaryStage, isServer, this);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
+        victoryView = new VictoryView();
+        defeatView = new DefeatView();
     }
 
     /*
@@ -194,6 +198,7 @@ public class GameController {
                 updateEnemyPanelImage(coordinate);
                 gameSession.increaseEnemyShipsDestroyed();
                 //player.setNextTargetShouldBeRandom(true);
+                break;
         }
     }
 
@@ -225,10 +230,8 @@ public class GameController {
 
     public void handleGameResult(Boolean victory) {
         if(victory) {
-            VictoryView victoryView = new VictoryView(primaryStage);
             victoryView.present();
         } else {
-            DefeatView defeatView = new DefeatView(primaryStage);
             defeatView.present();
         }
     }
