@@ -1,6 +1,5 @@
 package com.edugames.view;
 // Imports
-import com.edugames.controller.GameController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
