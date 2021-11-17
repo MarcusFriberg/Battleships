@@ -5,6 +5,7 @@ import com.edugames.model.*;
 import com.edugames.view.DefeatView;
 import com.edugames.view.GameView;
 import com.edugames.view.VictoryView;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import java.util.*;
 
@@ -75,8 +76,8 @@ public class GameController {
         gameView = new GameView(primaryStage, isServer, this);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
-        victoryView = new VictoryView();
-        defeatView = new DefeatView();
+        victoryView = new VictoryView(primaryStage);
+        defeatView = new DefeatView(primaryStage);
     }
 
     /*
@@ -230,9 +231,13 @@ public class GameController {
 
     public void handleGameResult(Boolean victory) {
         if(victory) {
-            victoryView.present();
+            Platform.runLater(() -> {
+                victoryView.present();
+            });
         } else {
-            defeatView.present();
+            Platform.runLater(() -> {
+                defeatView.present();
+            });
         }
     }
 
