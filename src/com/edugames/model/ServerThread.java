@@ -1,5 +1,7 @@
 package com.edugames.model;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -24,6 +26,7 @@ public class ServerThread extends Thread {
     private OutputStream output;
     private BufferedReader reader;
     private PrintWriter writer;
+    private String outputText;
 
     //Constructor
     public ServerThread(GameSession gameSession) {
@@ -31,9 +34,7 @@ public class ServerThread extends Thread {
         this.start();
     }
 
-
-    public void run()
-    {
+    public void run() {
         try(ServerSocket serverSocket = new ServerSocket(8888)) {
             socket = serverSocket.accept();
             System.out.println("Client connected");
@@ -46,23 +47,24 @@ public class ServerThread extends Thread {
             System.out.println("Run method in ServerThread could not initialize socket, reader or writer with the message: " + e);
         }
 
-        System.out.println("ServerThread passed checkpoint 1");
         setPriority(Thread.MAX_PRIORITY);
-        while(gameSession.getGameIsRunning())
-        {
-            System.out.println("ServerThread passed checkpoint 2");
+        while(gameSession.getGameIsRunning()) {
             try {
-                sleep(gameSession.getGameDelay());
-            }
-            catch (Exception e) {System.out.println("Error in ServerThread");}
-            try {
-            if(reader.ready()) {
-                writer.println(gameSession.socketHelper(reader.readLine()));
-            }
+                if(reader.ready()) {
+                    outputText = gameSession.socketHelper(reader.readLine());
+                    try {
+                        sleep(gameSession.getGameDelay());
+                    } catch (InterruptedException e) {
+                        System.out.println("Error when trying to execute gameDelay with error message: " + e);
+                    }
+                    if(outputText.equals("game over")) {
+                        gameSession.setGameIsRunning(false);
+                    }
+                    writer.println(outputText);
+                }
             } catch (IOException e){
-                System.out.println("ServerThread could not call gameSession.socketHelper with message: " + e );
+                System.out.println("ServerThread failed to receive or send data with error message: " + e );
             }
-            System.out.println("ServerThread passed checkpoint 4");
         }
     }
 }

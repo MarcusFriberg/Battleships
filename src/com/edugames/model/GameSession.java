@@ -20,6 +20,7 @@ public class GameSession {
     // Variables
     private Boolean isServer;
     private Boolean gameIsRunning = true;
+    private Boolean victory = false;
     private GameController gameController;
     private Coordinate lastOutgoingShot;
     private String outgoingText = "";
@@ -74,12 +75,14 @@ public class GameSession {
         System.out.println("socketHelper tar emot: " + incomingText);
         if(incomingText.equals("game over")) {
             gameController.handleLastOutgoingShotResult("s", lastOutgoingShot);
-            // Code to present Victory Screen/Message
+            this.setGameIsRunning(false);
+            gameController.handleGameResult(true);
         } else {
             String incomingShotCoordinates = decodeIncomingData(incomingText);
             String incomingShotResult = gameController.handleIncomingShot(incomingShotCoordinates);
             if(incomingShotResult.equals("game over")) {
                 outgoingText = "game over";
+                gameController.handleGameResult(false);
             } else {
                 lastOutgoingShot = gameController.requestNewShot();
                 outgoingText = encodeOutgoingData(incomingShotResult, lastOutgoingShot);

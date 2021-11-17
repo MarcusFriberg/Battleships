@@ -1,5 +1,7 @@
 package com.edugames.model;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -25,6 +27,7 @@ public class ClientThread extends Thread {
     private BufferedReader reader;
     private PrintWriter writer;
     private Boolean firstShot;
+    private String outputText;
 
     //Constructor
     public ClientThread(GameSession gameSession) {
@@ -34,8 +37,7 @@ public class ClientThread extends Thread {
     }
 
 
-    public void run()
-    {
+    public void run() {
         try {
             socket = new Socket("localhost", 8888);
             input = socket.getInputStream();
@@ -45,33 +47,39 @@ public class ClientThread extends Thread {
         } catch (IOException e) {
             System.out.println("Run method in ClientThread could not initialize socket, reader or writer with the message: " + e);
         }
-
-        System.out.println("ClientThread passed checkpoint 1");
         setPriority(Thread.MAX_PRIORITY);
         while(gameSession.getGameIsRunning())
         {
-            System.out.println("ClientThread passed checkpoint 2");
-            try {
-                sleep(gameSession.getGameDelay());
-            }
-            catch (Exception e) {
-                System.out.println("Error in ClientThread; " + e);
-            }
             if (firstShot) {
                 gameSession.setLastOutgoingShot(gameSession.getGameController().requestNewShot());
                 String firstText = "i shot " + gameSession.getLastOutgoingShot().getX() + gameSession.getLastOutgoingShot().getY();
-                firstShot = false;
                 System.out.println("Client skickar: " + firstText); // --TODO-- Remove when working
                 writer.println(firstText);
-            }
-            try {
-                if(reader.ready()) {
-                    writer.println(gameSession.socketHelper(reader.readLine()));
+                firstShot = false;
+            } else {
+                try {
+                    if(reader.ready()) {
+                        outputText = gameSession.socketHelper(reader.readLine());
+                        try {
+                            sleep(gameSession.getGameDelay());
+                        } catch (InterruptedException e) {
+                            System.out.println("Error when trying to execute gameDelay with error message: " + e);
+                        }
+                        if(outputText.equals("game over")) {
+                            gameSession.setGameIsRunning(false);
+                        }
+                        writer.println(outputText);
+                    }
+                } catch (IOException e){
+                    System.out.println("ClientThread failed to receive or send data with error message: " + e );
                 }
-            } catch (IOException e) {
-                System.out.println("ClientThread could not call gameSession.socketHelper with message: " + e );
+
             }
-            System.out.println("ClientThread passed checkpoint 4");
+        }
+        try {
+            socket.close();
+        } catch (IOException e) {
+            System.out.println("Could not close socket with error message: " + e);
         }
     }
 }

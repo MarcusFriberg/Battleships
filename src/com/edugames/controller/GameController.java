@@ -1,12 +1,11 @@
 package com.edugames.controller;
 // Imports
 
-import com.edugames.model.AIPlayer;
-import com.edugames.model.Coordinate;
-import com.edugames.model.Ship;
+import com.edugames.model.*;
+import com.edugames.view.DefeatView;
 import com.edugames.view.GameView;
-import com.edugames.model.GameSession;
-import com.edugames.model.Target;
+import com.edugames.view.VictoryView;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import java.util.*;
 
@@ -19,20 +18,26 @@ public class GameController {
     private Coordinate[][] playerPanelCoordinates;
     private Coordinate[][] enemyPanelCoordinates;
     private AIPlayer player;
+    private BackgroundMusic audio;
+    private VictoryView victoryView;
+    private DefeatView defeatView;
 
     // Constructor
     public GameController(Stage primaryStage, Boolean isServer) {
         this.primaryStage = primaryStage;
         this.isServer = isServer;
-        initGameView();
+        initViews();
         initPlayer();
+        //initAudio();
         gameView.present();
     }
 
-
-
     public void initPlayer() {
         player = new AIPlayer(playerPanelCoordinates, this);
+    }
+
+    public void initAudio() {
+        audio = new BackgroundMusic();
     }
 
     public void startConnection() {
@@ -67,10 +72,12 @@ public class GameController {
     * @author: marcus.friberg@edu.edugrade.se
     * @version: 1.1
     */
-    public void initGameView() {
+    public void initViews() {
         gameView = new GameView(primaryStage, isServer, this);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
+        victoryView = new VictoryView(primaryStage);
+        defeatView = new DefeatView(primaryStage);
     }
 
     /*
@@ -192,6 +199,7 @@ public class GameController {
                 updateEnemyPanelImage(coordinate);
                 gameSession.increaseEnemyShipsDestroyed();
                 //player.setNextTargetShouldBeRandom(true);
+                break;
         }
     }
 
@@ -222,7 +230,15 @@ public class GameController {
     }
 
     public void handleGameResult(Boolean victory) {
-        // code to handle game result, true for victory, false for loss
+        if(victory) {
+            Platform.runLater(() -> {
+                victoryView.present();
+            });
+        } else {
+            Platform.runLater(() -> {
+                defeatView.present();
+            });
+        }
     }
 
     public void gameDelayWasChanged(int newGameDelay) {

@@ -46,9 +46,9 @@ import javafx.stage.Stage;
             // Set the background of stackPane to this background
             stackPane.setBackground(background);
             // Make a new Scene containing the stackPane and set the size as the backgrounds size
-            Scene scene = new Scene(stackPane, 960, 768);
+            Scene victoryScene = new Scene(stackPane, 960, 768);
             // Set this scene as the scene of primaryStage
-            primaryStage.setScene(scene);
+            primaryStage.setScene(victoryScene);
             // Show the stage
             primaryStage.show();
         }

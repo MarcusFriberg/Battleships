@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
         private GameController gameController;
         private GameView gameView;
 
+
         // Constructor
         public DefeatView(Stage primaryStage, GameView gameView) {
             this.primaryStage = primaryStage;
@@ -69,9 +70,9 @@ import javafx.scene.control.Button;
             stackPane.setBackground(background);
             stackPane.getChildren().add(reverseToGameView);
             // Make a new Scene containing the stackPane and set the size as the backgrounds size
-            Scene scene = new Scene(stackPane, 960, 768);
+            Scene defeatScene = new Scene(stackPane, 960, 768);
             // Set this scene as the scene of primaryStage
-            primaryStage.setScene(scene);
+            primaryStage.setScene(defeatScene);
             // Show the stage
             primaryStage.show();
         }
