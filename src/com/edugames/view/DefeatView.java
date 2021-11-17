@@ -3,9 +3,12 @@ package com.edugames.view;
 import com.edugames.controller.GameController;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-    /*
+import javafx.scene.control.Button;
+
+/*
      * Class DefeatView
      * A class to create a scene for the DefeatView of the game
      * @param: Constructor receives the primaryStage as a parameter.
@@ -16,10 +19,14 @@ import javafx.stage.Stage;
     public class DefeatView {
         // Variables
         private Stage primaryStage;
+        private GameController gameController;
+        private GameView gameView;
+
 
         // Constructor
-        public DefeatView(Stage primaryStage) {
+        public DefeatView(Stage primaryStage, GameView gameView) {
             this.primaryStage = primaryStage;
+            this.gameView = gameView;
         }
 
         /*
@@ -30,9 +37,27 @@ import javafx.stage.Stage;
          * the call to the constructor.
          * @author: Matilda Wintence
          * @author: matilda.wintence@edu.edugrade.se
+         * @co-author: Marcus Friberg
+         * @co-author: marcus.friberg@edu.edugrade.com
          * @version: 1.0
          */
         public void present() {
+            Button reverseToGameView = new Button("", new ImageView("buttonback.png"));
+            reverseToGameView.setStyle("-fx-background-color:transparent");
+            reverseToGameView.setOnMouseEntered(event -> {
+                reverseToGameView.setScaleX(1.2);
+                reverseToGameView.setScaleY(1.2);
+            });
+            reverseToGameView.setOnMouseExited(event -> {
+                reverseToGameView.setScaleX(1);
+                reverseToGameView.setScaleY(1);
+            });
+            reverseToGameView.setOnAction(event -> {
+                reverseToGameView.setScaleX(1.2);
+                reverseToGameView.setScaleY(1.2);
+                System.out.println("Return button was pressed");
+                gameView.present();
+            });
             // Create a StackPane
             StackPane stackPane = new StackPane();
             // Create a new image called DefeatView from DEFEAT4.png
@@ -43,6 +68,7 @@ import javafx.stage.Stage;
             Background background = new Background(backgroundImage);
             // Set the background of stackPane to this background
             stackPane.setBackground(background);
+            stackPane.getChildren().add(reverseToGameView);
             // Make a new Scene containing the stackPane and set the size as the backgrounds size
             Scene defeatScene = new Scene(stackPane, 960, 768);
             // Set this scene as the scene of primaryStage
