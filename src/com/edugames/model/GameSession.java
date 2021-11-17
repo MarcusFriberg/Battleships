@@ -20,6 +20,7 @@ public class GameSession {
     // Variables
     private Boolean isServer;
     private Boolean gameIsRunning = true;
+    private Boolean victory = false;
     private GameController gameController;
     private Coordinate lastOutgoingShot;
     private String outgoingText = "";

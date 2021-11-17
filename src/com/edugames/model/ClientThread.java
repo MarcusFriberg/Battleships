@@ -1,5 +1,7 @@
 package com.edugames.model;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -34,8 +36,7 @@ public class ClientThread extends Thread {
     }
 
 
-    public void run()
-    {
+    public void run() {
         try {
             socket = new Socket("localhost", 8888);
             input = socket.getInputStream();
@@ -64,6 +65,7 @@ public class ClientThread extends Thread {
                 System.out.println("Client skickar: " + firstText); // --TODO-- Remove when working
                 writer.println(firstText);
             }
+            Platform.runLater(() -> {
             try {
                 if(reader.ready()) {
                     writer.println(gameSession.socketHelper(reader.readLine()));
@@ -71,6 +73,7 @@ public class ClientThread extends Thread {
             } catch (IOException e) {
                 System.out.println("ClientThread could not call gameSession.socketHelper with message: " + e );
             }
+            });
             System.out.println("ClientThread passed checkpoint 4");
         }
     }
