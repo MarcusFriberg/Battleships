@@ -1,6 +1,8 @@
 package com.edugames.view;
 
 import com.edugames.controller.GameController;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,12 +16,13 @@ import javafx.scene.control.Button;
      * @param: Constructor receives the primaryStage as a parameter.
      * @author: Matilda Wintence
      * @author: matilda.wintence@edu.edugrade.se
+     * @co-author: Marcus Friberg
+ *   * @co-author: marcus.friberg@edu.edugrade.com
      * @version: 1.0
      */
     public class DefeatView {
         // Variables
         private Stage primaryStage;
-        private GameController gameController;
         private GameView gameView;
 
 
@@ -42,22 +45,27 @@ import javafx.scene.control.Button;
          * @version: 1.0
          */
         public void present() {
+            // Create new button with image "buttonback.png"
             Button reverseToGameView = new Button("", new ImageView("buttonback.png"));
+            // Set the background to transparent
             reverseToGameView.setStyle("-fx-background-color:transparent");
+            // Make button scale up when mouse hoovering over
             reverseToGameView.setOnMouseEntered(event -> {
-                reverseToGameView.setScaleX(1.2);
-                reverseToGameView.setScaleY(1.2);
+                reverseToGameView.setScaleX(1.1);
+                reverseToGameView.setScaleY(1.1);
             });
+            // Make button scale down when mouse stops hoovering over
             reverseToGameView.setOnMouseExited(event -> {
                 reverseToGameView.setScaleX(1);
                 reverseToGameView.setScaleY(1);
             });
+            // When button is pressed gameView is yet again presented
             reverseToGameView.setOnAction(event -> {
-                reverseToGameView.setScaleX(1.2);
-                reverseToGameView.setScaleY(1.2);
                 System.out.println("Return button was pressed");
                 gameView.present();
             });
+            // Set padding for the button
+            reverseToGameView.setPadding(new Insets(0, 0, 180, 0));
             // Create a StackPane
             StackPane stackPane = new StackPane();
             // Create a new image called DefeatView from DEFEAT4.png
@@ -68,7 +76,10 @@ import javafx.scene.control.Button;
             Background background = new Background(backgroundImage);
             // Set the background of stackPane to this background
             stackPane.setBackground(background);
+            // Add button to stackPane
             stackPane.getChildren().add(reverseToGameView);
+            // Set alignment of the stackPane
+            stackPane.setAlignment(Pos.BOTTOM_CENTER);
             // Make a new Scene containing the stackPane and set the size as the backgrounds size
             Scene defeatScene = new Scene(stackPane, 960, 768);
             // Set this scene as the scene of primaryStage
