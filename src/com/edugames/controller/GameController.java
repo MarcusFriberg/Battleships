@@ -76,8 +76,8 @@ public class GameController {
         gameView = new GameView(primaryStage, isServer, this);
         playerPanelCoordinates = gameView.initPlayerPanel();
         enemyPanelCoordinates = gameView.initEnemyPanel();
-        victoryView = new VictoryView(primaryStage);
-        defeatView = new DefeatView(primaryStage);
+        victoryView = new VictoryView(primaryStage, gameView);
+        defeatView = new DefeatView(primaryStage, gameView);
     }
 
     /*
