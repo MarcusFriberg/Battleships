@@ -15,13 +15,11 @@ import javafx.stage.Stage;
      */
     public class DefeatView {
         // Variables
-        //private Stage primaryStage;
-        private Stage secondaryStage;
-        //private GameController gameController;
+        private Stage primaryStage;
 
         // Constructor
-        public DefeatView() {
-            secondaryStage = new Stage();
+        public DefeatView(Stage primaryStage) {
+            this.primaryStage = primaryStage;
         }
 
         /*
@@ -48,8 +46,8 @@ import javafx.stage.Stage;
             // Make a new Scene containing the stackPane and set the size as the backgrounds size
             Scene defeatScene = new Scene(stackPane, 960, 768);
             // Set this scene as the scene of primaryStage
-            secondaryStage.setScene(defeatScene);
+            primaryStage.setScene(defeatScene);
             // Show the stage
-            secondaryStage.show();
+            primaryStage.show();
         }
     }

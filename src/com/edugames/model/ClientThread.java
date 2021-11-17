@@ -27,6 +27,7 @@ public class ClientThread extends Thread {
     private BufferedReader reader;
     private PrintWriter writer;
     private Boolean firstShot;
+    private String outputText;
 
     //Constructor
     public ClientThread(GameSession gameSession) {
@@ -46,35 +47,38 @@ public class ClientThread extends Thread {
         } catch (IOException e) {
             System.out.println("Run method in ClientThread could not initialize socket, reader or writer with the message: " + e);
         }
-
-        System.out.println("ClientThread passed checkpoint 1");
         setPriority(Thread.MAX_PRIORITY);
         while(gameSession.getGameIsRunning())
         {
-            System.out.println("ClientThread passed checkpoint 2");
-            try {
-                sleep(gameSession.getGameDelay());
-            }
-            catch (Exception e) {
-                System.out.println("Error in ClientThread; " + e);
-            }
             if (firstShot) {
                 gameSession.setLastOutgoingShot(gameSession.getGameController().requestNewShot());
                 String firstText = "i shot " + gameSession.getLastOutgoingShot().getX() + gameSession.getLastOutgoingShot().getY();
                 firstShot = false;
                 System.out.println("Client skickar: " + firstText); // --TODO-- Remove when working
                 writer.println(firstText);
-            }
-            Platform.runLater(() -> {
-            try {
-                if(reader.ready()) {
-                    writer.println(gameSession.socketHelper(reader.readLine()));
+            } else {
+                try {
+                    if(reader.ready()) {
+                        outputText = gameSession.socketHelper(reader.readLine());
+
+                    }
+                } catch (IOException e){
+                    System.out.println("ServerThread could not call gameSession.socketHelper, error message: " + e );
                 }
-            } catch (IOException e) {
-                System.out.println("ClientThread could not call gameSession.socketHelper with message: " + e );
+                try {
+                    sleep(gameSession.getGameDelay());
+                } catch (Exception e) {
+                    System.out.println("Could not execute gameDelay, error message: " + e);
+                }
+                try {
+                    if(outputText.equals("game over")) {
+                        gameSession.setGameIsRunning(false);
+                    }
+                    writer.println(outputText);
+                } catch (Exception e) {
+                    System.out.println("Could not send data, error message: " + e);
+                }
             }
-            });
-            System.out.println("ClientThread passed checkpoint 4");
         }
     }
 }

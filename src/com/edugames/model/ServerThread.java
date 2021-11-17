@@ -1,5 +1,7 @@
 package com.edugames.model;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -24,15 +26,13 @@ public class ServerThread extends Thread {
     private OutputStream output;
     private BufferedReader reader;
     private PrintWriter writer;
-    private String textInput;
-    private String textOutput;
+    private String outputText;
 
     //Constructor
     public ServerThread(GameSession gameSession) {
         this.gameSession = gameSession;
         this.start();
     }
-
 
     public void run() {
         try(ServerSocket serverSocket = new ServerSocket(8888)) {
@@ -47,23 +47,29 @@ public class ServerThread extends Thread {
             System.out.println("Run method in ServerThread could not initialize socket, reader or writer with the message: " + e);
         }
 
-        System.out.println("ServerThread passed checkpoint 1");
         setPriority(Thread.MAX_PRIORITY);
-        while(gameSession.getGameIsRunning())
-        {
-            System.out.println("ServerThread passed checkpoint 2");
-            try {
-                sleep(gameSession.getGameDelay());
-            }
-            catch (Exception e) {System.out.println("Error in ServerThread");}
+        while(gameSession.getGameIsRunning()) {
             try {
                 if(reader.ready()) {
-                    writer.println(gameSession.socketHelper(reader.readLine()));
+                    outputText = gameSession.socketHelper(reader.readLine());
+
                 }
             } catch (IOException e){
-                System.out.println("ServerThread could not call gameSession.socketHelper with message: " + e );
+                System.out.println("ServerThread could not call gameSession.socketHelper, error message: " + e );
             }
-            System.out.println("ServerThread passed checkpoint 4");
+            try {
+                sleep(gameSession.getGameDelay());
+            } catch (Exception e) {
+                System.out.println("Could not execute gameDelay, error message: " + e);
+            }
+            try {
+                if(outputText.equals("game over")) {
+                    gameSession.setGameIsRunning(false);
+                }
+                writer.println(outputText);
+            } catch (Exception e) {
+                System.out.println("Could not send data, error message: " + e);
+            }
         }
     }
 }

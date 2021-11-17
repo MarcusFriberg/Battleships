@@ -16,12 +16,12 @@ import javafx.stage.Stage;
  */
     public class VictoryView {
         // Variables
-        private Stage secondaryStage;
+        private Stage primaryStage;
         private GameController gameController;
 
         // Constructor
-        public VictoryView() {
-            secondaryStage = new Stage();
+        public VictoryView(Stage primaryStage) {
+            this.primaryStage = primaryStage;
         }
 
         /*
@@ -48,8 +48,8 @@ import javafx.stage.Stage;
             // Make a new Scene containing the stackPane and set the size as the backgrounds size
             Scene victoryScene = new Scene(stackPane, 960, 768);
             // Set this scene as the scene of primaryStage
-            secondaryStage.setScene(victoryScene);
+            primaryStage.setScene(victoryScene);
             // Show the stage
-            secondaryStage.show();
+            primaryStage.show();
         }
     }
