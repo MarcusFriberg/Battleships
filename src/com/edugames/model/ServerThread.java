@@ -63,6 +63,9 @@ public class ServerThread extends Thread {
                 System.out.println("Could not execute gameDelay, error message: " + e);
             }
             try {
+                if(outputText.equals("game over")) {
+                    gameSession.setGameIsRunning(false);
+                }
                 writer.println(outputText);
             } catch (Exception e) {
                 System.out.println("Could not send data, error message: " + e);

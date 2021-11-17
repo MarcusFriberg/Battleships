@@ -75,6 +75,7 @@ public class GameSession {
         System.out.println("socketHelper tar emot: " + incomingText);
         if(incomingText.equals("game over")) {
             gameController.handleLastOutgoingShotResult("s", lastOutgoingShot);
+            this.setGameIsRunning(false);
             gameController.handleGameResult(true);
         } else {
             String incomingShotCoordinates = decodeIncomingData(incomingText);
