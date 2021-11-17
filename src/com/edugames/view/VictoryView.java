@@ -18,10 +18,12 @@ import javafx.stage.Stage;
         // Variables
         private Stage primaryStage;
         private GameController gameController;
+        private GameView gameView;
 
         // Constructor
-        public VictoryView(Stage primaryStage) {
+        public VictoryView(Stage primaryStage, GameView gameView) {
             this.primaryStage = primaryStage;
+            this.gameView = gameView;
         }
 
         /*
