@@ -52,23 +52,18 @@ public class ServerThread extends Thread {
             try {
                 if(reader.ready()) {
                     outputText = gameSession.socketHelper(reader.readLine());
-
+                    try {
+                        sleep(gameSession.getGameDelay());
+                    } catch (InterruptedException e) {
+                        System.out.println("Error when trying to execute gameDelay with error message: " + e);
+                    }
+                    if(outputText.equals("game over")) {
+                        gameSession.setGameIsRunning(false);
+                    }
+                    writer.println(outputText);
                 }
             } catch (IOException e){
-                System.out.println("ServerThread could not call gameSession.socketHelper, error message: " + e );
-            }
-            try {
-                sleep(gameSession.getGameDelay());
-            } catch (Exception e) {
-                System.out.println("Could not execute gameDelay, error message: " + e);
-            }
-            try {
-                if(outputText.equals("game over")) {
-                    gameSession.setGameIsRunning(false);
-                }
-                writer.println(outputText);
-            } catch (Exception e) {
-                System.out.println("Could not send data, error message: " + e);
+                System.out.println("ServerThread failed to receive or send data with error message: " + e );
             }
         }
     }
