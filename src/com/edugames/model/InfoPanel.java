@@ -28,6 +28,7 @@ public class InfoPanel {
     private Boolean isServer;
     private String gameModeImage;
     private GameView gameView;
+    private boolean startIsVisible = true;
 
     // Constructor
     public InfoPanel(GameView gameView) {
@@ -115,9 +116,9 @@ public class InfoPanel {
         });
         // When button is pressed a method startConnection() is initialized and startButton is made invisible
         startButton.setOnAction(event -> {
-            System.out.println("Start was pressed");
             gameView.getGameController().startConnection();
-            startButton.setVisible(false);
+            startButton.setVisible(startIsVisible);
+            startIsVisible = false;
         });
         // Create two labels with empty space to get everything into place
         Label emptySpace1 = new Label("");
