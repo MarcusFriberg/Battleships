@@ -99,16 +99,21 @@ public class InfoPanel {
         ImageView gameModeImageView = new ImageView(gameMode);
         // Create a new start button
         Button startButton = new Button("", new ImageView("startButton.png"));
+        // Set the buttons shape and size
         startButton.setShape(new Circle(0.5));
+        // Set the background to transparent
         startButton.setStyle("-fx-background-color:transparent");
+        // Make button scale up when mouse hoovering over
         startButton.setOnMouseEntered(event -> {
             startButton.setScaleX(1.15);
             startButton.setScaleY(1.15);
         });
+        // Make button scale down when mouse stops hoovering over
         startButton.setOnMouseExited(event -> {
             startButton.setScaleX(1);
             startButton.setScaleY(1);
         });
+        // When button is pressed a method startConnection() is initialized and startButton is made invisible
         startButton.setOnAction(event -> {
             System.out.println("Start was pressed");
             gameView.getGameController().startConnection();
@@ -137,13 +142,12 @@ public class InfoPanel {
         // Set the texts font, size, color and opacity
         gameSpeedDelayLabel.setFont(new Font("Impact", 16));
         gameSpeedDelayLabel.setTextFill(Color.web("414242", 0.9));
-        // Add an override method that shows changing value on slider
+        // Add an override method that shows changing value on slider and updates gameDelayWasChanged
         gameSpeedDelaySlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 gameSpeedDelayLabel.setText("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
                 gameView.getGameController().gameDelayWasChanged((int)gameSpeedDelaySlider.getValue()*1000);
-                // TODO: Inset method here that updates the controller and handles the delay, send with gameSpeedDelaySlider.getValue
             }
         });
         // Create ColumnConstraints so that the nodes doesn't affect each other, only to column 6
