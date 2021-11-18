@@ -28,4 +28,5 @@ public class Target {
     public int getYCoordinate() {
         return yCoordinate;
     }
+
 }
