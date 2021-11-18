@@ -394,11 +394,11 @@ public class AIPlayer{
      */
     public Target fetchNewTargetInDirectionFromLastTarget() {
         //If the last target is on the same y-coordinate, it has moved on the x-axel.
-        if(lastTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
+        if(lastTargetThatDidHit.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
             //If the last-targets x-axel is bigger than the firstHitOnNewShips x-axel(on the right).
-            if(lastTarget.getXCoordinate() > firstHitOnNewShip.getXCoordinate()) {
+            if(lastTargetThatDidHit.getXCoordinate() > firstHitOnNewShip.getXCoordinate()) {
                 //If the lastTargets x-coordinate is 9 or if the last target wasn't a hit.
-                if(lastTarget.getXCoordinate() == 9 || !lastTargetWasAHit) {
+                if(lastTargetThatDidHit.getXCoordinate() == 9 || !lastTargetWasAHit) {
                     //Searching for the target on the left of the first hit on the ship instead. Changes direction.
                     for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() - 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
@@ -416,7 +416,6 @@ public class AIPlayer{
                 //If the last-targets x-axel is smaller than the firstHitOnNewShips x-axel(on the left).
             }else if(lastTarget.getXCoordinate() < firstHitOnNewShip.getXCoordinate()){
                 //If the lastTargets x-coordinate is 0 or if the last target wasn't a hit.
-
                 if(lastTarget.getXCoordinate() == 0 || !lastTargetWasAHit){
                     //Searching for the target on the right of the first hit on the ship instead. Changes direction.
                     for(Target possibleTarget : possibleTargets){
@@ -426,9 +425,9 @@ public class AIPlayer{
                         }
                     }
                 }else{
-                    for(Target possibleTarget1 : possibleTargets){
-                        if(possibleTarget1.getXCoordinate() == (lastTarget.getXCoordinate() - 1) && possibleTarget1.getYCoordinate() == firstHitOnNewShip.getYCoordinate()){
-                        target = possibleTarget1;
+                    for(Target possibleTarget : possibleTargets){
+                        if(possibleTarget.getXCoordinate() == (lastTarget.getXCoordinate() - 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()){
+                        target = possibleTarget;
                         }
                     }
                 }
@@ -446,8 +445,8 @@ public class AIPlayer{
                         }
                     }
                 } else {
-                    for(Target possibleTarget : possibleTargets) {
-                        if(possibleTarget.getXCoordinate() == lastTarget.getXCoordinate() && possibleTarget.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() + 1)) {
+                    for(Target possibleTarget : possibleTargets) { // --TODO-- På raden nedan var firstHitOnNewShip och lastTarget förväxlade, därför sköt den om och om igen på koordinaten nedanför firstHitOnNewShip
+                        if(possibleTarget.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && possibleTarget.getYCoordinate() == (lastTarget.getYCoordinate() + 1)) {
                             target = possibleTarget;
                         }
                     }
@@ -463,8 +462,8 @@ public class AIPlayer{
                         }
                     }
                 } else {
-                    for(Target possibleTarget : possibleTargets) {
-                        if(possibleTarget.getXCoordinate() == (lastTarget.getXCoordinate()) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate() - 1) {
+                    for(Target possibleTarget : possibleTargets) { // --TODO-- På raden nedan var firstHitOnNewShip och lastTarget förväxlade, därför sköt den om och om igen på koordinaten nedanför firstHitOnNewShip
+                        if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate()) && possibleTarget.getYCoordinate() == lastTarget.getYCoordinate() - 1) {
                             target = possibleTarget;
                         }
                     }
