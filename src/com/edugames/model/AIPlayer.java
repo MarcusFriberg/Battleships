@@ -3,8 +3,10 @@ package com.edugames.model;
 import com.edugames.controller.GameController;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
 
 /*
  * Class AIPlayer
@@ -228,7 +230,49 @@ public class AIPlayer{
      * @co-author: marcus.friberg@edu.edugrade.se
      * @version: 1.0
      */
-    public void enemyShipWasDestroyed() {
+    /*
+    for(Iterator<String> itr = listOfPhones.iterator(); itr.hasNext();){ String phone = itr.next(); if(phone.startsWith("iPhone")){ // listOfPhones.remove(phone); // wrong again itr.remove(); // right call } }
+
+Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexception-in-java-arraylist.html#ixzz7Cc5i4UDQ
+     */
+    public boolean enemyShipWasDestroyed() {
+        lastTargetThatDidHit = lastTarget;
+        // If first Target that hit a new ship is on the same row as last Target that hit a ship
+        if(lastTargetThatDidHit.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
+            // For each Target in possibleTargets, check if its directly below or above from first Target that hit new ship and remove that Target from possibleTargets
+            for(Iterator<Target> target = possibleTargets.iterator();
+            target.hasNext();) {
+                Target targetToRemove = target.next();
+                if(targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate() +1) {
+                    if(firstHitOnNewShip.getYCoordinate() < 9) {
+                        target.remove();
+                    }
+                }
+                if(targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate() -1) {
+                    if(firstHitOnNewShip.getYCoordinate() > 0) {
+                        target.remove();
+                    }
+                }
+            }
+        }
+        // If first Target that hit a new ship is in the same column as last Target that hit a ship
+        if(lastTargetThatDidHit.getXCoordinate() == firstHitOnNewShip.getXCoordinate()) {
+            // For each Target in possibleTargets, check if its directly below or above from first Target that hit new ship and remove that Target from possibleTargets
+            for(Iterator<Target> target = possibleTargets.iterator();
+                target.hasNext();) {
+                Target targetToRemove = target.next();
+                if(targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate() && targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate() +1) {
+                    if(firstHitOnNewShip.getXCoordinate() < 9) {
+                        target.remove();
+                    }
+                }
+                if(targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate() && targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate() -1) {
+                    if(firstHitOnNewShip.getXCoordinate() > 0) {
+                        target.remove();
+                    }
+                }
+            }
+        }
         nextTargetShouldBeRandom = true;
         lastTargetWasAHit = true;
         directionIsKnown = false;
@@ -237,6 +281,7 @@ public class AIPlayer{
 
         //TODO: ev.kolla koordinaterna på target som sänkte skeppet. Jämföra med koordinaterna i enemyPanel som innehåller
         //hasShip true, isHit true och ta bort alla direkt intilliggande targets från possibletargets.
+        return true;
     }
 
     /*
@@ -255,18 +300,70 @@ public class AIPlayer{
     }
 
     //Setter
-    public void setLastTargetWasAHit(boolean lastTargetWasAHit) {
+    public boolean setLastTargetWasAHit(boolean lastTargetWasAHit) {
         this.lastTargetWasAHit = lastTargetWasAHit;
+        List <Target> targetsToRemove = new ArrayList<>();
         if(lastTargetWasAHit) {
-            lastTargetThatDidHit = target;
+            lastTargetThatDidHit = lastTarget;
             if(nextTargetShouldBeRandom) {
-                firstHitOnNewShip = target;
+                firstHitOnNewShip = lastTarget;
                 nextTargetShouldBeRandom = false;
                 directionIsKnown = false;
             } else {
                 directionIsKnown = true;
+                // If first Target that hit a new ship is on the same row as last Target that hit a ship
+                if(lastTargetThatDidHit.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
+                    // For each Target in possibleTargets, check if its directly below or above from last Target that hit new ship and remove that Target from possibleTargets
+                    for(Iterator<Target> target = possibleTargets.iterator();
+                        target.hasNext();) {
+                        Target targetBelow = target.next();
+                        if (targetBelow.getXCoordinate() == lastTargetThatDidHit.getXCoordinate() && targetBelow.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() + 1)) {
+                            System.out.println("targetToRemove has X" + targetBelow.getXCoordinate() + " Y " + targetBelow.getYCoordinate());
+                            if (lastTargetThatDidHit.getYCoordinate() < 9) {
+                                target.remove();
+                                System.out.println("removed target at " + targetBelow.getXCoordinate() + targetBelow.getYCoordinate());
+                            }
+                        }
+                    }
+                    for(Iterator<Target> target = possibleTargets.iterator();
+                        target.hasNext();) {
+                        Target targetAbove = target.next();
+                        if(targetAbove.getXCoordinate() == lastTargetThatDidHit.getXCoordinate() && targetAbove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1)) {
+                            System.out.println("targetToRemove has X" + targetAbove.getXCoordinate() + " Y " + targetAbove.getYCoordinate());
+                            if(lastTargetThatDidHit.getYCoordinate() > 0) {
+                                target.remove();
+                                System.out.println("removed target at " + targetAbove.getXCoordinate() + targetAbove.getYCoordinate());
+                            }
+                        }
+                    }
+                }
+                // If first Target that hit a new ship is in the same column as last Target that hit a ship
+                if(lastTargetThatDidHit.getXCoordinate() == firstHitOnNewShip.getXCoordinate()) {
+                    // For each Target in possibleTargets, check if its directly below or above from last Target that hit new ship and remove that Target from possibleTargets
+                    for(Iterator<Target> target = possibleTargets.iterator();
+                        target.hasNext();) {
+                        Target targetOnRight = target.next();
+                        if (targetOnRight.getYCoordinate() == lastTargetThatDidHit.getYCoordinate() && targetOnRight.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() + 1)) {
+                            if (lastTargetThatDidHit.getXCoordinate() < 9) {
+                                target.remove();
+                                System.out.println("removed target at " + targetOnRight.getXCoordinate() + targetOnRight.getYCoordinate());
+                            }
+                        }
+                    }
+                    for(Iterator<Target> target = possibleTargets.iterator();
+                        target.hasNext();) {
+                        Target targetOnLeft = target.next();
+                        if(targetOnLeft.getYCoordinate() == lastTargetThatDidHit.getYCoordinate() && targetOnLeft.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1)) {
+                            if(lastTargetThatDidHit.getXCoordinate() > 0) {
+                                target.remove();
+                                System.out.println("removed target at " + targetOnLeft.getXCoordinate() + targetOnLeft.getYCoordinate());
+                            }
+                        }
+                    }
+                }
             }
         }
+        return true;
     }
 
     /*
@@ -394,11 +491,11 @@ public class AIPlayer{
      */
     public Target fetchNewTargetInDirectionFromLastTarget() {
         //If the last target is on the same y-coordinate, it has moved on the x-axel.
-        if(lastTargetThatDidHit.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
+        if(lastTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
             //If the last-targets x-axel is bigger than the firstHitOnNewShips x-axel(on the right).
-            if(lastTargetThatDidHit.getXCoordinate() > firstHitOnNewShip.getXCoordinate()) {
+            if(lastTarget.getXCoordinate() > firstHitOnNewShip.getXCoordinate()) {
                 //If the lastTargets x-coordinate is 9 or if the last target wasn't a hit.
-                if(lastTargetThatDidHit.getXCoordinate() == 9 || !lastTargetWasAHit) {
+                if(lastTarget.getXCoordinate() == 9 || !lastTargetWasAHit) {
                     //Searching for the target on the left of the first hit on the ship instead. Changes direction.
                     for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() - 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {

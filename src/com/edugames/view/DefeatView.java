@@ -61,7 +61,6 @@ import javafx.scene.control.Button;
             });
             // When button is pressed gameView is yet again presented
             reverseToGameView.setOnAction(event -> {
-                System.out.println("Return button was pressed");
                 gameView.present();
             });
             // Set padding for the button
