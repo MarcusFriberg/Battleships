@@ -490,6 +490,7 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
      * @version: 1.0
      */
     public Target fetchNewTargetInDirectionFromLastTarget() {
+        boolean newTargetHasBeenSet = false;
         //If the last target is on the same y-coordinate, it has moved on the x-axel.
         if(lastTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
             //If the last-targets x-axel is bigger than the firstHitOnNewShips x-axel(on the right).
@@ -500,6 +501,7 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
                     for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() - 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
                             target = possibleTarget;
+                            newTargetHasBeenSet = true;
                         }
                     }
                     //If the target was a hit and smaller than 9, we are continuing searching for the target on the right of the firstHitOnNewShip.
@@ -507,24 +509,26 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
                     for(Target possibleTarget : possibleTargets){
                         if(possibleTarget.getXCoordinate() == (lastTarget.getXCoordinate() + 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()){
                             target = possibleTarget;
+                            newTargetHasBeenSet = true;
                         }
                     }
                 }
                 //If the last-targets x-axel is smaller than the firstHitOnNewShips x-axel(on the left).
-            }else if(lastTarget.getXCoordinate() < firstHitOnNewShip.getXCoordinate()){
+            } else if(lastTarget.getXCoordinate() < firstHitOnNewShip.getXCoordinate()){
                 //If the lastTargets x-coordinate is 0 or if the last target wasn't a hit.
                 if(lastTarget.getXCoordinate() == 0 || !lastTargetWasAHit){
                     //Searching for the target on the right of the first hit on the ship instead. Changes direction.
                     for(Target possibleTarget : possibleTargets){
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() + 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()){
                             target = possibleTarget;
-                            //Else continue to the left.
+                            newTargetHasBeenSet = true;
                         }
                     }
                 }else{
                     for(Target possibleTarget : possibleTargets){
                         if(possibleTarget.getXCoordinate() == (lastTarget.getXCoordinate() - 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()){
-                        target = possibleTarget;
+                            target = possibleTarget;
+                            newTargetHasBeenSet = true;
                         }
                     }
                 }
@@ -539,12 +543,14 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
                     for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && possibleTarget.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() - 1)) {
                             target = possibleTarget;
+                            newTargetHasBeenSet = true;
                         }
                     }
                 } else {
                     for(Target possibleTarget : possibleTargets) { // --TODO-- På raden nedan var firstHitOnNewShip och lastTarget förväxlade, därför sköt den om och om igen på koordinaten nedanför firstHitOnNewShip
                         if(possibleTarget.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && possibleTarget.getYCoordinate() == (lastTarget.getYCoordinate() + 1)) {
                             target = possibleTarget;
+                            newTargetHasBeenSet = true;
                         }
                     }
                 }
@@ -556,12 +562,50 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
                     for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate()) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate() + 1) {
                             target = possibleTarget;
+                            newTargetHasBeenSet = true;
                         }
                     }
                 } else {
                     for(Target possibleTarget : possibleTargets) { // --TODO-- På raden nedan var firstHitOnNewShip och lastTarget förväxlade, därför sköt den om och om igen på koordinaten nedanför firstHitOnNewShip
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate()) && possibleTarget.getYCoordinate() == lastTarget.getYCoordinate() - 1) {
                             target = possibleTarget;
+                            newTargetHasBeenSet = true;
+                        }
+                    }
+                }
+            }
+        }
+        // If a new target has not been set in the code above the next target in the given direction has already been hit and we need to change direction.
+        if(!newTargetHasBeenSet) {
+            if(lastTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
+                if(lastTarget.getXCoordinate() > firstHitOnNewShip.getXCoordinate()) {
+                    for(Target possibleTarget : possibleTargets) {
+                        if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() - 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
+                            target = possibleTarget;
+                            newTargetHasBeenSet = true;
+                        }
+                    }
+                } else {
+                    for(Target possibleTarget : possibleTargets){
+                        if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() + 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()){
+                            target = possibleTarget;
+                            newTargetHasBeenSet = true;
+                        }
+                    }
+                }
+            } else {
+                if(lastTarget.getYCoordinate() > firstHitOnNewShip.getYCoordinate()) {
+                    for(Target possibleTarget : possibleTargets) {
+                        if(possibleTarget.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && possibleTarget.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() - 1)) {
+                            target = possibleTarget;
+                            newTargetHasBeenSet = true;
+                        }
+                    }
+                } else {
+                    for(Target possibleTarget : possibleTargets) {
+                        if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate()) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate() + 1) {
+                            target = possibleTarget;
+                            newTargetHasBeenSet = true;
                         }
                     }
                 }
@@ -612,7 +656,6 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
             for(Target possibleTarget : possibleTargets) {
                 if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() + 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
                     target = possibleTarget;
-                    foundTarget = true;
                 }
             }
         }
