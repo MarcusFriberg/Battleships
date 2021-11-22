@@ -148,4 +148,8 @@ public class GameView {
     public GamePanel getEnemyPanel() {
         return enemyPanel;
     }
+
+    public InfoPanel getInfoPanel() {
+        return infoPanel;
+    }
 }

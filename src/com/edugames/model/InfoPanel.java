@@ -29,6 +29,10 @@ public class InfoPanel {
     private String gameModeImage;
     private GameView gameView;
     private boolean startIsVisible = true;
+    private int numberOfCarriers = 1;
+    private int numberOfBattleships = 2;
+    private int numberOfCruisers = 3;
+    private int numberOfSubmarines = 4;
 
     // Constructor
     public InfoPanel(GameView gameView) {
@@ -55,6 +59,13 @@ public class InfoPanel {
         }
     }
 
+    public void updateShipCounts() {
+        numberOfCarriers = gameView.getGameController().getNumberOfShipsOfSize(5);
+        numberOfBattleships = gameView.getGameController().getNumberOfShipsOfSize(4);
+        numberOfCruisers = gameView.getGameController().getNumberOfShipsOfSize(3);
+        numberOfSubmarines = gameView.getGameController().getNumberOfShipsOfSize(2);
+    }
+
     /*
      * Method drawInfoPanel
      * A method that updates the InfoPanel that displays information about remaining ships and what mode user is playing in.
@@ -76,10 +87,10 @@ public class InfoPanel {
         ImageView submarineImageView = new ImageView(submarine);
         // --TODO-- Replace String numbers with a call to AIPlayers method to return number of ships of a given type
         // Create new Labels and assign values to the variables, make a toString to print out the Integer
-        Label airCraftCarrierCountLabel = new Label("  x " + "1");
-        Label battleshipCountLabel = new Label("  x " + "2");
-        Label cruiserCountLabel = new Label("  x " + "3");
-        Label submarineCountLabel = new Label("  x " + "4");
+        Label airCraftCarrierCountLabel = new Label("  x " + numberOfCarriers);
+        Label battleshipCountLabel = new Label("  x " + numberOfBattleships);
+        Label cruiserCountLabel = new Label("  x " + numberOfCruisers);
+        Label submarineCountLabel = new Label("  x " + numberOfSubmarines);
         // Set font style and size of the labels
         airCraftCarrierCountLabel.setFont(new Font("Impact", 20));
         battleshipCountLabel.setFont(new Font("Impact", 20));

@@ -582,14 +582,12 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
                     for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() - 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
                             target = possibleTarget;
-                            newTargetHasBeenSet = true;
                         }
                     }
                 } else {
                     for(Target possibleTarget : possibleTargets){
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() + 1) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate()){
                             target = possibleTarget;
-                            newTargetHasBeenSet = true;
                         }
                     }
                 }
@@ -598,14 +596,12 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
                     for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && possibleTarget.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() - 1)) {
                             target = possibleTarget;
-                            newTargetHasBeenSet = true;
                         }
                     }
                 } else {
                     for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate()) && possibleTarget.getYCoordinate() == firstHitOnNewShip.getYCoordinate() + 1) {
                             target = possibleTarget;
-                            newTargetHasBeenSet = true;
                         }
                     }
                 }
