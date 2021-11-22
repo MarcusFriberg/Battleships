@@ -24,7 +24,6 @@ public class GameSession {
     private GameController gameController;
     private Coordinate lastOutgoingShot;
     private String outgoingText = "";
-    private int gameDelay = 2000;
     private int enemyShipsDestroyed;
 
     // Constructor
@@ -124,11 +123,7 @@ public class GameSession {
     }
 
     public int getGameDelay() {
-        return gameDelay;
-    }
-
-    public void setGameDelay(int gameDelay) {
-        this.gameDelay = gameDelay;
+        return gameController.getGameDelay();
     }
 
     public Boolean getGameIsRunning() {

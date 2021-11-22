@@ -15,6 +15,7 @@ public class GameController {
     private Boolean isServer;
     private GameSession gameSession;
     private GameView gameView;
+    private int gameDelay = 2000;
     private Coordinate[][] playerPanelCoordinates;
     private Coordinate[][] enemyPanelCoordinates;
     private AIPlayer player;
@@ -108,6 +109,7 @@ public class GameController {
                 if(player.checkGameOver()) {
                     // Player is game over
                     result = "game over";
+                    gameView.getInfoPanel().updateShipCounts();
                 } else {
                     // Player is not game over but ship was sunken
                     result = "s";
@@ -248,11 +250,15 @@ public class GameController {
     }
 
     public void gameDelayWasChanged(int newGameDelay) {
-        gameSession.setGameDelay(newGameDelay);
+        gameDelay = newGameDelay;
     }
 
     public int getNumberOfShipsOfSize(int size) {
         int number = player.getNumberOfShipsOfShipSize(size);
         return number;
+    }
+
+    public int getGameDelay() {
+        return gameDelay;
     }
 }
