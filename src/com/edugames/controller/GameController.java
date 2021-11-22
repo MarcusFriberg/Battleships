@@ -111,6 +111,7 @@ public class GameController {
                 } else {
                     // Player is not game over but ship was sunken
                     result = "s";
+                    gameView.getInfoPanel().updateShipCounts();
                 }
             // If ship was not sunken
             } else {
@@ -201,7 +202,6 @@ public class GameController {
                 coordinate.setHasShip(true);
                 coordinate.changeImage();
                 updateEnemyPanelImage(coordinate);
-                gameSession.increaseEnemyShipsDestroyed();
                 if(!player.enemyShipWasDestroyed()) {
                     System.out.println("could not run method enemyShipWasDestroyed");
                 }
@@ -249,5 +249,10 @@ public class GameController {
 
     public void gameDelayWasChanged(int newGameDelay) {
         gameSession.setGameDelay(newGameDelay);
+    }
+
+    public int getNumberOfShipsOfSize(int size) {
+        int number = player.getNumberOfShipsOfShipSize(size);
+        return number;
     }
 }
