@@ -130,7 +130,6 @@ public class GameController {
                     // Player is not game over but ship was sunken
                     result = "s";
                 }
-                gameView.getInfoPanel().updateShipCounts();
                 // If ship was not sunken
             } else {
                 // Ship was hit
@@ -298,19 +297,6 @@ public class GameController {
      */
     public void gameDelayWasChanged(int newGameDelay) {
         gameDelay = newGameDelay;
-    }
-
-    /*
-     * Method getNumberOfShipsOfSize
-     * Method called by the infoPanel to get information about how many ships of a given size we have left.
-     * Method will ask the player-object and pass the answer back to infoPanel.
-     * @param: int size - An int between 2 and 5 depending on what ship infoPanel needs information about
-     * @author: Marcus Friberg
-     * @author: marcus.friberg@edu.edugrade.se
-     * @version: 1.1
-     */
-    public int getNumberOfShipsOfSize(int size) {
-        return player.getNumberOfShipsOfShipSize(size);
     }
 
     /*

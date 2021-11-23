@@ -197,29 +197,6 @@ public class AIPlayer{
     }
 
     /*
-     * Method getNumberOfShipsOfShipSize.
-     * A method that checks how many ships of a specific size that is left.
-     * @params int shipSize. When called upon a shipSize value has to be sent in.
-     * @returns int. Returns how many ship of the size that is left.
-     * @author: Linda Djurström
-     * @author: linda.djurstrom@edu.edugrad.se
-     * @version: 1.0
-     */
-    public int getNumberOfShipsOfShipSize(int shipSize) {
-        //Variables.
-        int counter = 0;
-        //For-loop that loops true the list myShips with and counter, that counts how many times a ship of the size is in
-        //the list.
-        for(Ship myShip : myShips) {
-            if(myShip.getShipSize() == shipSize) {
-                counter++;
-            }
-        }
-        //Returns the counters value.
-        return counter;
-    }
-
-    /*
      * Method enemyShipWasDestroyed()
      * A method that changes variables after a ship was sunk and removes nearby targets that should not be able to
      * contain another ship.

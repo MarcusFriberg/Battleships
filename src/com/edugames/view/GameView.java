@@ -29,6 +29,7 @@ public class GameView {
     private final InfoPanel infoPanel;
     private final GameController gameController;
 
+
     // Constructor
     public GameView(Stage primaryStage, Boolean isServer, GameController gameController) {
         this.primaryStage = primaryStage;
@@ -100,7 +101,6 @@ public class GameView {
         HBox topPanelContent = new HBox();
         topPanelContent.setMinSize(960,210);
         // Create a HBox to hold the content of the infoPanel and set its size
-        // --TODO-- Add a call to the infopanel method that returns a HBox when class is done
         GridPane infoPanelContent = infoPanel.drawInfoPanel();
         infoPanelContent.setMinSize(960, 113);
         infoPanelContent.setAlignment(Pos.CENTER);
