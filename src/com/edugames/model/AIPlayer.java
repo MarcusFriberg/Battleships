@@ -650,7 +650,7 @@ public class AIPlayer{
                         }
                     }
                 } else {
-                    for(Target possibleTarget : possibleTargets) { // --TODO-- På raden nedan var firstHitOnNewShip och lastTarget förväxlade, därför sköt den om och om igen på koordinaten nedanför firstHitOnNewShip
+                    for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && possibleTarget.getYCoordinate() == (lastTarget.getYCoordinate() + 1)) {
                             target = possibleTarget;
                             newTargetHasBeenSet = true;
@@ -669,7 +669,7 @@ public class AIPlayer{
                         }
                     }
                 } else {
-                    for(Target possibleTarget : possibleTargets) { // --TODO-- På raden nedan var firstHitOnNewShip och lastTarget förväxlade, därför sköt den om och om igen på koordinaten nedanför firstHitOnNewShip
+                    for(Target possibleTarget : possibleTargets) {
                         if(possibleTarget.getXCoordinate() == (firstHitOnNewShip.getXCoordinate()) && possibleTarget.getYCoordinate() == lastTarget.getYCoordinate() - 1) {
                             target = possibleTarget;
                             newTargetHasBeenSet = true;
