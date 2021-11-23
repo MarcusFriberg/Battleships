@@ -52,7 +52,7 @@ public class InfoPanel {
     public void initInfoPanel(Boolean isServer) {
         // Change the labelImage depending on Boolean isServer is true/false
         this.isServer = isServer;
-        if (isServer) {
+        if (this.isServer) {
             gameModeImage = "server.png";
         } else {
             gameModeImage = "client.png";
