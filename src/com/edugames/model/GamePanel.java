@@ -15,17 +15,15 @@ import java.io.FileNotFoundException;
  * @author Linda Djurström
  * @version: 1.0.
  */
-
 public class GamePanel {
     // Variabels created for y and x positions.
     private char[] xpos = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     private char[] ypos = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
     // Construction of a new two-dimensional array for coordinates.
     Coordinate[][] coordinates = new Coordinate[10][10];
-    ImageView[][] imageViews = new ImageView[10][10]; // TEST
+    ImageView[][] imageViews = new ImageView[10][10];
     // A new Gridpane is created.
     GridPane gridPane = new GridPane();
-
 
     // Constructor.
     public GamePanel() {}
@@ -64,10 +62,8 @@ public class GamePanel {
         gridPane.setAlignment(Pos.CENTER);
 
         // A for-loop assigns one position in the grid to one image.
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
                 // Tell this Coordinate-object to update its image-property depending on its current state.
                 coordinates[i][j].changeImage();
                 // Create a new imageView to hold the image.
