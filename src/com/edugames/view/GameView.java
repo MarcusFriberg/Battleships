@@ -68,10 +68,20 @@ public class GameView {
     }
 
     // Getters
-
-
     public GameController getGameController() {
         return gameController;
+    }
+
+    public GamePanel getPlayerPanel() {
+        return playerPanel;
+    }
+
+    public GamePanel getEnemyPanel() {
+        return enemyPanel;
+    }
+
+    public InfoPanel getInfoPanel() {
+        return infoPanel;
     }
 
     /*
@@ -137,17 +147,5 @@ public class GameView {
         primaryStage.setScene(scene);
         // Show the stage
         primaryStage.show();
-    }
-
-    public GamePanel getPlayerPanel() {
-        return playerPanel;
-    }
-
-    public GamePanel getEnemyPanel() {
-        return enemyPanel;
-    }
-
-    public InfoPanel getInfoPanel() {
-        return infoPanel;
     }
 }

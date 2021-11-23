@@ -39,8 +39,6 @@ public class InfoPanel {
         this.gameView = gameView;
     }
 
-    public InfoPanel() {}
-
     /*
      * Method init
      * A method to initialize InfoPanel.
