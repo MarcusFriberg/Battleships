@@ -2,8 +2,6 @@ package com.edugames.model;
 
 // Imports
 import com.edugames.view.GameView;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,10 +22,8 @@ import javafx.scene.text.Font;
  * @version: 2.0
  */
 public class InfoPanel {
-    // Variables
-    private Boolean isServer;
     private String gameModeImage;
-    private GameView gameView;
+    private final GameView gameView;
     private boolean startIsVisible = true;
 
     // Constructor
@@ -45,8 +41,8 @@ public class InfoPanel {
      */
     public void initInfoPanel(Boolean isServer) {
         // Change the labelImage depending on Boolean isServer is true/false
-        this.isServer = isServer;
-        if (this.isServer) {
+        // Variables
+        if (isServer) {
             gameModeImage = "server.png";
         } else {
             gameModeImage = "client.png";
@@ -118,12 +114,9 @@ public class InfoPanel {
         gameSpeedDelayLabel.setFont(new Font("Impact", 16));
         gameSpeedDelayLabel.setTextFill(Color.web("414242", 0.9));
         // Add an override method that shows changing value on slider and updates gameDelayWasChanged
-        gameSpeedDelaySlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                gameSpeedDelayLabel.setText("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
-                gameView.getGameController().gameDelayWasChanged((int)gameSpeedDelaySlider.getValue()*1000);
-            }
+        gameSpeedDelaySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            gameSpeedDelayLabel.setText("Fördröjning satt till " + (int)gameSpeedDelaySlider.getValue() + " sekunder");
+            gameView.getGameController().gameDelayWasChanged((int)gameSpeedDelaySlider.getValue()*1000);
         });
         // Create ColumnConstraints so that the nodes doesn't affect each other, only to column 6
         ColumnConstraints column1 = new ColumnConstraints(50, 100, 100);

@@ -25,8 +25,8 @@ public class Ship {
     private final char shipAlignment;
     private final int shipStartXPos;
     private final int shipStartYPos;
-    private List<Coordinate> shipCoordinates = new ArrayList<>();
-    private Coordinate[][] playerPanelCoordinates;
+    private final List<Coordinate> shipCoordinates = new ArrayList<>();
+    private final Coordinate[][] playerPanelCoordinates;
 
     // Constructor
     public Ship(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos, Coordinate[][] playerPanelCoordinates) {
@@ -36,11 +36,6 @@ public class Ship {
         this.shipStartYPos = shipStartYPos;
         this.playerPanelCoordinates = playerPanelCoordinates;
         storeShipCoordinates();
-    }
-
-    // Getters
-    public int getShipSize() {
-        return shipSize;
     }
 
     /*
@@ -90,10 +85,11 @@ public class Ship {
      * @version: 1.0
      */
     public Boolean checkIfShipIsSunken() {
-        Boolean sunken = true;
+        boolean sunken = true;
         for(Coordinate coordinate : shipCoordinates) {
-            if(!coordinate.getIsHit()) {
+            if (!coordinate.getIsHit()) {
                 sunken = false;
+                break;
             }
         }
         return sunken;

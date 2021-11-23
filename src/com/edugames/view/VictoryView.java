@@ -21,8 +21,8 @@ import javafx.stage.Stage;
  */
     public class VictoryView {
         // Variables
-        private Stage primaryStage;
-        private GameView gameView;
+        private final Stage primaryStage;
+        private final GameView gameView;
 
         // Constructor
         public VictoryView(Stage primaryStage, GameView gameView) {
@@ -58,10 +58,7 @@ import javafx.stage.Stage;
                 reverseToGameView.setScaleY(1);
             });
             // When button is pressed gameView is yet again presented
-            reverseToGameView.setOnAction(event -> {
-                System.out.println("Return button was pressed");
-                gameView.present();
-            });
+            reverseToGameView.setOnAction(event -> gameView.present());
             // Set padding for the button
             reverseToGameView.setPadding(new Insets(0, 0, 110, 0));
             // Create a StackPane

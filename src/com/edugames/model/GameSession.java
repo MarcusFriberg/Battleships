@@ -14,17 +14,14 @@ import com.edugames.controller.GameController;
  * @version: 1.0
  */
 public class GameSession {
-    // Variables
-    private Boolean isServer;
-    private Boolean gameIsRunning = true;
-    private Boolean victory = false;
-    private GameController gameController;
+    private boolean gameIsRunning = true;
+    private final GameController gameController;
     private Coordinate lastOutgoingShot;
     private String outgoingText = "";
 
     // Constructor
     public GameSession(Boolean isServer, GameController gameController) {
-        this.isServer = isServer;
+        // Variables
         this.gameController = gameController;
         if(isServer) {
             hostServer();
@@ -41,7 +38,7 @@ public class GameSession {
      * @version: 1.0
      */
     public void hostServer() {
-        ServerThread networkConnection = new ServerThread(this);
+        new ServerThread(this);
     }
 
     /*
@@ -52,7 +49,7 @@ public class GameSession {
      * @version: 1.0
      */
     public void hostClient() {
-        ClientThread networkConnection = new ClientThread(this);
+        new ClientThread(this);
     }
 
     /*
@@ -93,7 +90,7 @@ public class GameSession {
     public String decodeIncomingData(String incomingText) {
         String[] incomingDataSplit = incomingText.split(" ");
         while(!gameController.handleLastOutgoingShotResult(incomingDataSplit[0], lastOutgoingShot)) {
-            // Don't move forward
+            // Don't move forward until method call returns true.
         }
         return incomingDataSplit[2];
     }

@@ -22,8 +22,8 @@ import javafx.scene.control.Button;
      */
     public class DefeatView {
         // Variables
-        private Stage primaryStage;
-        private GameView gameView;
+        private final Stage primaryStage;
+        private final GameView gameView;
 
         // Constructor
         public DefeatView(Stage primaryStage, GameView gameView) {
@@ -59,9 +59,7 @@ import javafx.scene.control.Button;
                 reverseToGameView.setScaleY(1);
             });
             // When button is pressed gameView is yet again presented
-            reverseToGameView.setOnAction(event -> {
-                gameView.present();
-            });
+            reverseToGameView.setOnAction(event -> gameView.present());
             // Set padding for the button
             reverseToGameView.setPadding(new Insets(0, 0, 180, 0));
             // Create a StackPane

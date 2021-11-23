@@ -16,8 +16,8 @@ package com.edugames.model;
 
 public class Coordinate {
     // Variables
-    private char x;
-    private char y;
+    private final char x;
+    private final char y;
     private boolean isHit;
     private boolean hasShip;
     private String imageFileName;

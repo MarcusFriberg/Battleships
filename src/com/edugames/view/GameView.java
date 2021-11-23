@@ -79,10 +79,6 @@ public class GameView {
         return enemyPanel;
     }
 
-    public InfoPanel getInfoPanel() {
-        return infoPanel;
-    }
-
     /*
     * Method present
     * A method to present the gameView.

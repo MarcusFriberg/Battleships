@@ -4,7 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import java.io.FileNotFoundException;
 
 /*
  * Class GamePanel.
@@ -17,13 +16,11 @@ import java.io.FileNotFoundException;
  */
 public class GamePanel {
     // Variabels created for y and x positions.
-    private char[] xpos = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    private char[] ypos = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+    private final char[] xpos = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    private final char[] ypos = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
     // Construction of a new two-dimensional array for coordinates.
     Coordinate[][] coordinates = new Coordinate[10][10];
     ImageView[][] imageViews = new ImageView[10][10];
-    // A new Gridpane is created.
-    GridPane gridPane = new GridPane();
 
     // Constructor.
     public GamePanel() {}
@@ -53,7 +50,7 @@ public class GamePanel {
      * @author Linda Djurström
      * @version: 1.0.
      */
-    public GridPane drawGamePanel() throws FileNotFoundException {
+    public GridPane drawGamePanel() {
         // The GridPane is formatted.
         GridPane gridPane = new GridPane();
         gridPane.setMinSize(400, 400);
