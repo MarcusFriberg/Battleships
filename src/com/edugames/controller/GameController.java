@@ -1,6 +1,5 @@
 package com.edugames.controller;
 // Imports
-
 import com.edugames.model.*;
 import com.edugames.view.DefeatView;
 import com.edugames.view.GameView;
@@ -19,7 +18,6 @@ public class GameController {
     private Coordinate[][] playerPanelCoordinates;
     private Coordinate[][] enemyPanelCoordinates;
     private AIPlayer player;
-    private BackgroundMusic audio;
     private VictoryView victoryView;
     private DefeatView defeatView;
 
@@ -29,16 +27,11 @@ public class GameController {
         this.isServer = isServer;
         initViews();
         initPlayer();
-        //initAudio();
         gameView.present();
     }
 
     public void initPlayer() {
         player = new AIPlayer(playerPanelCoordinates, this);
-    }
-
-    public void initAudio() {
-        audio = new BackgroundMusic();
     }
 
     public void startConnection() {
@@ -177,7 +170,7 @@ public class GameController {
 
 
 
-    public void handleLastOutgoingShotResult(String result, Coordinate coordinate) {
+    public boolean handleLastOutgoingShotResult(String result, Coordinate coordinate) {
         switch (result) {
             case "i" :
                 break;
@@ -209,6 +202,7 @@ public class GameController {
                 }
                 break;
         }
+        return true;
     }
 
     /*
@@ -231,7 +225,7 @@ public class GameController {
     }
 
     public Coordinate requestNewShot() {
-        Target target = new Target(3, 3);
+        Target target;
         target = player.fireAtTarget();
         Coordinate coordinate = enemyPanelCoordinates[target.getXCoordinate()][target.getYCoordinate()];
         return coordinate;

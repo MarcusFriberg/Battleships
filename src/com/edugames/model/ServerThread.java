@@ -1,7 +1,5 @@
 package com.edugames.model;
 
-import javafx.application.Platform;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -62,8 +60,6 @@ public class ServerThread extends Thread {
     public void run() {
         try(ServerSocket serverSocket = new ServerSocket(8888)) {
             socket = serverSocket.accept();
-            System.out.println("Client connected");
-            System.out.println("Waiting for shot");
             input = socket.getInputStream();
             output = socket.getOutputStream();
             reader = new BufferedReader(new InputStreamReader(input));

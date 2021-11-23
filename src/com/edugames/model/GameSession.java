@@ -24,13 +24,11 @@ public class GameSession {
     private GameController gameController;
     private Coordinate lastOutgoingShot;
     private String outgoingText = "";
-    private int enemyShipsDestroyed;
 
     // Constructor
     public GameSession(Boolean isServer, GameController gameController) {
         this.isServer = isServer;
         this.gameController = gameController;
-        this.enemyShipsDestroyed = 0;
         if(isServer) {
             hostServer();
         } else {
@@ -71,7 +69,7 @@ public class GameSession {
      * @version: 1.0
      */
     public String socketHelper(String incomingText) {
-        System.out.println("socketHelper tar emot: " + incomingText);
+        System.out.println("Tar emot: " + incomingText);
         if(incomingText.equals("game over")) {
             gameController.handleLastOutgoingShotResult("s", lastOutgoingShot);
             this.setGameIsRunning(false);
@@ -87,7 +85,7 @@ public class GameSession {
                 outgoingText = encodeOutgoingData(incomingShotResult, lastOutgoingShot);
             }
         }
-        System.out.println("socketHelper skickar: " + outgoingText);
+        System.out.println("Skickar: " + outgoingText);
         return outgoingText;
     }
 
@@ -102,7 +100,9 @@ public class GameSession {
      */
     public String decodeIncomingData(String incomingText) {
         String[] incomingDataSplit = incomingText.split(" ");
-        gameController.handleLastOutgoingShotResult(incomingDataSplit[0], lastOutgoingShot);
+        while(!gameController.handleLastOutgoingShotResult(incomingDataSplit[0], lastOutgoingShot)) {
+            // Don't move forward
+        }
         return incomingDataSplit[2];
     }
 
@@ -116,10 +116,6 @@ public class GameSession {
      */
     public String encodeOutgoingData(String lastIncomingShotResult, Coordinate outgoingShot) {
         return lastIncomingShotResult + " shot " + outgoingShot.getX() + outgoingShot.getY();
-    }
-
-    public void increaseEnemyShipsDestroyed() {
-        enemyShipsDestroyed ++;
     }
 
     public int getGameDelay() {

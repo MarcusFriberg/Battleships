@@ -177,7 +177,7 @@ public class AIPlayer{
      * A method that checks if all ships are sunk.
      * @returns boolean. True if all ships are sunk, else false.
      * @author: Linda Djurström
-     * @author: linda.djurstrom@edu.edugrad.se
+     * @author: linda.djurstrom@edu.edugrade.se
      * @version: 1.0
      */
     public boolean checkGameOver() {
@@ -230,48 +230,163 @@ public class AIPlayer{
      * @co-author: marcus.friberg@edu.edugrade.se
      * @version: 1.0
      */
-    /*
-    for(Iterator<String> itr = listOfPhones.iterator(); itr.hasNext();){ String phone = itr.next(); if(phone.startsWith("iPhone")){ // listOfPhones.remove(phone); // wrong again itr.remove(); // right call } }
-
-Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexception-in-java-arraylist.html#ixzz7Cc5i4UDQ
-     */
     public boolean enemyShipWasDestroyed() {
         lastTargetThatDidHit = lastTarget;
         // If first Target that hit a new ship is on the same row as last Target that hit a ship
         if(lastTargetThatDidHit.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
-            // For each Target in possibleTargets, check if its directly below or above from first Target that hit new ship and remove that Target from possibleTargets
-            for(Iterator<Target> target = possibleTargets.iterator();
-            target.hasNext();) {
-                Target targetToRemove = target.next();
-                if(targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate() +1) {
-                    if(firstHitOnNewShip.getYCoordinate() < 9) {
-                        target.remove();
+            // If we have been shooting from left to right
+            if(lastTargetThatDidHit.getXCoordinate() > firstHitOnNewShip.getYCoordinate()) {
+                // For each Target in possibleTargets, check if its directly below or above from first Target that hit new ship and remove that Target from possibleTargets
+                for(Iterator<Target> target = possibleTargets.iterator();
+                    target.hasNext();) {
+                    Target targetToRemove = target.next();
+                    if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() +1) && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1)) {
+                        if(lastTargetThatDidHit.getXCoordinate() < 9 && lastTargetThatDidHit.getYCoordinate() < 9) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() +1) && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1)) {
+                        if(lastTargetThatDidHit.getXCoordinate() <9 && lastTargetThatDidHit.getYCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() +1) && targetToRemove.getYCoordinate() == lastTargetThatDidHit.getYCoordinate()) {
+                        if(lastTargetThatDidHit.getXCoordinate() < 9) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() -1) && targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() +1)) {
+                        if(firstHitOnNewShip.getXCoordinate() > 0 && firstHitOnNewShip.getYCoordinate() < 9) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() -1) && targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() -1)) {
+                        if(firstHitOnNewShip.getXCoordinate() > 0 && firstHitOnNewShip.getYCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() -1) && targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
+                        if(firstHitOnNewShip.getXCoordinate() > 0) {
+                            target.remove();
+                        }
                     }
                 }
-                if(targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate() && targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate() -1) {
-                    if(firstHitOnNewShip.getYCoordinate() > 0) {
-                        target.remove();
+            // We have been shooting from right to left
+            } else {
+                // For each Target in possibleTargets, check if its directly below or above from first Target that hit new ship and remove that Target from possibleTargets
+                for(Iterator<Target> target = possibleTargets.iterator();
+                    target.hasNext();) {
+                    Target targetToRemove = target.next();
+                    if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1) && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1)) {
+                        if(lastTargetThatDidHit.getXCoordinate() > 0 && lastTargetThatDidHit.getYCoordinate() < 9) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1) && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1)) {
+                        if(lastTargetThatDidHit.getXCoordinate() > 0 && lastTargetThatDidHit.getYCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1) && targetToRemove.getYCoordinate() == lastTargetThatDidHit.getYCoordinate()) {
+                        if(lastTargetThatDidHit.getXCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() +1) && targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() +1)) {
+                        if(firstHitOnNewShip.getXCoordinate() < 9 && firstHitOnNewShip.getYCoordinate() < 9) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() +1) && targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() -1)) {
+                        if(firstHitOnNewShip.getXCoordinate() <9 && firstHitOnNewShip.getYCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() +1) && targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate()) {
+                        if(firstHitOnNewShip.getXCoordinate() < 9) {
+                            target.remove();
+                        }
                     }
                 }
             }
         }
         // If first Target that hit a new ship is in the same column as last Target that hit a ship
         if(lastTargetThatDidHit.getXCoordinate() == firstHitOnNewShip.getXCoordinate()) {
-            // For each Target in possibleTargets, check if its directly below or above from first Target that hit new ship and remove that Target from possibleTargets
-            for(Iterator<Target> target = possibleTargets.iterator();
-                target.hasNext();) {
-                Target targetToRemove = target.next();
-                if(targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate() && targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate() +1) {
-                    if(firstHitOnNewShip.getXCoordinate() < 9) {
-                        target.remove();
+            // If we have been shooting downwards
+            if(lastTargetThatDidHit.getYCoordinate() > firstHitOnNewShip.getYCoordinate()) {
+                // For each Target in possibleTargets, check if its directly below or above from first Target that hit new ship and remove that Target from possibleTargets
+                for(Iterator<Target> target = possibleTargets.iterator();
+                    target.hasNext();) {
+                    Target targetToRemove = target.next();
+                    if(targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1) && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() +1)) {
+                        if(lastTargetThatDidHit.getYCoordinate() < 9 && lastTargetThatDidHit.getXCoordinate() <9) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1) && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1)) {
+                        if(lastTargetThatDidHit.getYCoordinate() < 9 && lastTargetThatDidHit.getXCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1) && targetToRemove.getXCoordinate() == lastTargetThatDidHit.getXCoordinate()) {
+                        if(lastTargetThatDidHit.getYCoordinate() < 9) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() -1) && targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() +1)) {
+                        if(firstHitOnNewShip.getYCoordinate() > 0 && firstHitOnNewShip.getXCoordinate() < 9){
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() -1) && targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() -1)) {
+                        if(firstHitOnNewShip.getYCoordinate() > 0 && firstHitOnNewShip.getXCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() -1) && targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate()) {
+                        if(firstHitOnNewShip.getYCoordinate() > 0) {
+                            target.remove();
+                        }
                     }
                 }
-                if(targetToRemove.getYCoordinate() == firstHitOnNewShip.getYCoordinate() && targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate() -1) {
-                    if(firstHitOnNewShip.getXCoordinate() > 0) {
-                        target.remove();
+            // We have been shooting upwards
+            } else {
+                for(Iterator<Target> target = possibleTargets.iterator();
+                    target.hasNext();) {
+                    Target targetToRemove = target.next();
+                    if(targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1) && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() +1)) {
+                        if(lastTargetThatDidHit.getYCoordinate() > 0 && lastTargetThatDidHit.getXCoordinate() < 9){
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1) && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1)) {
+                        if(lastTargetThatDidHit.getYCoordinate() > 0 && lastTargetThatDidHit.getXCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1) && targetToRemove.getXCoordinate() == lastTargetThatDidHit.getXCoordinate()) {
+                        if(lastTargetThatDidHit.getYCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() +1) && targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() +1)) {
+                        if(firstHitOnNewShip.getYCoordinate() < 9 && firstHitOnNewShip.getXCoordinate() <9) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() +1) && targetToRemove.getXCoordinate() == (firstHitOnNewShip.getXCoordinate() -1)) {
+                        if(firstHitOnNewShip.getYCoordinate() < 9 && firstHitOnNewShip.getXCoordinate() > 0) {
+                            target.remove();
+                        }
+                    }
+                    if(targetToRemove.getYCoordinate() == (firstHitOnNewShip.getYCoordinate() +1) && targetToRemove.getXCoordinate() == firstHitOnNewShip.getXCoordinate()) {
+                        if(firstHitOnNewShip.getYCoordinate() < 9) {
+                            target.remove();
+                        }
                     }
                 }
             }
+
         }
         nextTargetShouldBeRandom = true;
         lastTargetWasAHit = true;
@@ -302,7 +417,6 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
     //Setter
     public boolean setLastTargetWasAHit(boolean lastTargetWasAHit) {
         this.lastTargetWasAHit = lastTargetWasAHit;
-        List <Target> targetsToRemove = new ArrayList<>();
         if(lastTargetWasAHit) {
             lastTargetThatDidHit = lastTarget;
             if(nextTargetShouldBeRandom) {
@@ -316,23 +430,41 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
                     // For each Target in possibleTargets, check if its directly below or above from last Target that hit new ship and remove that Target from possibleTargets
                     for(Iterator<Target> target = possibleTargets.iterator();
                         target.hasNext();) {
-                        Target targetBelow = target.next();
-                        if (targetBelow.getXCoordinate() == lastTargetThatDidHit.getXCoordinate() && targetBelow.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() + 1)) {
-                            System.out.println("targetToRemove has X" + targetBelow.getXCoordinate() + " Y " + targetBelow.getYCoordinate());
+                        Target targetToRemove = target.next();
+                        if (targetToRemove.getXCoordinate() == lastTargetThatDidHit.getXCoordinate() && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() + 1)) {
                             if (lastTargetThatDidHit.getYCoordinate() < 9) {
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
                                 target.remove();
-                                System.out.println("removed target at " + targetBelow.getXCoordinate() + targetBelow.getYCoordinate());
                             }
                         }
-                    }
-                    for(Iterator<Target> target = possibleTargets.iterator();
-                        target.hasNext();) {
-                        Target targetAbove = target.next();
-                        if(targetAbove.getXCoordinate() == lastTargetThatDidHit.getXCoordinate() && targetAbove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1)) {
-                            System.out.println("targetToRemove has X" + targetAbove.getXCoordinate() + " Y " + targetAbove.getYCoordinate());
+                        if(targetToRemove.getXCoordinate() == lastTargetThatDidHit.getXCoordinate() && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1)) {
                             if(lastTargetThatDidHit.getYCoordinate() > 0) {
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
                                 target.remove();
-                                System.out.println("removed target at " + targetAbove.getXCoordinate() + targetAbove.getYCoordinate());
+                            }
+                        }
+                        if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1) && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1)) {
+                            if(lastTargetThatDidHit.getYCoordinate() > 0) {
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
+                                target.remove();
+                            }
+                        }
+                        if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() +1) && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1)) {
+                            if(lastTargetThatDidHit.getYCoordinate() > 0) {
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
+                                target.remove();
+                            }
+                        }
+                        if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1) && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1)) {
+                            if(lastTargetThatDidHit.getYCoordinate() < 9) {
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
+                                target.remove();
+                            }
+                        }
+                        if(targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() +1) && targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1)) {
+                            if(lastTargetThatDidHit.getYCoordinate() < 9) {
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
+                                target.remove();
                             }
                         }
                     }
@@ -342,23 +474,44 @@ Read more: https://www.java67.com/2015/10/how-to-solve-concurrentmodificationexc
                     // For each Target in possibleTargets, check if its directly below or above from last Target that hit new ship and remove that Target from possibleTargets
                     for(Iterator<Target> target = possibleTargets.iterator();
                         target.hasNext();) {
-                        Target targetOnRight = target.next();
-                        if (targetOnRight.getYCoordinate() == lastTargetThatDidHit.getYCoordinate() && targetOnRight.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() + 1)) {
+                        Target targetToRemove = target.next();
+                        if (targetToRemove.getYCoordinate() == lastTargetThatDidHit.getYCoordinate() && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() + 1)) {
                             if (lastTargetThatDidHit.getXCoordinate() < 9) {
                                 target.remove();
-                                System.out.println("removed target at " + targetOnRight.getXCoordinate() + targetOnRight.getYCoordinate());
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
                             }
                         }
-                    }
-                    for(Iterator<Target> target = possibleTargets.iterator();
-                        target.hasNext();) {
-                        Target targetOnLeft = target.next();
-                        if(targetOnLeft.getYCoordinate() == lastTargetThatDidHit.getYCoordinate() && targetOnLeft.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1)) {
+                        if (targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1) && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() + 1)) {
+                            if (lastTargetThatDidHit.getXCoordinate() < 9) {
+                                target.remove();
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
+                            }
+                        }
+                        if (targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1) && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() + 1)) {
+                            if (lastTargetThatDidHit.getXCoordinate() < 9) {
+                                target.remove();
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
+                            }
+                        }
+                        if(targetToRemove.getYCoordinate() == lastTargetThatDidHit.getYCoordinate() && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1)) {
                             if(lastTargetThatDidHit.getXCoordinate() > 0) {
                                 target.remove();
-                                System.out.println("removed target at " + targetOnLeft.getXCoordinate() + targetOnLeft.getYCoordinate());
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
                             }
                         }
+                        if(targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() +1) && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1)) {
+                            if(lastTargetThatDidHit.getXCoordinate() > 0) {
+                                target.remove();
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
+                            }
+                        }
+                        if(targetToRemove.getYCoordinate() == (lastTargetThatDidHit.getYCoordinate() -1) && targetToRemove.getXCoordinate() == (lastTargetThatDidHit.getXCoordinate() -1)) {
+                            if(lastTargetThatDidHit.getXCoordinate() > 0) {
+                                target.remove();
+                                System.out.println("removed target at " + targetToRemove.getXCoordinate() + targetToRemove.getYCoordinate());
+                            }
+                        }
+
                     }
                 }
             }
