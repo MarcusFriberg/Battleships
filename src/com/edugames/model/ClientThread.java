@@ -1,9 +1,6 @@
 package com.edugames.model;
-
-import javafx.application.Platform;
-
+// Imports
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /*
@@ -20,14 +17,11 @@ import java.net.Socket;
  */
 public class ClientThread extends Thread {
     // Variables
-    private GameSession gameSession;
+    private final GameSession gameSession;
     private Socket socket;
-    private InputStream input;
-    private OutputStream output;
     private BufferedReader reader;
     private PrintWriter writer;
     private Boolean firstShot;
-    private String outputText;
 
     /*
      * Constructor
@@ -64,8 +58,8 @@ public class ClientThread extends Thread {
         // Setting up the connection
         try {
             socket = new Socket("localhost", 8888);
-            input = socket.getInputStream();
-            output = socket.getOutputStream();
+            InputStream input = socket.getInputStream();
+            OutputStream output = socket.getOutputStream();
             reader = new BufferedReader(new InputStreamReader(input));
             writer = new PrintWriter(output, true);
         } catch (IOException e) {
@@ -90,7 +84,7 @@ public class ClientThread extends Thread {
                     // If there is something to read
                     if(reader.ready()) {
                         // outputText is the result of the call to the socketHelper with that something to read passed in as a parameter
-                        outputText = gameSession.socketHelper(reader.readLine());
+                        String outputText = gameSession.socketHelper(reader.readLine());
                         // Try to sleep for the amount of milliseconds returned from the call to gameSession.getGameDelay
                         try {
                             sleep(gameSession.getGameDelay());

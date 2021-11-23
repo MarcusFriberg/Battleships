@@ -1,5 +1,5 @@
 package com.edugames.model;
-
+// Imports
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,13 +19,9 @@ import java.net.Socket;
  */
 public class ServerThread extends Thread {
     // Variables
-    private GameSession gameSession;
-    private Socket socket;
-    private InputStream input;
-    private OutputStream output;
+    private final GameSession gameSession;
     private BufferedReader reader;
     private PrintWriter writer;
-    private String outputText;
 
     /*
      * Constructor
@@ -60,9 +56,9 @@ public class ServerThread extends Thread {
     public void run() {
         // Setting up the connection
         try(ServerSocket serverSocket = new ServerSocket(8888)) {
-            socket = serverSocket.accept();
-            input = socket.getInputStream();
-            output = socket.getOutputStream();
+            Socket socket = serverSocket.accept();
+            InputStream input = socket.getInputStream();
+            OutputStream output = socket.getOutputStream();
             reader = new BufferedReader(new InputStreamReader(input));
             writer = new PrintWriter(output, true);
         } catch (IOException e) {
@@ -75,7 +71,7 @@ public class ServerThread extends Thread {
                 // If there is something to read
                 if(reader.ready()) {
                     // outputText is the result of the call to the socketHelper with that something to read passed in as a parameter
-                    outputText = gameSession.socketHelper(reader.readLine());
+                    String outputText = gameSession.socketHelper(reader.readLine());
                     // Try to sleep for the amount of milliseconds returned from the call to gameSession.getGameDelay
                     try {
                         sleep(gameSession.getGameDelay());

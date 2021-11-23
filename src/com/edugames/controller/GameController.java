@@ -22,9 +22,8 @@ import java.util.*;
  */
 public class GameController {
     // Variables
-    private Stage primaryStage;
-    private Boolean isServer;
-    private GameSession gameSession;
+    private final Stage primaryStage;
+    private final Boolean isServer;
     private GameView gameView;
     private int gameDelay = 2000;
     private Coordinate[][] playerPanelCoordinates;
@@ -62,7 +61,7 @@ public class GameController {
      */
     public void startConnection() {
         // Code to init a new GameSession
-        gameSession = new GameSession(isServer, this);
+        new GameSession(isServer, this);
     }
 
     /*
@@ -77,8 +76,7 @@ public class GameController {
      * @version: 1.1
      */
     public Ship createShip(int shipSize, char shipAlignment, int shipStartXPos, int shipStartYPos) {
-        Ship ship = new Ship(shipSize, shipAlignment, shipStartXPos, shipStartYPos, playerPanelCoordinates);
-        return ship;
+        return new Ship(shipSize, shipAlignment, shipStartXPos, shipStartYPos, playerPanelCoordinates);
     }
 
     /*
@@ -112,7 +110,7 @@ public class GameController {
      * @version: 1.1
      */
     public String handleIncomingShot(String xy) {
-        String result = "";
+        String result;
         // Get the Coordinate-object that was hit by enemy
         Coordinate coordinate = getCoordinateObjectFromString(xy);
         // Set the isHit property of this Coordinate-object to true and update its image
@@ -128,13 +126,12 @@ public class GameController {
                 if(player.checkGameOver()) {
                     // Player is game over
                     result = "game over";
-                    gameView.getInfoPanel().updateShipCounts();
                 } else {
                     // Player is not game over but ship was sunken
                     result = "s";
-                    gameView.getInfoPanel().updateShipCounts();
                 }
-            // If ship was not sunken
+                gameView.getInfoPanel().updateShipCounts();
+                // If ship was not sunken
             } else {
                 // Ship was hit
                 result = "h";
@@ -167,10 +164,8 @@ public class GameController {
         int y = yValues.indexOf(positionArray[1]);
         // Convert the x value from char -> String - int
         int x = Integer.parseInt(Character.toString(positionArray[0]));
-        // Get the Coordinate-object from the x and y position in playerPanelCoordinates[][] and put it in coordinate
-        Coordinate coordinate = playerPanelCoordinates[x][y];
-        // Return the Coordinate-object that we were looking for
-        return coordinate;
+        // Get the Coordinate-object from the x and y position in playerPanelCoordinates[][] and return it
+        return playerPanelCoordinates[x][y];
     }
 
     /*
@@ -272,8 +267,7 @@ public class GameController {
     public Coordinate requestNewShot() {
         Target target;
         target = player.fireAtTarget();
-        Coordinate coordinate = enemyPanelCoordinates[target.getXCoordinate()][target.getYCoordinate()];
-        return coordinate;
+        return enemyPanelCoordinates[target.getXCoordinate()][target.getYCoordinate()];
     }
 
     /*
@@ -288,13 +282,9 @@ public class GameController {
      */
     public void handleGameResult(Boolean victory) {
         if(victory) {
-            Platform.runLater(() -> {
-                victoryView.present();
-            });
+            Platform.runLater(() -> victoryView.present());
         } else {
-            Platform.runLater(() -> {
-                defeatView.present();
-            });
+            Platform.runLater(() -> defeatView.present());
         }
     }
 
@@ -320,8 +310,7 @@ public class GameController {
      * @version: 1.1
      */
     public int getNumberOfShipsOfSize(int size) {
-        int number = player.getNumberOfShipsOfShipSize(size);
-        return number;
+        return player.getNumberOfShipsOfShipSize(size);
     }
 
     /*
