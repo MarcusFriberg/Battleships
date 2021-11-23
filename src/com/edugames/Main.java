@@ -47,6 +47,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         // Set the title of the window and create a StackPane
         primaryStage.setTitle("Sänka skepp");
+        primaryStage.setResizable(false);
         // Create a new startView and provide it with the primaryStage and let it present itself
         StartView startView = new StartView(primaryStage);
         startView.present();
