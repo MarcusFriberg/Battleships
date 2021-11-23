@@ -28,8 +28,6 @@ public class GameView {
     private final GamePanel enemyPanel;
     private final InfoPanel infoPanel;
     private final GameController gameController;
-    private GridPane playerPanelContent;
-    private GridPane enemyPanelContent;
 
     // Constructor
     public GameView(Stage primaryStage, Boolean isServer, GameController gameController) {
@@ -68,10 +66,20 @@ public class GameView {
     }
 
     // Getters
-
-
     public GameController getGameController() {
         return gameController;
+    }
+
+    public GamePanel getPlayerPanel() {
+        return playerPanel;
+    }
+
+    public GamePanel getEnemyPanel() {
+        return enemyPanel;
+    }
+
+    public InfoPanel getInfoPanel() {
+        return infoPanel;
     }
 
     /*
@@ -99,23 +107,23 @@ public class GameView {
         // Create a new HBox to hold both the panels
         HBox gamePanelsContent = new HBox();
         // Create a new GridPane to hold the enemyPanel
-        enemyPanelContent = new GridPane();
+        GridPane enemyPanelContent = new GridPane();
         // Fetch the content of the enemyPanel by calling drawGamePanel()
         try {
             enemyPanelContent = enemyPanel.drawGamePanel();
             //enemyPanelContent = enemyPanel.drawEnemyPanel();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error with the message: " + e);
         }
         // Set the padding of the enemyPanel to draw the panel in the correct position
         enemyPanelContent.setPadding(new Insets(0,0,0,50));
         // Create a new GridPane to hold the PlayerPanel
-        playerPanelContent = new GridPane();
+        GridPane playerPanelContent = new GridPane();
         // Fetch the content of the playerPanel by calling drawGamePanel()
         try {
             playerPanelContent = playerPanel.drawGamePanel();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error with the message: " + e);
         }
         // Set the padding of the playerPanel to draw the panel in the correct position
         playerPanelContent.setPadding(new Insets(0,0,0,62));
@@ -137,17 +145,5 @@ public class GameView {
         primaryStage.setScene(scene);
         // Show the stage
         primaryStage.show();
-    }
-
-    public GamePanel getPlayerPanel() {
-        return playerPanel;
-    }
-
-    public GamePanel getEnemyPanel() {
-        return enemyPanel;
-    }
-
-    public InfoPanel getInfoPanel() {
-        return infoPanel;
     }
 }

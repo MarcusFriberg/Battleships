@@ -1,9 +1,6 @@
 package com.edugames.model;
 // Imports
 import com.edugames.controller.GameController;
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /*
  * Class GameSession
@@ -38,8 +35,7 @@ public class GameSession {
 
     /*
      * Method hostServer
-     * A method connect with another computer as server, on the same network.
-     * Creates a loop in which in och out parameters can pass trough.
+     * Creates a new ServerThread-object and stores the reference to the object in networkConnection.
      * @author: Martin Andersson
      * @author: martin.andersson.edu.edugrade.com
      * @version: 1.0
@@ -50,8 +46,7 @@ public class GameSession {
 
     /*
      * Method hostClient
-     * A method connect with another computer as client, on the same network.
-     * Creates a loop in which in och out parameters can pass trough.
+     * Creates a new ClientThread-object and stores the reference to the object in networkConnection.
      * @author: Martin Andersson
      * @author: martin.andersson.edu.edugrade.com
      * @version: 1.0
@@ -69,7 +64,6 @@ public class GameSession {
      * @version: 1.0
      */
     public String socketHelper(String incomingText) {
-        System.out.println("Tar emot: " + incomingText);
         if(incomingText.equals("game over")) {
             gameController.handleLastOutgoingShotResult("s", lastOutgoingShot);
             this.setGameIsRunning(false);
@@ -85,7 +79,6 @@ public class GameSession {
                 outgoingText = encodeOutgoingData(incomingShotResult, lastOutgoingShot);
             }
         }
-        System.out.println("Skickar: " + outgoingText);
         return outgoingText;
     }
 
@@ -118,6 +111,7 @@ public class GameSession {
         return lastIncomingShotResult + " shot " + outgoingShot.getX() + outgoingShot.getY();
     }
 
+    // Setters and Getters
     public int getGameDelay() {
         return gameController.getGameDelay();
     }

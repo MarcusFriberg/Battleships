@@ -21,8 +21,7 @@ import javafx.stage.Stage;
  */
 public class StartView {
     // Variables
-    private Stage primaryStage;
-    private GameController gameController;
+    private final Stage primaryStage;
 
     // Constructor
     public StartView(Stage primaryStage) {
@@ -56,10 +55,7 @@ public class StartView {
             buttonStartServer.setScaleY(0.5);
         });
         // Set the action when button is pressed
-        buttonStartServer.setOnAction(event -> {
-            System.out.println("Server mode was pressed");
-            gameController = new GameController(primaryStage, true);
-        });
+        buttonStartServer.setOnAction(event -> new GameController(primaryStage, true));
         Button buttonStartClient = new Button("", new ImageView("clientstart.png"));
         // Style the button
         buttonStartClient.setStyle("-fx-background-color:transparent");
@@ -75,10 +71,7 @@ public class StartView {
             buttonStartClient.setScaleY(0.5);
         });
         // Set the action when button is pressed
-        buttonStartClient.setOnAction(event -> {
-            System.out.println("Client mode was pressed");
-            gameController = new GameController(primaryStage, false);
-        });
+        buttonStartClient.setOnAction(event -> new GameController(primaryStage, false));
         // Create a VBox to hold the buttons and place it under the game-logo
         VBox buttonsBox = new VBox();
         buttonsBox.setPadding(new Insets(240, 10, 10, 10));
