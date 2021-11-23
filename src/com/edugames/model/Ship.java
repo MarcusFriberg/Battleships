@@ -25,7 +25,6 @@ public class Ship {
     private final char shipAlignment;
     private final int shipStartXPos;
     private final int shipStartYPos;
-    private String shipType;
     private List<Coordinate> shipCoordinates = new ArrayList<>();
     private Coordinate[][] playerPanelCoordinates;
 
@@ -36,41 +35,12 @@ public class Ship {
         this.shipStartXPos = shipStartXPos;
         this.shipStartYPos = shipStartYPos;
         this.playerPanelCoordinates = playerPanelCoordinates;
-        setShipType();
         storeShipCoordinates();
     }
 
     // Getters
     public int getShipSize() {
         return shipSize;
-    }
-
-    /*
-    * Method setShipType
-    * A method to set the variable shipType to a string describing what kind
-    * of ship this is. The shipSize is used to set this value.
-    * @author: Marcus Friberg
-    * @author: marcus.friberg@edu.edugrad.se
-    * @version: 1.0
-    */
-    private void setShipType() {
-        switch (shipSize) {
-            case 2:
-                shipType = "submarine";
-                break;
-            case 3:
-                shipType = "cruiser";
-                break;
-            case 4:
-                shipType = "battleship";
-                break;
-            case 5:
-                shipType = "aircraft carrier";
-                break;
-            default:
-                System.out.println("The system have provided a shipSize to the constructor of class Ship that is not valid. Terminating application to get attention!");
-                System.exit(0);
-        }
     }
 
     /*
@@ -95,8 +65,6 @@ public class Ship {
                     playerPanelCoordinates[i][shipStartYPos].setShipOnThisCoordinate(this);
                     playerPanelCoordinates[i][shipStartYPos].setHasShip(true);
                     playerPanelCoordinates[i][shipStartYPos].changeImage();
-                    // --TODO-- Remove sout below, only to confirm this is working while testing.
-                    System.out.println("Added ship to coordinate " + playerPanelCoordinates[i][shipStartYPos].getX() + playerPanelCoordinates[i][shipStartYPos].getY());
                 }
                 break;
             case 'v':
@@ -105,8 +73,6 @@ public class Ship {
                     playerPanelCoordinates[shipStartXPos][i].setShipOnThisCoordinate(this);
                     playerPanelCoordinates[shipStartXPos][i].setHasShip(true);
                     playerPanelCoordinates[shipStartXPos][i].changeImage();
-                    // --TODO-- Remove sout below, only to confirm this is working while testing.
-                    System.out.println("Added ship to coordinate " + playerPanelCoordinates[shipStartXPos][i].getX() + playerPanelCoordinates[shipStartXPos][i].getY());
                 }
                 break;
             default:
