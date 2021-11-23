@@ -11,8 +11,8 @@ package com.edugames.model;
  */
 public class Target {
     // Variables
-    private int xCoordinate;
-    private int yCoordinate;
+    private final int xCoordinate;
+    private final int yCoordinate;
 
     // Constructor
     public Target(int xCoordinate, int yCoordinate) {
