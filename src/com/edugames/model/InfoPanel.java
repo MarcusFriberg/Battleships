@@ -142,7 +142,7 @@ public class InfoPanel {
         gameSpeedDelaySlider.setShowTickMarks(true);
         gameSpeedDelaySlider.setShowTickLabels(true);
         gameSpeedDelaySlider.showTickLabelsProperty();
-        // Set the tick intervalls to 1.0
+        // Set the tick intervals to 1.0
         gameSpeedDelaySlider.setMajorTickUnit(1.0);
         // Set no minor tick marks
         gameSpeedDelaySlider.setMinorTickCount(0);

@@ -25,7 +25,6 @@ import javafx.scene.control.Button;
         private Stage primaryStage;
         private GameView gameView;
 
-
         // Constructor
         public DefeatView(Stage primaryStage, GameView gameView) {
             this.primaryStage = primaryStage;

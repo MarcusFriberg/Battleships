@@ -83,7 +83,6 @@ public class GameSession {
     }
 
     /*
-
      * Method decodeIncomingData
      * A method that has a String as an inparameter.
      * Decodes the incoming data and sends it to the bridge.
